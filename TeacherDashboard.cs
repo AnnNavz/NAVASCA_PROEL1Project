@@ -21,9 +21,7 @@ namespace NAVASCA_PROEL1Project
 		{
 			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 			{
-				Login login = new Login();
-				login.Show();
-				this.Close();
+				
 			}
 		}
 	}
