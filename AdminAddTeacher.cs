@@ -204,13 +204,13 @@ namespace NAVASCA_PROEL1Project
 
 
 				cmd.ExecuteNonQuery();
-				MessageBox.Show("Registration Successful!" + "\n Username: " + generatedUserID +
+				MessageBox.Show("Added Teacher Successful!" + "\n Username: " + generatedUserID +
 								"\n Password: " + generatedPassword +
 								"\n Please wait for the admin's approval.",
 								"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-				Login login = new Login();
-				login.Show();
+				AdminTeachers adminteacher = new AdminTeachers();
+				adminteacher.Show();
 				this.Hide();
 			}
 

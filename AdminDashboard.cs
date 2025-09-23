@@ -178,13 +178,13 @@ namespace NAVASCA_PROEL1Project
 										  "FROM Profiles AS p " +
 										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-										  "WHERE r.RoleName = 'Student'";
+										  "WHERE r.RoleName = 'Student' AND p.Status = 'Active'";
 
 			string sqlQuery_TotalTeacherCount = "SELECT COUNT(p.ProfileID) " +
 										  "FROM Profiles AS p " +
 										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-										  "WHERE r.RoleName = 'Instructor'";
+										  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

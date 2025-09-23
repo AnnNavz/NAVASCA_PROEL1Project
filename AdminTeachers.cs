@@ -86,23 +86,26 @@ namespace NAVASCA_PROEL1Project
 
 		private void LoadData()
 		{
+			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
+
+			// SQL query to count students with 'Active' status
 			string sqlQuery_TotalCount = "SELECT COUNT(p.ProfileID) " +
 										  "FROM Profiles AS p " +
 										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 										  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
+			// SQL query to load all student data for the DataGridView, sorted by status
 			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-									   "WHERE r.RoleName = 'Instructor' " +
+									   "WHERE r.RoleName IN ('Instructor') AND p.Status <> 'Inactive' " + // Exclude inactive users
 									   "ORDER BY " +
 									   "CASE p.Status " +
 									   "WHEN 'Active' THEN 1 " +
 									   "WHEN 'Pending' THEN 2 " +
-									   "WHEN 'Inactive' THEN 3 " +
-									   "ELSE 4 END";
+									   "ELSE 3 END";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -245,7 +248,7 @@ namespace NAVASCA_PROEL1Project
 
 					if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
 					{
-						MessageBox.Show("This student is already inactive.", "Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						MessageBox.Show("This teacher is already inactive.", "Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						return;
 					}
 
