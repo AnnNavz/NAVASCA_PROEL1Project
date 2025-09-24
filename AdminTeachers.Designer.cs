@@ -30,10 +30,10 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminTeachers));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnHome = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
@@ -47,6 +47,7 @@
 			this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pnlUpdate = new System.Windows.Forms.Panel();
+			this.label9 = new System.Windows.Forms.Label();
 			this.btnSubmit = new Guna.UI2.WinForms.Guna2Button();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
@@ -76,7 +77,8 @@
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.errorProvider3 = new System.Windows.Forms.ErrorProvider(this.components);
-			this.label9 = new System.Windows.Forms.Label();
+			this.cmbDepartment = new Guna.UI2.WinForms.Guna2ComboBox();
+			this.label10 = new System.Windows.Forms.Label();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
 			this.panel1.SuspendLayout();
@@ -314,6 +316,8 @@
 			// 
 			this.pnlUpdate.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlUpdate.BackgroundImage")));
 			this.pnlUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlUpdate.Controls.Add(this.cmbDepartment);
+			this.pnlUpdate.Controls.Add(this.label10);
 			this.pnlUpdate.Controls.Add(this.label9);
 			this.pnlUpdate.Controls.Add(this.btnSubmit);
 			this.pnlUpdate.Controls.Add(this.label8);
@@ -338,6 +342,18 @@
 			this.pnlUpdate.TabIndex = 22;
 			this.pnlUpdate.Visible = false;
 			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.BackColor = System.Drawing.Color.Transparent;
+			this.label9.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label9.Location = new System.Drawing.Point(36, 68);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(277, 17);
+			this.label9.TabIndex = 66;
+			this.label9.Text = "Click a user in the table to be able to update.";
+			// 
 			// btnSubmit
 			// 
 			this.btnSubmit.Animated = true;
@@ -351,7 +367,7 @@
 			this.btnSubmit.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold);
 			this.btnSubmit.ForeColor = System.Drawing.Color.White;
 			this.btnSubmit.HoverState.FillColor = System.Drawing.Color.RoyalBlue;
-			this.btnSubmit.Location = new System.Drawing.Point(67, 593);
+			this.btnSubmit.Location = new System.Drawing.Point(67, 615);
 			this.btnSubmit.Name = "btnSubmit";
 			this.btnSubmit.Size = new System.Drawing.Size(214, 45);
 			this.btnSubmit.TabIndex = 64;
@@ -364,7 +380,7 @@
 			this.label8.BackColor = System.Drawing.Color.Transparent;
 			this.label8.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label8.Location = new System.Drawing.Point(33, 104);
+			this.label8.Location = new System.Drawing.Point(33, 115);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(87, 20);
 			this.label8.TabIndex = 63;
@@ -376,7 +392,7 @@
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label7.Location = new System.Drawing.Point(33, 175);
+			this.label7.Location = new System.Drawing.Point(33, 179);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(89, 20);
 			this.label7.TabIndex = 62;
@@ -388,7 +404,7 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label6.Location = new System.Drawing.Point(243, 244);
+			this.label6.Location = new System.Drawing.Point(233, 248);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(44, 20);
 			this.label6.TabIndex = 61;
@@ -400,7 +416,7 @@
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label5.Location = new System.Drawing.Point(33, 489);
+			this.label5.Location = new System.Drawing.Point(33, 446);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(112, 20);
 			this.label5.TabIndex = 60;
@@ -412,7 +428,7 @@
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label4.Location = new System.Drawing.Point(33, 418);
+			this.label4.Location = new System.Drawing.Point(33, 380);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(71, 20);
 			this.label4.TabIndex = 59;
@@ -424,7 +440,7 @@
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label3.Location = new System.Drawing.Point(33, 351);
+			this.label3.Location = new System.Drawing.Point(33, 315);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(122, 20);
 			this.label3.TabIndex = 58;
@@ -444,11 +460,11 @@
 			this.txtEmail.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtEmail.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtEmail.Location = new System.Drawing.Point(31, 512);
+			this.txtEmail.Location = new System.Drawing.Point(31, 469);
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.PlaceholderText = "";
 			this.txtEmail.SelectedText = "";
-			this.txtEmail.Size = new System.Drawing.Size(286, 40);
+			this.txtEmail.Size = new System.Drawing.Size(273, 37);
 			this.txtEmail.TabIndex = 57;
 			// 
 			// txtAddress
@@ -465,11 +481,11 @@
 			this.txtAddress.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtAddress.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtAddress.Location = new System.Drawing.Point(31, 441);
+			this.txtAddress.Location = new System.Drawing.Point(31, 403);
 			this.txtAddress.Name = "txtAddress";
 			this.txtAddress.PlaceholderText = "";
 			this.txtAddress.SelectedText = "";
-			this.txtAddress.Size = new System.Drawing.Size(286, 40);
+			this.txtAddress.Size = new System.Drawing.Size(273, 37);
 			this.txtAddress.TabIndex = 56;
 			// 
 			// txtPhone
@@ -486,11 +502,11 @@
 			this.txtPhone.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtPhone.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtPhone.Location = new System.Drawing.Point(31, 374);
+			this.txtPhone.Location = new System.Drawing.Point(31, 338);
 			this.txtPhone.Name = "txtPhone";
 			this.txtPhone.PlaceholderText = "";
 			this.txtPhone.SelectedText = "";
-			this.txtPhone.Size = new System.Drawing.Size(286, 40);
+			this.txtPhone.Size = new System.Drawing.Size(273, 37);
 			this.txtPhone.TabIndex = 55;
 			// 
 			// label2
@@ -499,7 +515,7 @@
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label2.Location = new System.Drawing.Point(33, 244);
+			this.label2.Location = new System.Drawing.Point(33, 248);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(70, 20);
 			this.label2.TabIndex = 54;
@@ -520,7 +536,7 @@
             "Male",
             "Female",
             "Prefer not to say"});
-			this.cmbGender.Location = new System.Drawing.Point(31, 268);
+			this.cmbGender.Location = new System.Drawing.Point(31, 273);
 			this.cmbGender.Name = "cmbGender";
 			this.cmbGender.Size = new System.Drawing.Size(196, 36);
 			this.cmbGender.TabIndex = 51;
@@ -539,11 +555,11 @@
 			this.txtAge.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtAge.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtAge.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtAge.Location = new System.Drawing.Point(247, 268);
+			this.txtAge.Location = new System.Drawing.Point(237, 273);
 			this.txtAge.Name = "txtAge";
 			this.txtAge.PlaceholderText = "";
 			this.txtAge.SelectedText = "";
-			this.txtAge.Size = new System.Drawing.Size(70, 36);
+			this.txtAge.Size = new System.Drawing.Size(67, 36);
 			this.txtAge.TabIndex = 52;
 			// 
 			// txtFirstname
@@ -560,11 +576,11 @@
 			this.txtFirstname.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtFirstname.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtFirstname.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtFirstname.Location = new System.Drawing.Point(31, 128);
+			this.txtFirstname.Location = new System.Drawing.Point(31, 139);
 			this.txtFirstname.Name = "txtFirstname";
 			this.txtFirstname.PlaceholderText = "";
 			this.txtFirstname.SelectedText = "";
-			this.txtFirstname.Size = new System.Drawing.Size(286, 40);
+			this.txtFirstname.Size = new System.Drawing.Size(273, 37);
 			this.txtFirstname.TabIndex = 49;
 			// 
 			// txtLastname
@@ -581,11 +597,11 @@
 			this.txtLastname.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtLastname.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtLastname.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtLastname.Location = new System.Drawing.Point(31, 198);
+			this.txtLastname.Location = new System.Drawing.Point(31, 202);
 			this.txtLastname.Name = "txtLastname";
 			this.txtLastname.PlaceholderText = "";
 			this.txtLastname.SelectedText = "";
-			this.txtLastname.Size = new System.Drawing.Size(286, 40);
+			this.txtLastname.Size = new System.Drawing.Size(273, 37);
 			this.txtLastname.TabIndex = 50;
 			// 
 			// btnClose
@@ -741,44 +757,44 @@
 			// TeachersData
 			// 
 			this.TeachersData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.TeachersData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle17.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.TeachersData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
 			this.TeachersData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(234)))), ((int)(((byte)(243)))));
 			this.TeachersData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.TeachersData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle18.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.TeachersData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
 			this.TeachersData.ColumnHeadersHeight = 35;
 			this.TeachersData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.TeachersData.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle19.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.TeachersData.DefaultCellStyle = dataGridViewCellStyle19;
 			this.TeachersData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(222)))), ((int)(((byte)(251)))));
 			this.TeachersData.Location = new System.Drawing.Point(38, 146);
 			this.TeachersData.Name = "TeachersData";
 			this.TeachersData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.TeachersData.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.TeachersData.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
 			this.TeachersData.RowHeadersVisible = false;
 			this.TeachersData.RowTemplate.Height = 30;
 			this.TeachersData.Size = new System.Drawing.Size(688, 465);
@@ -831,17 +847,38 @@
 			// 
 			this.errorProvider3.ContainerControl = this;
 			// 
-			// label9
+			// cmbDepartment
 			// 
-			this.label9.AutoSize = true;
-			this.label9.BackColor = System.Drawing.Color.Transparent;
-			this.label9.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label9.Location = new System.Drawing.Point(36, 68);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(277, 17);
-			this.label9.TabIndex = 66;
-			this.label9.Text = "Click a user in the table to be able to update.";
+			this.cmbDepartment.BackColor = System.Drawing.Color.Transparent;
+			this.cmbDepartment.BorderRadius = 16;
+			this.cmbDepartment.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.cmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbDepartment.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbDepartment.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbDepartment.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.cmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+			this.cmbDepartment.ItemHeight = 30;
+			this.cmbDepartment.Items.AddRange(new object[] {
+            "College of Computer Studies",
+            "College of Business and Management",
+            "College of Arts, Sciences, and Pedagogy",
+            "College of Nursing"});
+			this.cmbDepartment.Location = new System.Drawing.Point(33, 535);
+			this.cmbDepartment.Name = "cmbDepartment";
+			this.cmbDepartment.Size = new System.Drawing.Size(271, 36);
+			this.cmbDepartment.TabIndex = 74;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.BackColor = System.Drawing.Color.Transparent;
+			this.label10.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label10.Location = new System.Drawing.Point(35, 512);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(101, 20);
+			this.label10.TabIndex = 73;
+			this.label10.Text = "Department:";
 			// 
 			// AdminTeachers
 			// 
@@ -916,5 +953,7 @@
 		private System.Windows.Forms.ErrorProvider errorProvider2;
 		private System.Windows.Forms.ErrorProvider errorProvider3;
 		private System.Windows.Forms.Label label9;
+		private Guna.UI2.WinForms.Guna2ComboBox cmbDepartment;
+		private System.Windows.Forms.Label label10;
 	}
 }

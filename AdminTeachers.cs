@@ -86,21 +86,20 @@ namespace NAVASCA_PROEL1Project
 
 		private void LoadData()
 		{
-			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
-
-			// SQL query to count students with 'Active' status
 			string sqlQuery_TotalCount = "SELECT COUNT(p.ProfileID) " +
-										  "FROM Profiles AS p " +
-										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
-										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-										  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
+								  "FROM Profiles AS p " +
+								  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+								  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+								  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
-			// SQL query to load all student data for the DataGridView, sorted by status
-			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
+			// SQL query to load teacher data, including the department name
+			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status, d.DepartmentName " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-									   "WHERE r.RoleName IN ('Instructor') AND p.Status <> 'Inactive' " + // Exclude inactive users
+									   "INNER JOIN Instructors AS i ON p.ProfileID = i.ProfileID " + // Join with Instructors table
+									   "INNER JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " + // Join with Departments table
+									   "WHERE r.RoleName IN ('Instructor') AND p.Status <> 'Inactive' " +
 									   "ORDER BY " +
 									   "CASE p.Status " +
 									   "WHEN 'Active' THEN 1 " +
@@ -114,8 +113,8 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 
 					SqlCommand countCmd = new SqlCommand(sqlQuery_TotalCount, conn);
-					int activeStudentCount = (int)countCmd.ExecuteScalar();
-					lblTotal.Text = activeStudentCount.ToString();
+					int activeTeacherCount = (int)countCmd.ExecuteScalar();
+					lblTotal.Text = activeTeacherCount.ToString();
 
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery_LoadData, conn);
 					DataTable dataTable = new DataTable();
@@ -125,6 +124,7 @@ namespace NAVASCA_PROEL1Project
 					TeachersData.Columns.Clear();
 					TeachersData.ReadOnly = true;
 
+					// Add the new 'Department Name' column
 					TeachersData.Columns.Add("ProfileID", "Profile ID");
 					TeachersData.Columns.Add("FirstName", "First Name");
 					TeachersData.Columns.Add("LastName", "Last Name");
@@ -133,14 +133,16 @@ namespace NAVASCA_PROEL1Project
 					TeachersData.Columns.Add("Phone", "Phone");
 					TeachersData.Columns.Add("Address", "Address");
 					TeachersData.Columns.Add("Email", "Email");
+					TeachersData.Columns.Add("DepartmentName", "Department Name");
 					TeachersData.Columns.Add("Status", "Status");
+					
 
 					DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn();
 					btnColumn.Name = "StatusActionButton";
 					btnColumn.HeaderText = "Change Status";
 					btnColumn.Text = "Approve";
 					btnColumn.UseColumnTextForButtonValue = true;
-					TeachersData.Columns.Insert(9, btnColumn);
+					TeachersData.Columns.Insert(10, btnColumn);
 
 					foreach (DataGridViewColumn col in TeachersData.Columns)
 					{
@@ -417,7 +419,7 @@ namespace NAVASCA_PROEL1Project
 
 			if (string.IsNullOrEmpty(selectedProfileId))
 			{
-				MessageBox.Show("Please select a student to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				MessageBox.Show("Please select a teacher to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 
@@ -470,49 +472,80 @@ namespace NAVASCA_PROEL1Project
 					}
 				}
 
-				
+				string selectedDepartmentName = cmbDepartment.SelectedItem.ToString();
+
+				// Get the DepartmentID from the department name
+				int departmentID = GetDepartmentID(selectedDepartmentName);
+
+				if (departmentID == -1)
+				{
+					MessageBox.Show("Selected department not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+
+				// Assuming you have a variable for the ProfileID of the selected teacher
+				int selectedProfileID = (int)TeachersData.SelectedRows[0].Cells["ProfileID"].Value;
+
+
+				// SQL query to update both the Profiles and Instructors tables
 				string sqlQuery = "UPDATE Profiles SET " +
-								  "FirstName = @firstName, " +
-								  "LastName = @lastName, " +
-								  "Age = @age, " +
-								  "Gender = @gender, " +
-								  "Phone = @phone, " +
-								  "Address = @address, " +
-								  "Email = @email " +
-								  "WHERE ProfileID = @profileId";
+								  "FirstName = @FirstName, " +
+								  "LastName = @LastName, " +
+								  "Age = @Age, " +
+								  "Gender = @Gender, " +
+								  "Phone = @Phone, " +
+								  "Address = @Address, " +
+								  "Email = @Email " +
+								  "WHERE ProfileID = @profileId; " +
+								  "UPDATE Instructors SET DepartmentID = @DepartmentID WHERE ProfileID = @profileId;";
 
 				using (SqlConnection conn = new SqlConnection(connectionString))
 				{
-					using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+					try
 					{
-						cmd.Parameters.AddWithValue("@firstName", firstName);
-						cmd.Parameters.AddWithValue("@lastName", lastName);
-						cmd.Parameters.AddWithValue("@age", age);
-						cmd.Parameters.AddWithValue("@gender", gender);
-						cmd.Parameters.AddWithValue("@phone", phone);
-						cmd.Parameters.AddWithValue("@address", address);
-						cmd.Parameters.AddWithValue("@email", newEmail);
-						cmd.Parameters.AddWithValue("@profileId", selectedProfileId);
-
 						conn.Open();
+						SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+						// Add parameters for the Profiles table update
+						cmd.Parameters.AddWithValue("@FirstName", txtFirstname.Text);
+						cmd.Parameters.AddWithValue("@LastName", txtLastname.Text);
+						cmd.Parameters.AddWithValue("@Age", txtAge.Text);
+						cmd.Parameters.AddWithValue("@Gender", cmbGender.SelectedItem.ToString());
+						cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
+						cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
+						cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+						cmd.Parameters.AddWithValue("@profileId", selectedProfileID);
+
+						// Add parameter for the Instructors table update
+						cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
+
 						int rowsAffected = cmd.ExecuteNonQuery();
 
 						if (rowsAffected > 0)
 						{
-							MessageBox.Show("Teacher profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-							LoadData();
-							pnlUpdate.Visible = false;
+							// Create log description
+							string logDescription = $"Updated teacher with ProfileID: {selectedProfileID} and assigned to Department: {selectedDepartmentName}";
 
-							string logDescription = $"Updated a teacher";
-							AddLogEntry(Convert.ToInt32(selectedProfileId), "Update Teacher", logDescription);
+							// Assuming AddLogEntry is a pre-existing method
+							// You will need to replace `currentAdminID` with the actual ID of the logged-in administrator.
+							int currentAdminID = 1;
+							AddLogEntry(currentAdminID, "Update Teacher", logDescription);
+
+							MessageBox.Show("Teacher updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							LoadData();
 						}
 						else
 						{
 							MessageBox.Show("No records were updated. Profile not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
 					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("An error occurred during the update: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
 				}
 			}
+			
 			catch (Exception ex)
 			{
 				MessageBox.Show("An error occurred during the update: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -541,6 +574,32 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
+		private int GetDepartmentID(string departmentName)
+		{
+			int departmentID = -1;
+			string sqlQuery = "SELECT DepartmentID FROM Departments WHERE DepartmentName = @DepartmentName";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+					cmd.Parameters.AddWithValue("@DepartmentName", departmentName);
+					object result = cmd.ExecuteScalar();
+					if (result != null)
+					{
+						departmentID = Convert.ToInt32(result);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred while getting DepartmentID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			return departmentID;
+		}
+
 		private void TeachersData_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 
@@ -557,6 +616,7 @@ namespace NAVASCA_PROEL1Project
 				string phone = row.Cells["Phone"].Value.ToString();
 				string address = row.Cells["Address"].Value.ToString();
 				string email = row.Cells["Email"].Value.ToString();
+				string department = row.Cells["DepartmentName"].Value.ToString();
 
 				txtFirstname.Text = firstName;
 				txtLastname.Text = lastName;
@@ -565,6 +625,7 @@ namespace NAVASCA_PROEL1Project
 				txtAddress.Text = address;
 				txtEmail.Text = email;
 				cmbGender.Text = gender;
+				cmbDepartment.Text = department;
 			}
 		}
 
