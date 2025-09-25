@@ -201,5 +201,11 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
+		private void btnApproval_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminApproval approval = new AdminApproval();
+			approval.Show();
+		}
 	}
 }

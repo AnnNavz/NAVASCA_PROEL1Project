@@ -35,46 +35,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void btnHome_Click(object sender, EventArgs e)
-		{
-			AdminDashboard adminDashboard = new AdminDashboard();
-			adminDashboard.Show();
-			this.Hide();
-		}
-
-		private void btnStudents_Click(object sender, EventArgs e)
-		{
-			AdminStudents adminStudents = new AdminStudents();
-			adminStudents.Show();
-			this.Hide();
-		}
-
-		private void btnTeachers_Click(object sender, EventArgs e)
-		{
-			this.Show();
-		}
-
-		private void btnSubjects_Click(object sender, EventArgs e)
-		{
-			AdminSubjects adminSubjects = new AdminSubjects();
-			adminSubjects.Show();
-			this.Hide();
-		}
-
-		private void btnReports_Click(object sender, EventArgs e)
-		{
-			AdminReports adminReports = new AdminReports();
-			adminReports.Show();
-			this.Hide();
-		}
-
-		private void btnLogs_Click(object sender, EventArgs e)
-		{
-			AdminLogs adminLogs = new AdminLogs();
-			adminLogs.Show();
-			this.Hide();
-		}
-
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
 			AdminAddTeacher addTeacher = new AdminAddTeacher();
@@ -135,14 +95,11 @@ namespace NAVASCA_PROEL1Project
 					TeachersData.Columns.Add("Email", "Email");
 					TeachersData.Columns.Add("DepartmentName", "Department Name");
 					TeachersData.Columns.Add("Status", "Status");
-					
 
-					DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn();
-					btnColumn.Name = "StatusActionButton";
-					btnColumn.HeaderText = "Change Status";
-					btnColumn.Text = "Approve";
-					btnColumn.UseColumnTextForButtonValue = true;
-					TeachersData.Columns.Insert(10, btnColumn);
+					TeachersData.Columns["Status"].Visible = false;
+
+
+
 
 					foreach (DataGridViewColumn col in TeachersData.Columns)
 					{
@@ -653,6 +610,53 @@ namespace NAVASCA_PROEL1Project
 					}
 				}
 			}
+		}
+
+		private void btnApproval_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminApproval approval = new AdminApproval();
+			approval.Show();
+		}
+
+		private void btnHome_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminDashboard dashboard = new AdminDashboard();
+			dashboard.Show();
+		}
+
+		private void btnStudents_Click(object sender, EventArgs e)
+		{
+			AdminStudents adminStudents = new AdminStudents();
+			adminStudents.Show();
+			this.Hide();
+		}
+
+		private void btnTeachers_Click(object sender, EventArgs e)
+		{
+			this.Show();
+		}
+
+		private void btnSubjects_Click(object sender, EventArgs e)
+		{
+			AdminSubjects adminSubjects = new AdminSubjects();
+			adminSubjects.Show();
+			this.Hide();
+		}
+
+		private void btnReports_Click(object sender, EventArgs e)
+		{
+			AdminReports adminReports = new AdminReports();
+			adminReports.Show();
+			this.Hide();
+		}
+
+		private void btnLogs_Click(object sender, EventArgs e)
+		{
+			AdminLogs adminLogs = new AdminLogs();
+			adminLogs.Show();
+			this.Hide();
 		}
 	}
 }

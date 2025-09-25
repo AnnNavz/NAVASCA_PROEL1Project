@@ -18,12 +18,12 @@ namespace NAVASCA_PROEL1Project
 			InitializeComponent();
 			LogsData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 			LogsData.ReadOnly = true;
-			Load();
+			LoadLogs();
 		}
 
 		string connectionString = Database.ConnectionString;
 
-		private void Load()
+		private void LoadLogs()
 		{
 
 			string sqlQuery = "SELECT l.LogID, p.FirstName, p.LastName, l.Action, l.Description, l.Date, " +
@@ -72,45 +72,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void btnHome_Click(object sender, EventArgs e)
-		{
-			AdminDashboard adminDashboard = new AdminDashboard();
-			adminDashboard.Show();
-			this.Hide();
-		}
-
-		private void btnStudents_Click(object sender, EventArgs e)
-		{
-			AdminStudents adminStudents = new AdminStudents();
-			adminStudents.Show();
-			this.Hide();
-		}
-
-		private void btnTeachers_Click(object sender, EventArgs e)
-		{
-			AdminTeachers adminTeachers = new AdminTeachers();
-			adminTeachers.Show();
-			this.Hide();
-		}
-
-		private void btnSubjects_Click(object sender, EventArgs e)
-		{
-			AdminSubjects adminSubjects = new AdminSubjects();
-			adminSubjects.Show();
-			this.Hide();
-		}
-
-		private void btnReports_Click(object sender, EventArgs e)
-		{
-			AdminReports adminReports = new AdminReports();
-			adminReports.Show();
-			this.Hide();
-		}
-
-		private void btnLogs_Click(object sender, EventArgs e)
-		{
-			this.Show();
-		}
 
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
@@ -119,7 +80,7 @@ namespace NAVASCA_PROEL1Project
 
 			if (string.IsNullOrEmpty(searchTerm))
 			{
-				Load();
+				LoadLogs();
 				return;
 			}
 
@@ -186,6 +147,54 @@ namespace NAVASCA_PROEL1Project
 					MessageBox.Show("An error occurred during search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
+		}
+
+		private void btnApproval_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminApproval approval = new AdminApproval();
+			approval.Show();
+		}
+
+		private void btnHome_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminDashboard dashboard = new AdminDashboard();
+			dashboard.Show();
+		}
+
+		private void btnStudents_Click(object sender, EventArgs e)
+		{
+			AdminStudents adminStudents = new AdminStudents();
+			adminStudents.Show();
+			this.Hide();
+		}
+
+		private void btnTeachers_Click(object sender, EventArgs e)
+		{
+			AdminTeachers adminTeachers = new AdminTeachers();
+			adminTeachers.Show();
+			this.Hide();
+
+		}
+
+		private void btnSubjects_Click(object sender, EventArgs e)
+		{
+			AdminSubjects adminSubjects = new AdminSubjects();
+			adminSubjects.Show();
+			this.Hide();
+		}
+
+		private void btnReports_Click(object sender, EventArgs e)
+		{
+			AdminReports adminReports = new AdminReports();
+			adminReports.Show();
+			this.Hide();
+		}
+
+		private void btnLogs_Click(object sender, EventArgs e)
+		{
+			this.Show();
 		}
 	}
 }

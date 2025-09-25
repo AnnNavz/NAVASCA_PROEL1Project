@@ -29,12 +29,12 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminDashboard));
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnHome = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
@@ -48,9 +48,11 @@
 			this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel6 = new System.Windows.Forms.Panel();
+			this.lblSubjectTotal = new System.Windows.Forms.Label();
 			this.guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.panel5 = new System.Windows.Forms.Panel();
+			this.lblTeacherTotal = new System.Windows.Forms.Label();
 			this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.panel4 = new System.Windows.Forms.Panel();
@@ -62,8 +64,7 @@
 			this.chartStudentStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.lblTeacherTotal = new System.Windows.Forms.Label();
-			this.lblSubjectTotal = new System.Windows.Forms.Label();
+			this.btnApproval = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
 			this.panel1.SuspendLayout();
@@ -84,6 +85,7 @@
 			this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
 			this.guna2Panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("guna2Panel1.BackgroundImage")));
 			this.guna2Panel1.BorderColor = System.Drawing.Color.Transparent;
+			this.guna2Panel1.Controls.Add(this.btnApproval);
 			this.guna2Panel1.Controls.Add(this.btnHome);
 			this.guna2Panel1.Controls.Add(this.btnLogout);
 			this.guna2Panel1.Controls.Add(this.guna2PictureBox3);
@@ -112,7 +114,7 @@
 			this.btnHome.FillColor = System.Drawing.Color.Orange;
 			this.btnHome.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnHome.ForeColor = System.Drawing.Color.Black;
-			this.btnHome.Location = new System.Drawing.Point(20, 219);
+			this.btnHome.Location = new System.Drawing.Point(20, 197);
 			this.btnHome.Name = "btnHome";
 			this.btnHome.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnHome.Size = new System.Drawing.Size(184, 45);
@@ -133,7 +135,7 @@
 			this.btnLogout.FillColor = System.Drawing.Color.White;
 			this.btnLogout.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnLogout.ForeColor = System.Drawing.Color.Black;
-			this.btnLogout.Location = new System.Drawing.Point(19, 629);
+			this.btnLogout.Location = new System.Drawing.Point(19, 637);
 			this.btnLogout.Name = "btnLogout";
 			this.btnLogout.PressedColor = System.Drawing.Color.CornflowerBlue;
 			this.btnLogout.Size = new System.Drawing.Size(185, 49);
@@ -147,7 +149,7 @@
 			this.guna2PictureBox3.BorderRadius = 58;
 			this.guna2PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("guna2PictureBox3.Image")));
 			this.guna2PictureBox3.ImageRotate = 0F;
-			this.guna2PictureBox3.Location = new System.Drawing.Point(53, 23);
+			this.guna2PictureBox3.Location = new System.Drawing.Point(53, 16);
 			this.guna2PictureBox3.Name = "guna2PictureBox3";
 			this.guna2PictureBox3.Size = new System.Drawing.Size(114, 113);
 			this.guna2PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -168,7 +170,7 @@
 			this.btnLogs.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.btnLogs.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnLogs.ForeColor = System.Drawing.Color.Black;
-			this.btnLogs.Location = new System.Drawing.Point(19, 525);
+			this.btnLogs.Location = new System.Drawing.Point(19, 559);
 			this.btnLogs.Name = "btnLogs";
 			this.btnLogs.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnLogs.Size = new System.Drawing.Size(185, 45);
@@ -189,7 +191,7 @@
 			this.btnReports.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.btnReports.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnReports.ForeColor = System.Drawing.Color.Black;
-			this.btnReports.Location = new System.Drawing.Point(19, 465);
+			this.btnReports.Location = new System.Drawing.Point(19, 499);
 			this.btnReports.Name = "btnReports";
 			this.btnReports.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnReports.Size = new System.Drawing.Size(185, 45);
@@ -210,7 +212,7 @@
 			this.btnSubjects.FillColor = System.Drawing.Color.DarkOrange;
 			this.btnSubjects.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnSubjects.ForeColor = System.Drawing.Color.Black;
-			this.btnSubjects.Location = new System.Drawing.Point(19, 405);
+			this.btnSubjects.Location = new System.Drawing.Point(19, 439);
 			this.btnSubjects.Name = "btnSubjects";
 			this.btnSubjects.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnSubjects.Size = new System.Drawing.Size(185, 45);
@@ -231,7 +233,7 @@
 			this.btnTeachers.FillColor = System.Drawing.Color.DarkOrange;
 			this.btnTeachers.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnTeachers.ForeColor = System.Drawing.Color.Black;
-			this.btnTeachers.Location = new System.Drawing.Point(19, 343);
+			this.btnTeachers.Location = new System.Drawing.Point(19, 377);
 			this.btnTeachers.Name = "btnTeachers";
 			this.btnTeachers.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnTeachers.Size = new System.Drawing.Size(185, 45);
@@ -252,7 +254,7 @@
 			this.btnStudents.FillColor = System.Drawing.Color.DarkOrange;
 			this.btnStudents.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
 			this.btnStudents.ForeColor = System.Drawing.Color.Black;
-			this.btnStudents.Location = new System.Drawing.Point(19, 280);
+			this.btnStudents.Location = new System.Drawing.Point(19, 314);
 			this.btnStudents.Name = "btnStudents";
 			this.btnStudents.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnStudents.Size = new System.Drawing.Size(185, 45);
@@ -265,7 +267,7 @@
 			this.guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent;
 			this.guna2HtmlLabel2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.guna2HtmlLabel2.ForeColor = System.Drawing.Color.Black;
-			this.guna2HtmlLabel2.Location = new System.Drawing.Point(88, 168);
+			this.guna2HtmlLabel2.Location = new System.Drawing.Point(88, 161);
 			this.guna2HtmlLabel2.Name = "guna2HtmlLabel2";
 			this.guna2HtmlLabel2.Size = new System.Drawing.Size(45, 19);
 			this.guna2HtmlLabel2.TabIndex = 2;
@@ -276,7 +278,7 @@
 			this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
 			this.guna2HtmlLabel1.Font = new System.Drawing.Font("Century Gothic", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.Black;
-			this.guna2HtmlLabel1.Location = new System.Drawing.Point(23, 146);
+			this.guna2HtmlLabel1.Location = new System.Drawing.Point(23, 139);
 			this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
 			this.guna2HtmlLabel1.Size = new System.Drawing.Size(177, 20);
 			this.guna2HtmlLabel1.TabIndex = 1;
@@ -306,6 +308,17 @@
 			this.panel6.Name = "panel6";
 			this.panel6.Size = new System.Drawing.Size(211, 153);
 			this.panel6.TabIndex = 6;
+			// 
+			// lblSubjectTotal
+			// 
+			this.lblSubjectTotal.AutoSize = true;
+			this.lblSubjectTotal.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSubjectTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblSubjectTotal.Location = new System.Drawing.Point(80, 55);
+			this.lblSubjectTotal.Name = "lblSubjectTotal";
+			this.lblSubjectTotal.Size = new System.Drawing.Size(51, 56);
+			this.lblSubjectTotal.TabIndex = 13;
+			this.lblSubjectTotal.Text = "0";
 			// 
 			// guna2PictureBox4
 			// 
@@ -342,6 +355,17 @@
 			this.panel5.Name = "panel5";
 			this.panel5.Size = new System.Drawing.Size(211, 153);
 			this.panel5.TabIndex = 5;
+			// 
+			// lblTeacherTotal
+			// 
+			this.lblTeacherTotal.AutoSize = true;
+			this.lblTeacherTotal.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTeacherTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblTeacherTotal.Location = new System.Drawing.Point(80, 55);
+			this.lblTeacherTotal.Name = "lblTeacherTotal";
+			this.lblTeacherTotal.Size = new System.Drawing.Size(51, 56);
+			this.lblTeacherTotal.TabIndex = 12;
+			this.lblTeacherTotal.Text = "0";
 			// 
 			// guna2PictureBox2
 			// 
@@ -427,17 +451,17 @@
 			// 
 			this.chartTeacher.BorderlineColor = System.Drawing.Color.Black;
 			this.chartTeacher.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea5.Name = "ChartArea1";
-			this.chartTeacher.ChartAreas.Add(chartArea5);
-			legend5.Name = "Legend1";
-			this.chartTeacher.Legends.Add(legend5);
+			chartArea1.Name = "ChartArea1";
+			this.chartTeacher.ChartAreas.Add(chartArea1);
+			legend1.Name = "Legend1";
+			this.chartTeacher.Legends.Add(legend1);
 			this.chartTeacher.Location = new System.Drawing.Point(59, 392);
 			this.chartTeacher.Name = "chartTeacher";
-			series5.ChartArea = "ChartArea1";
-			series5.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			series5.Legend = "Legend1";
-			series5.Name = "Series1";
-			this.chartTeacher.Series.Add(series5);
+			series1.ChartArea = "ChartArea1";
+			series1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			series1.Legend = "Legend1";
+			series1.Name = "Series1";
+			this.chartTeacher.Series.Add(series1);
 			this.chartTeacher.Size = new System.Drawing.Size(580, 322);
 			this.chartTeacher.TabIndex = 2;
 			this.chartTeacher.Text = "Teacher";
@@ -446,17 +470,17 @@
 			// 
 			this.chartStudentStatus.BorderlineColor = System.Drawing.Color.Black;
 			this.chartStudentStatus.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea6.Name = "ChartArea1";
-			this.chartStudentStatus.ChartAreas.Add(chartArea6);
-			legend6.Name = "Legend1";
-			this.chartStudentStatus.Legends.Add(legend6);
+			chartArea2.Name = "ChartArea1";
+			this.chartStudentStatus.ChartAreas.Add(chartArea2);
+			legend2.Name = "Legend1";
+			this.chartStudentStatus.Legends.Add(legend2);
 			this.chartStudentStatus.Location = new System.Drawing.Point(59, 32);
 			this.chartStudentStatus.Name = "chartStudentStatus";
-			series6.ChartArea = "ChartArea1";
-			series6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			series6.Legend = "Legend1";
-			series6.Name = "Series1";
-			this.chartStudentStatus.Series.Add(series6);
+			series2.ChartArea = "ChartArea1";
+			series2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			series2.Legend = "Legend1";
+			series2.Name = "Series1";
+			this.chartStudentStatus.Series.Add(series2);
 			this.chartStudentStatus.Size = new System.Drawing.Size(580, 322);
 			this.chartStudentStatus.TabIndex = 1;
 			this.chartStudentStatus.Text = "Student";
@@ -481,27 +505,26 @@
 			this.panel2.Size = new System.Drawing.Size(765, 75);
 			this.panel2.TabIndex = 2;
 			// 
-			// lblTeacherTotal
+			// btnApproval
 			// 
-			this.lblTeacherTotal.AutoSize = true;
-			this.lblTeacherTotal.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTeacherTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblTeacherTotal.Location = new System.Drawing.Point(80, 55);
-			this.lblTeacherTotal.Name = "lblTeacherTotal";
-			this.lblTeacherTotal.Size = new System.Drawing.Size(51, 56);
-			this.lblTeacherTotal.TabIndex = 12;
-			this.lblTeacherTotal.Text = "0";
-			// 
-			// lblSubjectTotal
-			// 
-			this.lblSubjectTotal.AutoSize = true;
-			this.lblSubjectTotal.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblSubjectTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblSubjectTotal.Location = new System.Drawing.Point(80, 55);
-			this.lblSubjectTotal.Name = "lblSubjectTotal";
-			this.lblSubjectTotal.Size = new System.Drawing.Size(51, 56);
-			this.lblSubjectTotal.TabIndex = 13;
-			this.lblSubjectTotal.Text = "0";
+			this.btnApproval.Animated = true;
+			this.btnApproval.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(126)))), ((int)(((byte)(61)))));
+			this.btnApproval.BorderRadius = 14;
+			this.btnApproval.BorderThickness = 1;
+			this.btnApproval.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnApproval.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnApproval.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnApproval.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnApproval.FillColor = System.Drawing.Color.Orange;
+			this.btnApproval.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
+			this.btnApproval.ForeColor = System.Drawing.Color.Black;
+			this.btnApproval.Location = new System.Drawing.Point(20, 255);
+			this.btnApproval.Name = "btnApproval";
+			this.btnApproval.PressedColor = System.Drawing.Color.Firebrick;
+			this.btnApproval.Size = new System.Drawing.Size(184, 45);
+			this.btnApproval.TabIndex = 11;
+			this.btnApproval.Text = "Approval";
+			this.btnApproval.Click += new System.EventHandler(this.btnApproval_Click);
 			// 
 			// AdminDashboard
 			// 
@@ -568,5 +591,6 @@
 		private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox4;
 		private System.Windows.Forms.Label lblSubjectTotal;
 		private System.Windows.Forms.Label lblTeacherTotal;
+		private Guna.UI2.WinForms.Guna2Button btnApproval;
 	}
 }

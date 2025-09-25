@@ -27,11 +27,18 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
+		private void btnApproval_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminApproval approval = new AdminApproval();
+			approval.Show();
+		}
+
 		private void btnHome_Click(object sender, EventArgs e)
 		{
-			AdminDashboard adminDashboard = new AdminDashboard();
-			adminDashboard.Show();
 			this.Hide();
+			AdminDashboard dashboard = new AdminDashboard();
+			dashboard.Show();
 		}
 
 		private void btnStudents_Click(object sender, EventArgs e)

@@ -18,7 +18,6 @@ namespace NAVASCA_PROEL1Project
 		{
 			InitializeComponent();
 			LoadData();
-			this.StudentData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.StudentData_CellContentClick);
 			StudentData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 			StudentData.ReadOnly = true;
 
@@ -29,8 +28,6 @@ namespace NAVASCA_PROEL1Project
 
 		private void LoadData()
 		{
-			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
-
 			// SQL query to count students with 'Active' status
 			string sqlQuery_TotalCount = "SELECT COUNT(p.ProfileID) " +
 										  "FROM Profiles AS p " +
@@ -44,11 +41,7 @@ namespace NAVASCA_PROEL1Project
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 									   "WHERE r.RoleName IN ('Student') AND p.Status <> 'Inactive' " + // Exclude inactive users
-									   "ORDER BY " +
-									   "CASE p.Status " +
-									   "WHEN 'Active' THEN 1 " +
-									   "WHEN 'Pending' THEN 2 " +
-									   "ELSE 3 END";
+									   "ORDER BY p.ProfileID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -78,12 +71,8 @@ namespace NAVASCA_PROEL1Project
 					StudentData.Columns.Add("Email", "Email");
 					StudentData.Columns.Add("Status", "Status");
 
-					DataGridViewButtonColumn btnColumn = new DataGridViewButtonColumn();
-					btnColumn.Name = "StatusActionButton";
-					btnColumn.HeaderText = "Change Status";
-					btnColumn.Text = "Approve";
-					btnColumn.UseColumnTextForButtonValue = true;
-					StudentData.Columns.Insert(9, btnColumn);
+
+					StudentData.Columns["Status"].Visible = false;
 
 					foreach (DataGridViewColumn col in StudentData.Columns)
 					{
@@ -112,115 +101,7 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void btnHome_Click(object sender, EventArgs e)
-		{
-			AdminDashboard adminDashboard = new AdminDashboard();
-			adminDashboard.Show();
-			this.Hide();
-		}
 
-		private void btnStudents_Click(object sender, EventArgs e)
-		{
-			this.Show();
-		}
-
-		private void btnTeachers_Click(object sender, EventArgs e)
-		{
-			AdminTeachers adminTeachers = new AdminTeachers();
-			adminTeachers.Show();
-			this.Hide();
-		}
-
-		private void btnSubjects_Click(object sender, EventArgs e)
-		{
-			AdminSubjects adminSubjects = new AdminSubjects();
-			adminSubjects.Show();
-			this.Hide();
-		}
-
-		private void btnReports_Click(object sender, EventArgs e)
-		{
-			AdminReports adminReports = new AdminReports();
-			adminReports.Show();
-			this.Hide();
-		}
-
-		private void btnLogs_Click(object sender, EventArgs e)
-		{
-			AdminLogs adminLogs = new AdminLogs();
-			adminLogs.Show();
-			this.Hide();
-		}
-
-		private void StudentData_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (e.RowIndex >= 0 && StudentData.Columns[e.ColumnIndex].Name == "StatusActionButton")
-			{
-				DataGridViewRow row = StudentData.Rows[e.RowIndex];
-				string profileId = row.Cells["ProfileID"].Value.ToString();
-				string currentStatus = row.Cells["Status"].Value.ToString();
-				string newStatus = string.Empty;
-
-				if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
-				{
-					DialogResult result = MessageBox.Show($"The student is pending. Do you want to activate them?", "Approve Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (result == DialogResult.Yes)
-					{
-						newStatus = "Active";
-					}
-					else
-					{
-						return;
-					}
-				}
-				else if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
-				{
-					DialogResult result = MessageBox.Show($"The student is inactive. Do you want to re-activate them?", "Re-activate Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (result == DialogResult.Yes)
-					{
-						newStatus = "Active";
-					}
-					else
-					{
-						return;
-					}
-				}
-				if (!string.IsNullOrEmpty(newStatus))
-				{
-					
-					using (SqlConnection conn = new SqlConnection(connectionString))
-					{
-						try
-						{
-							conn.Open();
-							string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
-							using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
-							{
-								cmd.Parameters.AddWithValue("@newStatus", newStatus);
-								cmd.Parameters.AddWithValue("@profileId", profileId);
-
-								int rowsAffected = cmd.ExecuteNonQuery();
-
-								if (rowsAffected > 0)
-								{
-									MessageBox.Show($"Successfully updated status to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-									LoadData();
-								}
-								else
-								{
-									MessageBox.Show("No rows were affected. The update may have failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-								}
-							}
-						}
-						catch (Exception ex)
-						{
-							MessageBox.Show("An error occurred while updating the database: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-					}
-				}
-			}
-		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
@@ -588,6 +469,54 @@ namespace NAVASCA_PROEL1Project
 					}
 				}
 			}
+		}
+
+		private void btnApproval_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminApproval approval = new AdminApproval();
+			approval.Show();
+		}
+
+		private void btnHome_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			AdminDashboard dashboard = new AdminDashboard();
+			dashboard.Show();
+		}
+
+		private void btnStudents_Click(object sender, EventArgs e)
+		{
+			this.Show();
+		}
+
+		private void btnTeachers_Click(object sender, EventArgs e)
+		{
+			AdminTeachers adminTeachers = new AdminTeachers();
+			adminTeachers.Show();
+			this.Hide();
+		}
+
+		private void btnSubjects_Click(object sender, EventArgs e)
+		{
+			AdminSubjects adminSubjects = new AdminSubjects();
+			adminSubjects.Show();
+			this.Hide();
+		
+		}
+
+		private void btnReports_Click(object sender, EventArgs e)
+		{
+			AdminReports adminReports = new AdminReports();
+			adminReports.Show();
+			this.Hide();
+		}
+
+		private void btnLogs_Click(object sender, EventArgs e)
+		{
+			AdminLogs adminLogs = new AdminLogs();
+			adminLogs.Show();
+			this.Hide();
 		}
 	}
 }

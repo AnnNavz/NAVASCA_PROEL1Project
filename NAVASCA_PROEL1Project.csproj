@@ -71,6 +71,12 @@
     <Compile Include="AdminAddTeacher.Designer.cs">
       <DependentUpon>AdminAddTeacher.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminApproval.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminApproval.Designer.cs">
+      <DependentUpon>AdminApproval.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminAddTeacher.resx">
       <DependentUpon>AdminAddTeacher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminApproval.resx">
+      <DependentUpon>AdminApproval.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
