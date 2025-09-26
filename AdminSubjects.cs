@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static NAVASCA_PROEL1Project.AdminAddSubject;
 
 namespace NAVASCA_PROEL1Project
 {
@@ -16,9 +17,12 @@ namespace NAVASCA_PROEL1Project
 		public AdminSubjects()
 		{
 			InitializeComponent();
-			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			CoursesData.ReadOnly = true;
 			LoadCourses();
+
+			DataTable departmentsData = DatabaseManager.GetDepartments();
+			cmbDepartment.DataSource = departmentsData;
+			cmbDepartment.DisplayMember = "DepartmentName";
+			cmbDepartment.ValueMember = "DepartmentID";
 		}
 
 		string connectionString = Database.ConnectionString;
@@ -52,9 +56,10 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
-					CoursesData.DataSource = dataTable;
+					CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+					CoursesData.ReadOnly = true;
 
-					// Call the shared setup method
+					CoursesData.DataSource = dataTable;
 					SetupCoursesDataGridView();
 				}
 				catch (Exception ex)
@@ -68,22 +73,16 @@ namespace NAVASCA_PROEL1Project
 		{
 			if (CoursesData.SelectedRows.Count > 0)
 			{
-				// Get the selected row
 				DataGridViewRow selectedRow = CoursesData.SelectedRows[0];
 
-				// Get the CourseID from the selected row
-				// Assuming 'CourseID' is the name of the column that holds the CourseID
 				int courseID = Convert.ToInt32(selectedRow.Cells["CourseID"].Value);
 
-				// Confirmation message box
 				DialogResult result = MessageBox.Show("Are you sure you want to delete this course?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 				if (result == DialogResult.Yes)
 				{
-					// Call the DeleteCourse method
 					DeleteCourse(courseID);
 
-					// Refresh the DataGridView
 					LoadCourses();
 				}
 			}
@@ -96,7 +95,6 @@ namespace NAVASCA_PROEL1Project
 		private void DeleteCourse(int courseID)
 		{
 
-			// SQL command to update the course status to 'Inactive'
 			string sqlCommand = "UPDATE Courses SET Status = 'Inactive' WHERE CourseID = @CourseID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -121,21 +119,19 @@ namespace NAVASCA_PROEL1Project
 		{
 			string searchTerm = txtSearch.Text.Trim();
 
-			// If search term is empty, reload all active courses
 			if (string.IsNullOrEmpty(searchTerm))
 			{
 				LoadCourses();
 				return;
 			}
 
-			// Base SQL query with joins
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
 							  "p.FirstName, p.LastName, d.DepartmentName, c.Status " +
 							  "FROM Courses AS c " +
 							  "INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
 							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
-							  "WHERE c.Status = 'Active' AND " + // Filter by 'Active' status
+							  "WHERE c.Status = 'Active' AND " + 
 							  "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -149,10 +145,8 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
-					// Bind the filtered data to the DataGridView
 					CoursesData.DataSource = dataTable;
 
-					// Reapply the column properties
 					SetupCoursesDataGridView();
 
 					if (dataTable.Rows.Count == 0)
@@ -173,7 +167,6 @@ namespace NAVASCA_PROEL1Project
 			CoursesData.Columns.Clear();
 			CoursesData.ReadOnly = true;
 
-			// Add columns
 			CoursesData.Columns.Add("CourseID", "Course ID");
 			CoursesData.Columns.Add("CourseName", "Course Name");
 			CoursesData.Columns.Add("CourseCode", "Course Code");
@@ -183,14 +176,12 @@ namespace NAVASCA_PROEL1Project
 			CoursesData.Columns.Add("DepartmentName", "Department Name");
 			CoursesData.Columns.Add("Status", "Status");
 
-			// Create the calculated column for Instructor Name
 			DataTable dataTable = (DataTable)CoursesData.DataSource;
 			if (dataTable != null && !dataTable.Columns.Contains("InstructorName"))
 			{
 				dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
 			}
 
-			// Set DataPropertyName for each column
 			foreach (DataGridViewColumn col in CoursesData.Columns)
 			{
 				if (dataTable.Columns.Contains(col.Name))
@@ -199,7 +190,6 @@ namespace NAVASCA_PROEL1Project
 				}
 			}
 
-			// Hide the status column
 			CoursesData.Columns["Status"].Visible = false;
 
 			
@@ -267,38 +257,81 @@ namespace NAVASCA_PROEL1Project
 		{
 			if (CoursesData.SelectedRows.Count == 0)
 			{
-				MessageBox.Show("Please select a course to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				MessageBox.Show("Please select a course.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 
-			// Retrieve CourseID from the selected row
 			int courseID = Convert.ToInt32(CoursesData.SelectedRows[0].Cells["CourseID"].Value);
 
-			// Convert Department Name and Instructor Name back to their IDs for the database
-			// You will need helper methods (like GetDepartmentID and GetInstructorID) for this.
-			string selectedDepartmentName = cmbDepartment.SelectedItem.ToString();
-			string selectedInstructorName = cmbInstructor.SelectedItem.ToString();
+			string selectedDepartmentName = cmbDepartment.Text;
+			string selectedInstructorName = cmbTeacher.Text;
+
+			if (string.IsNullOrEmpty(selectedDepartmentName) || string.IsNullOrEmpty(selectedInstructorName))
+			{
+				MessageBox.Show("Please select both a Department and an Instructor.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 
 			int departmentID = GetDepartmentID(selectedDepartmentName);
 			int instructorID = GetInstructorID(selectedInstructorName);
 
 			if (departmentID == -1 || instructorID == -1)
 			{
-				MessageBox.Show("Invalid Department or Instructor selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Selected Department or Instructor not found in the database.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
-			// 2. Execute the Update Operation
-			UpdateCourse(courseID, txtCourseName.Text, txtCourseCode.Text, txtDescription.Text,
-						 Convert.ToInt32(txtCredis.Text), instructorID, departmentID);
+			string sqlQuery = "UPDATE Courses SET " +
+							  "CourseName = @CourseName, " +
+							  "CourseCode = @CourseCode, " +
+							  "Credits = @Credits, " +
+							  "Description = @Description, " +
+							  "DepartmentID = @DepartmentID, " +
+							  "InstructorID = @InstructorID " +
+							  "WHERE CourseID = @CourseID;";
 
-			// 3. Refresh Data
-			LoadCourses();
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+					cmd.Parameters.AddWithValue("@CourseID", courseID);
+					cmd.Parameters.AddWithValue("@CourseName", txtCourseName.Text);
+					cmd.Parameters.AddWithValue("@CourseCode", txtCourseCode.Text);
+					cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
+					cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
+
+					cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
+					cmd.Parameters.AddWithValue("@InstructorID", instructorID);
+
+					int rowsAffected = cmd.ExecuteNonQuery();
+
+					if (rowsAffected > 0)
+					{
+						MessageBox.Show("Course details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+						CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+						CoursesData.ReadOnly = true;
+						LoadCourses();
+
+
+					}
+					else
+					{
+						MessageBox.Show("Update failed. Course not found or no changes were made.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred during the update: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 		}
 
 		private int GetDepartmentID(string departmentName)
 		{
-			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
 			int departmentID = -1;
 			string sqlQuery = "SELECT DepartmentID FROM Departments WHERE DepartmentName = @DepartmentName";
 
@@ -317,7 +350,7 @@ namespace NAVASCA_PROEL1Project
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show("An error occurred while getting DepartmentID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Error retrieving Department ID: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 			return departmentID;
@@ -325,15 +358,20 @@ namespace NAVASCA_PROEL1Project
 
 		private int GetInstructorID(string fullName)
 		{
-			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
 			int instructorID = -1;
 
-			// Split the full name into first and last name for the search
-			string[] names = fullName.Split(' ');
-			string firstName = names[0];
-			string lastName = names.Length > 1 ? names[names.Length - 1] : "";
+			string[] names = fullName.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-			// SQL to find InstructorID by joining Profiles and Instructors
+			if (names.Length == 0) return -1;
+
+			string firstName = names[0];
+
+			string lastName = "";
+			if (names.Length > 1)
+			{
+				lastName = string.Join(" ", names, 1, names.Length - 1);
+			}
+
 			string sqlQuery = "SELECT i.InstructorID FROM Instructors AS i " +
 							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "WHERE p.FirstName = @FirstName AND p.LastName = @LastName";
@@ -361,48 +399,119 @@ namespace NAVASCA_PROEL1Project
 			return instructorID;
 		}
 
-		private void UpdateCourse(int courseID, string name, string code, string description, int credits, int instructorID, int departmentID)
+
+
+
+		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
+		   pnlUpdate.Visible = true;
+		}
 
-			string sqlQuery = "UPDATE Courses SET " +
-							  "CourseName = @CourseName, " +
-							  "CourseCode = @CourseCode, " +
-							  "Description = @Description, " +
-							  "Credits = @Credits, " +
-							  "InstructorID = @InstructorID, " +
-							  "DepartmentID = @DepartmentID " +
-							  "WHERE CourseID = @CourseID";
+		private string selectedCourseId;
+		private void CoursesData_CellClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex >= 0)
+			{
+				DataGridViewRow row = CoursesData.Rows[e.RowIndex];
 
-			using (SqlConnection conn = new SqlConnection(connectionString))
+				selectedCourseId = row.Cells["CourseID"].Value.ToString();
+
+				string CourseName = row.Cells["CourseName"].Value.ToString();
+				string CourseCode = row.Cells["CourseCode"].Value.ToString();
+				string Credits = row.Cells["Credits"].Value.ToString();
+				string Description = row.Cells["Description"].Value.ToString();
+				string Department = row.Cells["DepartmentName"].Value.ToString();
+				string Instructor = row.Cells["InstructorName"].Value.ToString();
+
+				txtCourseName.Text = CourseName;
+				txtCourseCode.Text = CourseCode;
+				cmbCredits.Text = Credits;
+				txtDescription.Text = Description;
+				cmbDepartment.Text = Department;
+				cmbTeacher.Text = Instructor;
+			}
+
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			pnlUpdate.Visible=false;
+		}
+
+		public static class DatabaseManager
+		{
+			public static DataTable GetDepartments()
+			{
+				DataTable dataTable = new DataTable();
+				string sqlQuery = "SELECT DepartmentID, DepartmentName FROM Departments";
+				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
+				{
+					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+					{
+						connection.Open();
+						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+						dataAdapter.Fill(dataTable);
+					}
+				}
+				return dataTable;
+			}
+
+
+			public static DataTable GetInstructorsByDepartment(int departmentID)
+			{
+				DataTable dataTable = new DataTable();
+				string sqlQuery = @"
+                                  SELECT 
+                                  i.InstructorID, 
+                                  p.FirstName + ' ' + p.LastName AS FullName
+                                  FROM 
+                                  Instructors i
+                                  INNER JOIN 
+                                  Profiles p ON i.ProfileID = p.ProfileID
+                                  WHERE 
+                                  i.DepartmentID = @DepartmentID
+                                  AND
+                                  p.Status = 'Active';
+                                  ";
+
+				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
+				{
+					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+					{
+						command.Parameters.AddWithValue("@DepartmentID", departmentID);
+						connection.Open();
+						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+						dataAdapter.Fill(dataTable);
+					}
+				}
+				return dataTable;
+			}
+
+
+		}
+
+		private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+			if (cmbDepartment.SelectedValue != null && cmbDepartment.SelectedValue.ToString() != "")
 			{
 				try
 				{
-					conn.Open();
-					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
 
-					cmd.Parameters.AddWithValue("@CourseID", courseID);
-					cmd.Parameters.AddWithValue("@CourseName", name);
-					cmd.Parameters.AddWithValue("@CourseCode", code);
-					cmd.Parameters.AddWithValue("@Description", description);
-					cmd.Parameters.AddWithValue("@Credits", credits);
-					cmd.Parameters.AddWithValue("@InstructorID", instructorID);
-					cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
+					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
 
-					int rowsAffected = cmd.ExecuteNonQuery();
-
-					if (rowsAffected > 0)
-					{
-						MessageBox.Show("Course updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}
-					else
-					{
-						MessageBox.Show("No course found with the specified ID or no changes were made.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
+					cmbTeacher.DataSource = instructorsData;
+					cmbTeacher.DisplayMember = "FullName";
+					cmbTeacher.ValueMember = "InstructorID";
+				}
+				catch (InvalidCastException ex)
+				{
+					Console.WriteLine("InvalidCastException: " + ex.Message);
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show("An error occurred during the course update: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("An error occurred: " + ex.Message);
 				}
 			}
 		}

@@ -41,7 +41,8 @@
 			this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pnlUpdate = new System.Windows.Forms.Panel();
-			this.label8 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.txtCourseCode = new Guna.UI2.WinForms.Guna2TextBox();
 			this.cmbDepartment = new Guna.UI2.WinForms.Guna2ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -168,6 +169,7 @@
 			this.CoursesData.ThemeStyle.RowsStyle.Height = 30;
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.CoursesData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CoursesData_CellClick);
 			// 
 			// btnAdd
 			// 
@@ -209,6 +211,7 @@
 			this.btnUpdate.Size = new System.Drawing.Size(148, 39);
 			this.btnUpdate.TabIndex = 15;
 			this.btnUpdate.Text = "Update Subject";
+			this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
 			// 
 			// btnSearch
 			// 
@@ -267,7 +270,8 @@
 			// 
 			this.pnlUpdate.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlUpdate.BackgroundImage")));
 			this.pnlUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlUpdate.Controls.Add(this.label8);
+			this.pnlUpdate.Controls.Add(this.label6);
+			this.pnlUpdate.Controls.Add(this.txtCourseCode);
 			this.pnlUpdate.Controls.Add(this.cmbDepartment);
 			this.pnlUpdate.Controls.Add(this.label4);
 			this.pnlUpdate.Controls.Add(this.label3);
@@ -287,17 +291,38 @@
 			this.pnlUpdate.TabIndex = 23;
 			this.pnlUpdate.Visible = false;
 			// 
-			// label8
+			// label6
 			// 
-			this.label8.AutoSize = true;
-			this.label8.BackColor = System.Drawing.Color.Transparent;
-			this.label8.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label8.Location = new System.Drawing.Point(29, 451);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(232, 32);
-			this.label8.TabIndex = 100;
-			this.label8.Text = "Note: Click the department first to see the \r\nteachers.";
+			this.label6.AutoSize = true;
+			this.label6.BackColor = System.Drawing.Color.Transparent;
+			this.label6.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label6.Location = new System.Drawing.Point(33, 177);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(111, 20);
+			this.label6.TabIndex = 101;
+			this.label6.Text = "Course Code:";
+			// 
+			// txtCourseCode
+			// 
+			this.txtCourseCode.BackColor = System.Drawing.Color.Transparent;
+			this.txtCourseCode.BorderRadius = 16;
+			this.txtCourseCode.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.txtCourseCode.DefaultText = "";
+			this.txtCourseCode.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.txtCourseCode.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.txtCourseCode.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtCourseCode.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtCourseCode.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtCourseCode.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.txtCourseCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.txtCourseCode.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtCourseCode.Location = new System.Drawing.Point(29, 203);
+			this.txtCourseCode.Name = "txtCourseCode";
+			this.txtCourseCode.PlaceholderText = "Enter name...";
+			this.txtCourseCode.SelectedText = "";
+			this.txtCourseCode.Size = new System.Drawing.Size(295, 36);
+			this.txtCourseCode.TabIndex = 100;
 			// 
 			// cmbDepartment
 			// 
@@ -310,14 +335,11 @@
 			this.cmbDepartment.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbDepartment.ItemHeight = 30;
-			this.cmbDepartment.Items.AddRange(new object[] {
-            "College of Computer Studies",
-            "College of Education",
-            "College of Nursing"});
-			this.cmbDepartment.Location = new System.Drawing.Point(27, 412);
+			this.cmbDepartment.Location = new System.Drawing.Point(27, 462);
 			this.cmbDepartment.Name = "cmbDepartment";
 			this.cmbDepartment.Size = new System.Drawing.Size(296, 36);
 			this.cmbDepartment.TabIndex = 96;
+			this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
 			// 
 			// label4
 			// 
@@ -325,7 +347,7 @@
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label4.Location = new System.Drawing.Point(31, 386);
+			this.label4.Location = new System.Drawing.Point(31, 436);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(101, 20);
 			this.label4.TabIndex = 99;
@@ -337,7 +359,7 @@
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label3.Location = new System.Drawing.Point(31, 519);
+			this.label3.Location = new System.Drawing.Point(31, 515);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(141, 20);
 			this.label3.TabIndex = 98;
@@ -354,7 +376,7 @@
 			this.cmbTeacher.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbTeacher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbTeacher.ItemHeight = 30;
-			this.cmbTeacher.Location = new System.Drawing.Point(29, 545);
+			this.cmbTeacher.Location = new System.Drawing.Point(29, 541);
 			this.cmbTeacher.Name = "cmbTeacher";
 			this.cmbTeacher.Size = new System.Drawing.Size(294, 36);
 			this.cmbTeacher.TabIndex = 97;
@@ -365,7 +387,7 @@
 			this.label5.BackColor = System.Drawing.Color.Transparent;
 			this.label5.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label5.Location = new System.Drawing.Point(31, 118);
+			this.label5.Location = new System.Drawing.Point(31, 100);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(113, 20);
 			this.label5.TabIndex = 95;
@@ -377,7 +399,7 @@
 			this.label2.BackColor = System.Drawing.Color.Transparent;
 			this.label2.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label2.Location = new System.Drawing.Point(33, 202);
+			this.label2.Location = new System.Drawing.Point(33, 261);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(64, 20);
 			this.label2.TabIndex = 94;
@@ -400,7 +422,7 @@
             "3",
             "4",
             "5"});
-			this.cmbCredits.Location = new System.Drawing.Point(103, 195);
+			this.cmbCredits.Location = new System.Drawing.Point(103, 254);
 			this.cmbCredits.Name = "cmbCredits";
 			this.cmbCredits.Size = new System.Drawing.Size(219, 36);
 			this.cmbCredits.TabIndex = 92;
@@ -419,7 +441,7 @@
 			this.txtDescription.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtDescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtDescription.Location = new System.Drawing.Point(27, 251);
+			this.txtDescription.Location = new System.Drawing.Point(27, 310);
 			this.txtDescription.Name = "txtDescription";
 			this.txtDescription.PlaceholderText = "Description";
 			this.txtDescription.SelectedText = "";
@@ -440,7 +462,7 @@
 			this.txtCourseName.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtCourseName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtCourseName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtCourseName.Location = new System.Drawing.Point(27, 144);
+			this.txtCourseName.Location = new System.Drawing.Point(27, 126);
 			this.txtCourseName.Name = "txtCourseName";
 			this.txtCourseName.PlaceholderText = "Enter name...";
 			this.txtCourseName.SelectedText = "";
@@ -493,6 +515,7 @@
 			this.btnClose.TabIndex = 11;
 			this.btnClose.TabStop = false;
 			this.btnClose.UseTransparentBackground = true;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// label1
 			// 
@@ -835,10 +858,11 @@
 		private Guna.UI2.WinForms.Guna2ComboBox cmbCredits;
 		private Guna.UI2.WinForms.Guna2TextBox txtDescription;
 		private Guna.UI2.WinForms.Guna2TextBox txtCourseName;
-		private System.Windows.Forms.Label label8;
 		private Guna.UI2.WinForms.Guna2ComboBox cmbDepartment;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
 		private Guna.UI2.WinForms.Guna2ComboBox cmbTeacher;
+		private System.Windows.Forms.Label label6;
+		private Guna.UI2.WinForms.Guna2TextBox txtCourseCode;
 	}
 }

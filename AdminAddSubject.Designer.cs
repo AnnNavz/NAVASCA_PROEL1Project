@@ -208,10 +208,6 @@
 			this.cmbDepartment.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbDepartment.ItemHeight = 30;
-			this.cmbDepartment.Items.AddRange(new object[] {
-            "College of Computer Studies",
-            "College of Education",
-            "College of Nursing"});
 			this.cmbDepartment.Location = new System.Drawing.Point(400, 232);
 			this.cmbDepartment.Name = "cmbDepartment";
 			this.cmbDepartment.Size = new System.Drawing.Size(316, 36);
