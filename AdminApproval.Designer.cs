@@ -46,6 +46,8 @@
 			this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+			this.lblTotal = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
 			this.btnSearch = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -53,8 +55,6 @@
 			this.btnAdd = new Guna.UI2.WinForms.Guna2Button();
 			this.ApprovalData = new Guna.UI2.WinForms.Guna2DataGridView();
 			this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
-			this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.lblTotal = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
 			this.panel1.SuspendLayout();
@@ -144,6 +144,7 @@
 			this.btnLogout.Size = new System.Drawing.Size(185, 49);
 			this.btnLogout.TabIndex = 9;
 			this.btnLogout.Text = "Log out";
+			this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
 			// 
 			// guna2PictureBox3
 			// 
@@ -303,6 +304,28 @@
 			this.panel1.Size = new System.Drawing.Size(765, 711);
 			this.panel1.TabIndex = 5;
 			// 
+			// guna2HtmlLabel3
+			// 
+			this.guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent;
+			this.guna2HtmlLabel3.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.guna2HtmlLabel3.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.guna2HtmlLabel3.Location = new System.Drawing.Point(38, 96);
+			this.guna2HtmlLabel3.Name = "guna2HtmlLabel3";
+			this.guna2HtmlLabel3.Size = new System.Drawing.Size(84, 25);
+			this.guna2HtmlLabel3.TabIndex = 24;
+			this.guna2HtmlLabel3.Text = "Pending:";
+			// 
+			// lblTotal
+			// 
+			this.lblTotal.BackColor = System.Drawing.Color.Transparent;
+			this.lblTotal.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblTotal.Location = new System.Drawing.Point(124, 92);
+			this.lblTotal.Name = "lblTotal";
+			this.lblTotal.Size = new System.Drawing.Size(16, 32);
+			this.lblTotal.TabIndex = 23;
+			this.lblTotal.Text = "0";
+			// 
 			// guna2HtmlLabel5
 			// 
 			this.guna2HtmlLabel5.BackColor = System.Drawing.Color.Transparent;
@@ -332,7 +355,8 @@
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(148, 39);
 			this.btnDelete.TabIndex = 20;
-			this.btnDelete.Text = "Delete Subject";
+			this.btnDelete.Text = "Delete";
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
 			// btnSearch
 			// 
@@ -348,6 +372,7 @@
 			this.btnSearch.TabIndex = 17;
 			this.btnSearch.TabStop = false;
 			this.btnSearch.UseTransparentBackground = true;
+			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
 			// btnUpdate
 			// 
@@ -479,28 +504,6 @@
 			this.txtSearch.SelectedText = "";
 			this.txtSearch.Size = new System.Drawing.Size(384, 38);
 			this.txtSearch.TabIndex = 21;
-			// 
-			// guna2HtmlLabel3
-			// 
-			this.guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent;
-			this.guna2HtmlLabel3.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.guna2HtmlLabel3.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.guna2HtmlLabel3.Location = new System.Drawing.Point(38, 96);
-			this.guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-			this.guna2HtmlLabel3.Size = new System.Drawing.Size(84, 25);
-			this.guna2HtmlLabel3.TabIndex = 24;
-			this.guna2HtmlLabel3.Text = "Pending:";
-			// 
-			// lblTotal
-			// 
-			this.lblTotal.BackColor = System.Drawing.Color.Transparent;
-			this.lblTotal.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTotal.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblTotal.Location = new System.Drawing.Point(124, 92);
-			this.lblTotal.Name = "lblTotal";
-			this.lblTotal.Size = new System.Drawing.Size(16, 32);
-			this.lblTotal.TabIndex = 23;
-			this.lblTotal.Text = "0";
 			// 
 			// AdminApproval
 			// 

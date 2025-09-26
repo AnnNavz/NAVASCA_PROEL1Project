@@ -28,19 +28,17 @@ namespace NAVASCA_PROEL1Project
 
 		private void LoadData()
 		{
-			// SQL query to count students with 'Active' status
 			string sqlQuery_TotalCount = "SELECT COUNT(p.ProfileID) " +
 										  "FROM Profiles AS p " +
 										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 										  "WHERE r.RoleName = 'Student' AND p.Status = 'Active'";
 
-			// SQL query to load all student data for the DataGridView, sorted by status
 			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-									   "WHERE r.RoleName IN ('Student') AND p.Status <> 'Inactive' " + // Exclude inactive users
+									   "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' " +
 									   "ORDER BY p.ProfileID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -91,16 +89,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void btnLogout_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				Login login = new Login();
-				login.Show();
-				this.Close();
-			}
-		}
-
 
 
 		private void btnDelete_Click(object sender, EventArgs e)
@@ -119,13 +107,8 @@ namespace NAVASCA_PROEL1Project
 						currentStatus = selectedRow.Cells["Status"].Value.ToString();
 					}
 
-					if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
-					{
-						MessageBox.Show("This student is already inactive.", "Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						return; 
-					}
 
-					DialogResult confirmResult = MessageBox.Show($"Are you sure you want to deactivate Student {profileId}?", "Confirm Deactivation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					DialogResult confirmResult = MessageBox.Show($"Are you sure you want to deactivate this student?", "Confirm Deactivation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 					if (confirmResult == DialogResult.Yes)
 					{
@@ -168,7 +151,7 @@ namespace NAVASCA_PROEL1Project
 
 						if (rowsAffected > 0)
 						{
-							MessageBox.Show($"Student {profileId} has been set to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							MessageBox.Show($"Student has been set to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 							LoadData();
 						}
@@ -199,7 +182,7 @@ namespace NAVASCA_PROEL1Project
 							  "FROM Profiles p " +
 							  "INNER JOIN Users u ON p.ProfileID = u.ProfileID " +
 							  "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
-							  "WHERE r.RoleName = 'Student' AND ";
+							  "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' AND ";
 
 			if (int.TryParse(searchTerm, out int numericSearchTerm))
 			{
@@ -214,12 +197,7 @@ namespace NAVASCA_PROEL1Project
 				sqlQuery += " (p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR p.Phone LIKE @searchTerm OR p.Address LIKE @searchTerm OR p.Email LIKE @searchTerm OR p.Status LIKE @searchTerm)";
 			}
 
-			sqlQuery += " ORDER BY " +
-						"CASE p.Status " +
-						"WHEN 'Active' THEN 1 " +
-						"WHEN 'Pending' THEN 2 " +
-						"WHEN 'Inactive' THEN 3 " +
-						"ELSE 4 END";
+			sqlQuery += "ORDER BY p.ProfileID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -517,6 +495,16 @@ namespace NAVASCA_PROEL1Project
 			AdminLogs adminLogs = new AdminLogs();
 			adminLogs.Show();
 			this.Hide();
+		}
+
+		private void btnLogout_Click_1(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				Login login = new Login();
+				login.Show();
+				this.Close();
+			}
 		}
 	}
 }

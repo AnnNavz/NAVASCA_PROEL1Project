@@ -36,6 +36,7 @@
 			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+			this.btnApproval = new Guna.UI2.WinForms.Guna2Button();
 			this.btnHome = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -64,7 +65,6 @@
 			this.chartStudentStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.btnApproval = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
 			this.panel1.SuspendLayout();
@@ -100,6 +100,27 @@
 			this.guna2Panel1.Name = "guna2Panel1";
 			this.guna2Panel1.Size = new System.Drawing.Size(222, 711);
 			this.guna2Panel1.TabIndex = 0;
+			// 
+			// btnApproval
+			// 
+			this.btnApproval.Animated = true;
+			this.btnApproval.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(126)))), ((int)(((byte)(61)))));
+			this.btnApproval.BorderRadius = 14;
+			this.btnApproval.BorderThickness = 1;
+			this.btnApproval.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnApproval.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnApproval.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnApproval.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnApproval.FillColor = System.Drawing.Color.Orange;
+			this.btnApproval.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
+			this.btnApproval.ForeColor = System.Drawing.Color.Black;
+			this.btnApproval.Location = new System.Drawing.Point(20, 255);
+			this.btnApproval.Name = "btnApproval";
+			this.btnApproval.PressedColor = System.Drawing.Color.Firebrick;
+			this.btnApproval.Size = new System.Drawing.Size(184, 45);
+			this.btnApproval.TabIndex = 11;
+			this.btnApproval.Text = "Approval";
+			this.btnApproval.Click += new System.EventHandler(this.btnApproval_Click);
 			// 
 			// btnHome
 			// 
@@ -504,27 +525,6 @@
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(765, 75);
 			this.panel2.TabIndex = 2;
-			// 
-			// btnApproval
-			// 
-			this.btnApproval.Animated = true;
-			this.btnApproval.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(126)))), ((int)(((byte)(61)))));
-			this.btnApproval.BorderRadius = 14;
-			this.btnApproval.BorderThickness = 1;
-			this.btnApproval.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnApproval.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnApproval.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnApproval.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnApproval.FillColor = System.Drawing.Color.Orange;
-			this.btnApproval.Font = new System.Drawing.Font("Poppins SemiBold", 9F, System.Drawing.FontStyle.Bold);
-			this.btnApproval.ForeColor = System.Drawing.Color.Black;
-			this.btnApproval.Location = new System.Drawing.Point(20, 255);
-			this.btnApproval.Name = "btnApproval";
-			this.btnApproval.PressedColor = System.Drawing.Color.Firebrick;
-			this.btnApproval.Size = new System.Drawing.Size(184, 45);
-			this.btnApproval.TabIndex = 11;
-			this.btnApproval.Text = "Approval";
-			this.btnApproval.Click += new System.EventHandler(this.btnApproval_Click);
 			// 
 			// AdminDashboard
 			// 

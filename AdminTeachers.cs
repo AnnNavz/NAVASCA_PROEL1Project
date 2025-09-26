@@ -18,22 +18,12 @@ namespace NAVASCA_PROEL1Project
 		{
 			InitializeComponent();
 			LoadData();
-			this.TeachersData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeachersData_CellContentClick);
 			TeachersData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 			TeachersData.ReadOnly = true;
 		}
 
 		string connectionString = Database.ConnectionString;
 
-		private void btnLogout_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				Login login = new Login();
-				login.Show();
-				this.Close();
-			}
-		}
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
@@ -52,19 +42,22 @@ namespace NAVASCA_PROEL1Project
 								  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 								  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
-			// SQL query to load teacher data, including the department name
 			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status, d.DepartmentName " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-									   "INNER JOIN Instructors AS i ON p.ProfileID = i.ProfileID " + // Join with Instructors table
-									   "INNER JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " + // Join with Departments table
-									   "WHERE r.RoleName IN ('Instructor') AND p.Status <> 'Inactive' " +
+									   "INNER JOIN Instructors AS i ON p.ProfileID = i.ProfileID " +
+									   "INNER JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " +
+									   "WHERE r.RoleName IN ('Instructor') AND p.Status = 'Active' " +
 									   "ORDER BY " +
-									   "CASE p.Status " +
-									   "WHEN 'Active' THEN 1 " +
-									   "WHEN 'Pending' THEN 2 " +
-									   "ELSE 3 END";
+							           "CASE d.DepartmentName " +
+							           "WHEN 'College of Computer Studies' THEN 1 " +
+							           "WHEN 'College of Business and Management' THEN 2 " +
+							           "WHEN 'College of Arts, Sciences, and Pedagogy' THEN 3 " +
+							           "WHEN 'College of Nursing' THEN 4 " +
+							           "ELSE 5 END, " +
+			                           "p.ProfileID";
+
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -118,76 +111,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void TeachersData_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-
-			if (e.RowIndex >= 0 && TeachersData.Columns[e.ColumnIndex].Name == "StatusActionButton")
-			{
-				DataGridViewRow row = TeachersData.Rows[e.RowIndex];
-				string profileId = row.Cells["ProfileID"].Value.ToString();
-				string currentStatus = row.Cells["Status"].Value.ToString();
-				string newStatus = string.Empty;
-
-				if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
-				{
-					DialogResult result = MessageBox.Show($"The teacher is pending. Do you want to activate them?", "Approve Teacher", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (result == DialogResult.Yes)
-					{
-						newStatus = "Active";
-					}
-					else
-					{
-						return;
-					}
-				}
-				else if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
-				{
-					DialogResult result = MessageBox.Show($"The teacher is inactive. Do you want to re-activate them?", "Re-activate Teacher", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (result == DialogResult.Yes)
-					{
-						newStatus = "Active";
-					}
-					else
-					{
-						return;
-					}
-				}
-				if (!string.IsNullOrEmpty(newStatus))
-				{
-					
-					using (SqlConnection conn = new SqlConnection(connectionString))
-					{
-						try
-						{
-							conn.Open();
-							string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
-							using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
-							{
-								cmd.Parameters.AddWithValue("@newStatus", newStatus);
-								cmd.Parameters.AddWithValue("@profileId", profileId);
-
-								int rowsAffected = cmd.ExecuteNonQuery();
-
-								if (rowsAffected > 0)
-								{
-									MessageBox.Show($"Successfully updated status to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-									LoadData();
-								}
-								else
-								{
-									MessageBox.Show("No rows were affected. The update may have failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-								}
-							}
-						}
-						catch (Exception ex)
-						{
-							MessageBox.Show("An error occurred while updating the database: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-					}
-				}
-			}
-		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
@@ -205,13 +128,8 @@ namespace NAVASCA_PROEL1Project
 						currentStatus = selectedRow.Cells["Status"].Value.ToString();
 					}
 
-					if (currentStatus.Equals("Inactive", StringComparison.OrdinalIgnoreCase))
-					{
-						MessageBox.Show("This teacher is already inactive.", "Status", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						return;
-					}
 
-					DialogResult confirmResult = MessageBox.Show($"Are you sure you want to deactivate Teacher {profileId}?", "Confirm Deactivation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					DialogResult confirmResult = MessageBox.Show($"Are you sure you want to deactivate this teacher?", "Confirm Deactivation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 					if (confirmResult == DialogResult.Yes)
 					{
@@ -254,7 +172,7 @@ namespace NAVASCA_PROEL1Project
 
 						if (rowsAffected > 0)
 						{
-							MessageBox.Show($"Teacher {profileId} has been set to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							MessageBox.Show($"Teacher has been set to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 							LoadData();
 						}
@@ -281,31 +199,42 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status " +
-							  "FROM Profiles p " +
-							  "INNER JOIN Users u ON p.ProfileID = u.ProfileID " +
-							  "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
-							  "WHERE r.RoleName = 'Student' AND ";
+			// Original SQL Query structure modified to include DepartmentName and necessary joins
+			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status, d.DepartmentName " +
+							  "FROM Profiles AS p " +
+							  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+							  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+							  // *** ADDED JOINS FOR DEPARTMENT NAME ***
+							  // NOTE: Students do not have an InstructorID, so this join will likely exclude many records or result in NULL.
+							  "LEFT JOIN Instructors AS i ON p.ProfileID = i.ProfileID " +
+							  "LEFT JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " +
+							  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active' AND ";
 
 			if (int.TryParse(searchTerm, out int numericSearchTerm))
 			{
-				sqlQuery += " (p.ProfileID = @searchTerm OR p.Age = @searchTerm)";
+				sqlQuery += "(p.ProfileID = @numericSearchTerm OR p.Age = @numericSearchTerm)";
 			}
 			else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
 			{
-				sqlQuery += " p.Gender = @exactSearchTerm";
+				sqlQuery += "p.Gender = @exactSearchTerm";
 			}
 			else
 			{
-				sqlQuery += " (p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR p.Phone LIKE @searchTerm OR p.Address LIKE @searchTerm OR p.Email LIKE @searchTerm OR p.Status LIKE @searchTerm)";
+				// Added d.DepartmentName to the search criteria
+				sqlQuery += "(p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR p.Phone LIKE @searchTerm OR p.Address LIKE @searchTerm OR p.Email LIKE @searchTerm OR p.Status LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
 			}
 
+			// *** KEPT ORIGINAL ORDER BY (which is department logic for teachers) ***
 			sqlQuery += " ORDER BY " +
-						"CASE p.Status " +
-						"WHEN 'Active' THEN 1 " +
-						"WHEN 'Pending' THEN 2 " +
-						"WHEN 'Inactive' THEN 3 " +
-						"ELSE 4 END";
+						"CASE d.DepartmentName " +
+						"WHEN 'College of Computer Studies' THEN 1 " +
+						"WHEN 'College of Business and Management' THEN 2 " +
+						"WHEN 'College of Arts, Sciences, and Pedagogy' THEN 3 " +
+						"WHEN 'College of Nursing' THEN 4 " +
+						"ELSE 5 END, " +
+						"p.ProfileID";
+
+			// ... (rest of the code for SQL connection, parameters, and DataAdapter remains the same)
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -314,7 +243,7 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					// Add parameters based on the search type
+					// Parameter logic from original code
 					if (int.TryParse(searchTerm, out int numericSearchTerm2))
 					{
 						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", numericSearchTerm2);
@@ -330,11 +259,18 @@ namespace NAVASCA_PROEL1Project
 
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
+
+					// Assuming StudentsData is the DataGridView name for students
 					TeachersData.DataSource = dataTable;
+
+					// NOTE: You must update the StudentData column definition 
+					// to include the 'DepartmentName' column for it to appear!
+					// This part is in your LoadData() method, not the search, 
+					// so you must update LoadData() separately to include this column definition.
 
 					if (dataTable.Rows.Count == 0)
 					{
-						MessageBox.Show("No teachers found matching your search criteria.", "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						MessageBox.Show("No users found matching your search criteria.", "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
 				}
 				catch (Exception ex)
@@ -657,6 +593,16 @@ namespace NAVASCA_PROEL1Project
 			AdminLogs adminLogs = new AdminLogs();
 			adminLogs.Show();
 			this.Hide();
+		}
+
+		private void btnLogout_Click_1(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				Login login = new Login();
+				login.Show();
+				this.Close();
+			}
 		}
 	}
 }

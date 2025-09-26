@@ -202,5 +202,94 @@ namespace NAVASCA_PROEL1Project
 				}
 			}
 		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (ApprovalData.SelectedRows.Count > 0)
+				{
+					DataGridViewRow selectedRow = ApprovalData.SelectedRows[0];
+
+					string profileId = selectedRow.Cells["ProfileID"].Value.ToString();
+
+					string currentStatus = string.Empty;
+					if (selectedRow.Cells["Status"].Value != null)
+					{
+						currentStatus = selectedRow.Cells["Status"].Value.ToString();
+					}
+
+
+					DialogResult confirmResult = MessageBox.Show($"Are you sure you want to delete this Student {profileId}?", "Confirm Deactivation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+					if (confirmResult == DialogResult.Yes)
+					{
+						string newStatus = "Inactive";
+						UpdateUserStatus(profileId, newStatus);
+
+					}
+				}
+				else
+				{
+					MessageBox.Show("Please select a student to deactivate.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		private void UpdateUserStatus(string profileId, string newStatus)
+		{
+
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
+
+					using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+					{
+						cmd.Parameters.AddWithValue("@newStatus", newStatus);
+						cmd.Parameters.AddWithValue("@profileId", profileId);
+
+						int rowsAffected = cmd.ExecuteNonQuery();
+
+						if (rowsAffected > 0)
+						{
+							MessageBox.Show($"Student {profileId} has been set to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+							LoadData();
+						}
+						else
+						{
+							MessageBox.Show("The status could not be updated.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"An error occurred while updating the database: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
+
+		private void btnSearch_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnLogout_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				Login login = new Login();
+				login.Show();
+				this.Close();
+			}
+		}
 	}
 }

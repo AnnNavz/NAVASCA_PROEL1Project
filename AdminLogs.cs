@@ -62,17 +62,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void btnLogout_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				Login login = new Login();
-				login.Show();
-				this.Close();
-			}
-		}
-
-
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
 
@@ -195,6 +184,16 @@ namespace NAVASCA_PROEL1Project
 		private void btnLogs_Click(object sender, EventArgs e)
 		{
 			this.Show();
+		}
+
+		private void btnLogout_Click_1(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Are you sure you want log out?", "Pizsity", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				Login login = new Login();
+				login.Show();
+				this.Close();
+			}
 		}
 	}
 }

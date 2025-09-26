@@ -150,6 +150,7 @@
 			this.btnLogout.Size = new System.Drawing.Size(185, 49);
 			this.btnLogout.TabIndex = 9;
 			this.btnLogout.Text = "Log out";
+			this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click_1);
 			// 
 			// guna2PictureBox3
 			// 

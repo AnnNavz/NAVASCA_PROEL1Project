@@ -319,11 +319,11 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.DimGray;
-			this.label6.Location = new System.Drawing.Point(163, 87);
+			this.label6.Location = new System.Drawing.Point(170, 87);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(173, 20);
+			this.label6.Size = new System.Drawing.Size(178, 20);
 			this.label6.TabIndex = 41;
-			this.label6.Text = "Please register to login";
+			this.label6.Text = "Please register to enroll";
 			// 
 			// label5
 			// 

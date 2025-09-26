@@ -76,24 +76,24 @@
 			this.btnRegister.AutoSize = true;
 			this.btnRegister.BackColor = System.Drawing.Color.Transparent;
 			this.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnRegister.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnRegister.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnRegister.ForeColor = System.Drawing.Color.SteelBlue;
-			this.btnRegister.Location = new System.Drawing.Point(587, 479);
+			this.btnRegister.Location = new System.Drawing.Point(531, 486);
 			this.btnRegister.Name = "btnRegister";
-			this.btnRegister.Size = new System.Drawing.Size(67, 20);
+			this.btnRegister.Size = new System.Drawing.Size(165, 17);
 			this.btnRegister.TabIndex = 28;
-			this.btnRegister.Text = "Register";
+			this.btnRegister.Text = "Click here to enroll now!";
 			this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
 			this.label8.BackColor = System.Drawing.Color.Transparent;
-			this.label8.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label8.ForeColor = System.Drawing.Color.DimGray;
-			this.label8.Location = new System.Drawing.Point(403, 479);
+			this.label8.Location = new System.Drawing.Point(365, 486);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(189, 20);
+			this.label8.Size = new System.Drawing.Size(168, 17);
 			this.label8.TabIndex = 27;
 			this.label8.Text = "Don\'t have an account?";
 			// 
@@ -132,11 +132,11 @@
 			this.label4.AutoSize = true;
 			this.label4.BackColor = System.Drawing.Color.Transparent;
 			this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.label4.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.ForeColor = System.Drawing.Color.SteelBlue;
-			this.label4.Location = new System.Drawing.Point(534, 345);
+			this.label4.Location = new System.Drawing.Point(546, 347);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(139, 20);
+			this.label4.Size = new System.Drawing.Size(123, 17);
 			this.label4.TabIndex = 31;
 			this.label4.Text = "Forgot Password?";
 			this.label4.Click += new System.EventHandler(this.label4_Click);

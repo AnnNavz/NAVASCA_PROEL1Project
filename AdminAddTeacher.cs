@@ -205,8 +205,7 @@ namespace NAVASCA_PROEL1Project
 
 				cmd.ExecuteNonQuery();
 				MessageBox.Show("Added Teacher Successful!" + "\n Username: " + generatedUserID +
-								"\n Password: " + generatedPassword +
-								"\n Please wait for the admin's approval.",
+								"\n Password: " + generatedPassword,
 								"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				AdminTeachers adminteacher = new AdminTeachers();
