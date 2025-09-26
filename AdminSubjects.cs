@@ -19,6 +19,9 @@ namespace NAVASCA_PROEL1Project
 			InitializeComponent();
 			LoadCourses();
 
+			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+			CoursesData.ReadOnly = true;
+
 			DataTable departmentsData = DatabaseManager.GetDepartments();
 			cmbDepartment.DataSource = departmentsData;
 			cmbDepartment.DisplayMember = "DepartmentName";
@@ -272,14 +275,16 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			int departmentID = GetDepartmentID(selectedDepartmentName);
-			int instructorID = GetInstructorID(selectedInstructorName);
-
-			if (departmentID == -1 || instructorID == -1)
+			// *** FIX: Retrieve IDs directly from SelectedValue after ComboBox binding ***
+			// This is safer and avoids relying on name splitting.
+			if (cmbDepartment.SelectedValue == null || cmbTeacher.SelectedValue == null)
 			{
-				MessageBox.Show("Selected Department or Instructor not found in the database.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Selected Department or Instructor is not a valid item.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			int departmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
+			int instructorID = Convert.ToInt32(cmbTeacher.SelectedValue);
 
 			string sqlQuery = "UPDATE Courses SET " +
 							  "CourseName = @CourseName, " +
@@ -311,7 +316,6 @@ namespace NAVASCA_PROEL1Project
 					if (rowsAffected > 0)
 					{
 						MessageBox.Show("Course details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 						CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 						CoursesData.ReadOnly = true;
 						LoadCourses();
@@ -414,21 +418,51 @@ namespace NAVASCA_PROEL1Project
 			{
 				DataGridViewRow row = CoursesData.Rows[e.RowIndex];
 
+				// Store CourseID
 				selectedCourseId = row.Cells["CourseID"].Value.ToString();
 
-				string CourseName = row.Cells["CourseName"].Value.ToString();
-				string CourseCode = row.Cells["CourseCode"].Value.ToString();
-				string Credits = row.Cells["Credits"].Value.ToString();
-				string Description = row.Cells["Description"].Value.ToString();
-				string Department = row.Cells["DepartmentName"].Value.ToString();
-				string Instructor = row.Cells["InstructorName"].Value.ToString();
+				// Retrieve display values from DataGridView
+				string courseName = row.Cells["CourseName"].Value.ToString();
+				string courseCode = row.Cells["CourseCode"].Value.ToString();
+				string credits = row.Cells["Credits"].Value.ToString();
+				string description = row.Cells["Description"].Value.ToString();
+				string department = row.Cells["DepartmentName"].Value.ToString();
+				string instructor = row.Cells["InstructorName"].Value.ToString();
 
-				txtCourseName.Text = CourseName;
-				txtCourseCode.Text = CourseCode;
-				cmbCredits.Text = Credits;
-				txtDescription.Text = Description;
-				cmbDepartment.Text = Department;
-				cmbTeacher.Text = Instructor;
+				// 1. Populate simple fields
+				txtCourseName.Text = courseName;
+				txtCourseCode.Text = courseCode;
+				cmbCredits.Text = credits; // Assuming cmbCredits is correct
+				txtDescription.Text = description;
+
+				// 2. Safely set Department ComboBox selection
+				// Temporarily detach the event handler to prevent it from filtering cmbTeacher prematurely
+				cmbDepartment.SelectedIndexChanged -= cmbDepartment_SelectedIndexChanged;
+
+				// Find and select the item by its text value
+				cmbDepartment.SelectedIndex = cmbDepartment.FindStringExact(department);
+
+				// Re-attach the event handler
+				cmbDepartment.SelectedIndexChanged += cmbDepartment_SelectedIndexChanged;
+
+
+				// 3. Manually load the Instructor list now that the Department is set
+				// Call the filtering logic directly to populate cmbTeacher based on the selected Department
+				if (cmbDepartment.SelectedValue != null)
+				{
+					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
+
+					// This logic is copied from cmbDepartment_SelectedIndexChanged
+					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
+					cmbTeacher.DataSource = instructorsData;
+					cmbTeacher.DisplayMember = "FullName";
+					cmbTeacher.ValueMember = "InstructorID";
+				}
+
+				// 4. Safely set Teacher ComboBox selection
+				// Now find and select the Instructor by the full name (e.g., "Tyler the Creator")
+				// Use FindStringExact or FindString
+				cmbTeacher.SelectedIndex = cmbTeacher.FindStringExact(instructor);
 			}
 
 		}
