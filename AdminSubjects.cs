@@ -262,5 +262,149 @@ namespace NAVASCA_PROEL1Project
 				this.Close();
 			}
 		}
+
+		private void btnUpdateSubmit_Click(object sender, EventArgs e)
+		{
+			if (CoursesData.SelectedRows.Count == 0)
+			{
+				MessageBox.Show("Please select a course to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			// Retrieve CourseID from the selected row
+			int courseID = Convert.ToInt32(CoursesData.SelectedRows[0].Cells["CourseID"].Value);
+
+			// Convert Department Name and Instructor Name back to their IDs for the database
+			// You will need helper methods (like GetDepartmentID and GetInstructorID) for this.
+			string selectedDepartmentName = cmbDepartment.SelectedItem.ToString();
+			string selectedInstructorName = cmbInstructor.SelectedItem.ToString();
+
+			int departmentID = GetDepartmentID(selectedDepartmentName);
+			int instructorID = GetInstructorID(selectedInstructorName);
+
+			if (departmentID == -1 || instructorID == -1)
+			{
+				MessageBox.Show("Invalid Department or Instructor selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// 2. Execute the Update Operation
+			UpdateCourse(courseID, txtCourseName.Text, txtCourseCode.Text, txtDescription.Text,
+						 Convert.ToInt32(txtCredis.Text), instructorID, departmentID);
+
+			// 3. Refresh Data
+			LoadCourses();
+		}
+
+		private int GetDepartmentID(string departmentName)
+		{
+			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
+			int departmentID = -1;
+			string sqlQuery = "SELECT DepartmentID FROM Departments WHERE DepartmentName = @DepartmentName";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+					cmd.Parameters.AddWithValue("@DepartmentName", departmentName);
+					object result = cmd.ExecuteScalar();
+					if (result != null)
+					{
+						departmentID = Convert.ToInt32(result);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred while getting DepartmentID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			return departmentID;
+		}
+
+		private int GetInstructorID(string fullName)
+		{
+			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
+			int instructorID = -1;
+
+			// Split the full name into first and last name for the search
+			string[] names = fullName.Split(' ');
+			string firstName = names[0];
+			string lastName = names.Length > 1 ? names[names.Length - 1] : "";
+
+			// SQL to find InstructorID by joining Profiles and Instructors
+			string sqlQuery = "SELECT i.InstructorID FROM Instructors AS i " +
+							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
+							  "WHERE p.FirstName = @FirstName AND p.LastName = @LastName";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+					cmd.Parameters.AddWithValue("@FirstName", firstName);
+					cmd.Parameters.AddWithValue("@LastName", lastName);
+
+					object result = cmd.ExecuteScalar();
+					if (result != null)
+					{
+						instructorID = Convert.ToInt32(result);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred while getting InstructorID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			return instructorID;
+		}
+
+		private void UpdateCourse(int courseID, string name, string code, string description, int credits, int instructorID, int departmentID)
+		{
+			string connectionString = "Data Source=DESKTOP-5QHCE6M; Initial Catalog=NAVASCA_DB; Integrated Security=true";
+
+			string sqlQuery = "UPDATE Courses SET " +
+							  "CourseName = @CourseName, " +
+							  "CourseCode = @CourseCode, " +
+							  "Description = @Description, " +
+							  "Credits = @Credits, " +
+							  "InstructorID = @InstructorID, " +
+							  "DepartmentID = @DepartmentID " +
+							  "WHERE CourseID = @CourseID";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+					cmd.Parameters.AddWithValue("@CourseID", courseID);
+					cmd.Parameters.AddWithValue("@CourseName", name);
+					cmd.Parameters.AddWithValue("@CourseCode", code);
+					cmd.Parameters.AddWithValue("@Description", description);
+					cmd.Parameters.AddWithValue("@Credits", credits);
+					cmd.Parameters.AddWithValue("@InstructorID", instructorID);
+					cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
+
+					int rowsAffected = cmd.ExecuteNonQuery();
+
+					if (rowsAffected > 0)
+					{
+						MessageBox.Show("Course updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					else
+					{
+						MessageBox.Show("No course found with the specified ID or no changes were made.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred during the course update: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
 	}
 }

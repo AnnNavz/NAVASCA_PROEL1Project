@@ -40,6 +40,21 @@
 			this.btnSearch = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.pnlUpdate = new System.Windows.Forms.Panel();
+			this.label8 = new System.Windows.Forms.Label();
+			this.cmbDepartment = new Guna.UI2.WinForms.Guna2ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.cmbTeacher = new Guna.UI2.WinForms.Guna2ComboBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.cmbCredits = new Guna.UI2.WinForms.Guna2ComboBox();
+			this.txtDescription = new Guna.UI2.WinForms.Guna2TextBox();
+			this.txtCourseName = new Guna.UI2.WinForms.Guna2TextBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.btnUpdateSubmit = new Guna.UI2.WinForms.Guna2Button();
+			this.btnClose = new Guna.UI2.WinForms.Guna2PictureBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -59,6 +74,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
 			this.panel1.SuspendLayout();
+			this.pnlUpdate.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
 			this.SuspendLayout();
@@ -233,6 +250,7 @@
 			// panel1
 			// 
 			this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+			this.panel1.Controls.Add(this.pnlUpdate);
 			this.panel1.Controls.Add(this.guna2HtmlLabel5);
 			this.panel1.Controls.Add(this.btnDelete);
 			this.panel1.Controls.Add(this.btnSearch);
@@ -244,6 +262,249 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(765, 711);
 			this.panel1.TabIndex = 2;
+			// 
+			// pnlUpdate
+			// 
+			this.pnlUpdate.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlUpdate.BackgroundImage")));
+			this.pnlUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlUpdate.Controls.Add(this.label8);
+			this.pnlUpdate.Controls.Add(this.cmbDepartment);
+			this.pnlUpdate.Controls.Add(this.label4);
+			this.pnlUpdate.Controls.Add(this.label3);
+			this.pnlUpdate.Controls.Add(this.cmbTeacher);
+			this.pnlUpdate.Controls.Add(this.label5);
+			this.pnlUpdate.Controls.Add(this.label2);
+			this.pnlUpdate.Controls.Add(this.cmbCredits);
+			this.pnlUpdate.Controls.Add(this.txtDescription);
+			this.pnlUpdate.Controls.Add(this.txtCourseName);
+			this.pnlUpdate.Controls.Add(this.label9);
+			this.pnlUpdate.Controls.Add(this.btnUpdateSubmit);
+			this.pnlUpdate.Controls.Add(this.btnClose);
+			this.pnlUpdate.Controls.Add(this.label1);
+			this.pnlUpdate.Location = new System.Drawing.Point(415, 0);
+			this.pnlUpdate.Name = "pnlUpdate";
+			this.pnlUpdate.Size = new System.Drawing.Size(350, 710);
+			this.pnlUpdate.TabIndex = 23;
+			this.pnlUpdate.Visible = false;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.BackColor = System.Drawing.Color.Transparent;
+			this.label8.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label8.Location = new System.Drawing.Point(29, 451);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(232, 32);
+			this.label8.TabIndex = 100;
+			this.label8.Text = "Note: Click the department first to see the \r\nteachers.";
+			// 
+			// cmbDepartment
+			// 
+			this.cmbDepartment.BackColor = System.Drawing.Color.Transparent;
+			this.cmbDepartment.BorderRadius = 16;
+			this.cmbDepartment.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.cmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbDepartment.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbDepartment.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbDepartment.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.cmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+			this.cmbDepartment.ItemHeight = 30;
+			this.cmbDepartment.Items.AddRange(new object[] {
+            "College of Computer Studies",
+            "College of Education",
+            "College of Nursing"});
+			this.cmbDepartment.Location = new System.Drawing.Point(27, 412);
+			this.cmbDepartment.Name = "cmbDepartment";
+			this.cmbDepartment.Size = new System.Drawing.Size(296, 36);
+			this.cmbDepartment.TabIndex = 96;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.BackColor = System.Drawing.Color.Transparent;
+			this.label4.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label4.Location = new System.Drawing.Point(31, 386);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(101, 20);
+			this.label4.TabIndex = 99;
+			this.label4.Text = "Department:";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label3.Location = new System.Drawing.Point(31, 519);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(141, 20);
+			this.label3.TabIndex = 98;
+			this.label3.Text = "Teacher Assigned:";
+			// 
+			// cmbTeacher
+			// 
+			this.cmbTeacher.BackColor = System.Drawing.Color.Transparent;
+			this.cmbTeacher.BorderRadius = 16;
+			this.cmbTeacher.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.cmbTeacher.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbTeacher.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbTeacher.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbTeacher.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.cmbTeacher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+			this.cmbTeacher.ItemHeight = 30;
+			this.cmbTeacher.Location = new System.Drawing.Point(29, 545);
+			this.cmbTeacher.Name = "cmbTeacher";
+			this.cmbTeacher.Size = new System.Drawing.Size(294, 36);
+			this.cmbTeacher.TabIndex = 97;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.BackColor = System.Drawing.Color.Transparent;
+			this.label5.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label5.Location = new System.Drawing.Point(31, 118);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(113, 20);
+			this.label5.TabIndex = 95;
+			this.label5.Text = "Course Name:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.BackColor = System.Drawing.Color.Transparent;
+			this.label2.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label2.Location = new System.Drawing.Point(33, 202);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(64, 20);
+			this.label2.TabIndex = 94;
+			this.label2.Text = "Credits:";
+			// 
+			// cmbCredits
+			// 
+			this.cmbCredits.BackColor = System.Drawing.Color.Transparent;
+			this.cmbCredits.BorderRadius = 16;
+			this.cmbCredits.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.cmbCredits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbCredits.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbCredits.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbCredits.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.cmbCredits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+			this.cmbCredits.ItemHeight = 30;
+			this.cmbCredits.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+			this.cmbCredits.Location = new System.Drawing.Point(103, 195);
+			this.cmbCredits.Name = "cmbCredits";
+			this.cmbCredits.Size = new System.Drawing.Size(219, 36);
+			this.cmbCredits.TabIndex = 92;
+			// 
+			// txtDescription
+			// 
+			this.txtDescription.BackColor = System.Drawing.Color.Transparent;
+			this.txtDescription.BorderRadius = 16;
+			this.txtDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.txtDescription.DefaultText = "";
+			this.txtDescription.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.txtDescription.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.txtDescription.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtDescription.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtDescription.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtDescription.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.txtDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.txtDescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtDescription.Location = new System.Drawing.Point(27, 251);
+			this.txtDescription.Name = "txtDescription";
+			this.txtDescription.PlaceholderText = "Description";
+			this.txtDescription.SelectedText = "";
+			this.txtDescription.Size = new System.Drawing.Size(295, 109);
+			this.txtDescription.TabIndex = 93;
+			// 
+			// txtCourseName
+			// 
+			this.txtCourseName.BackColor = System.Drawing.Color.Transparent;
+			this.txtCourseName.BorderRadius = 16;
+			this.txtCourseName.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.txtCourseName.DefaultText = "";
+			this.txtCourseName.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.txtCourseName.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.txtCourseName.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtCourseName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtCourseName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtCourseName.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.txtCourseName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.txtCourseName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtCourseName.Location = new System.Drawing.Point(27, 144);
+			this.txtCourseName.Name = "txtCourseName";
+			this.txtCourseName.PlaceholderText = "Enter name...";
+			this.txtCourseName.SelectedText = "";
+			this.txtCourseName.Size = new System.Drawing.Size(295, 36);
+			this.txtCourseName.TabIndex = 91;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.BackColor = System.Drawing.Color.Transparent;
+			this.label9.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label9.Location = new System.Drawing.Point(26, 68);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(297, 17);
+			this.label9.TabIndex = 66;
+			this.label9.Text = "Click a subject in the table to be able to update.";
+			// 
+			// btnUpdateSubmit
+			// 
+			this.btnUpdateSubmit.Animated = true;
+			this.btnUpdateSubmit.BackColor = System.Drawing.Color.Transparent;
+			this.btnUpdateSubmit.BorderRadius = 16;
+			this.btnUpdateSubmit.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnUpdateSubmit.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnUpdateSubmit.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnUpdateSubmit.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnUpdateSubmit.FillColor = System.Drawing.Color.CornflowerBlue;
+			this.btnUpdateSubmit.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold);
+			this.btnUpdateSubmit.ForeColor = System.Drawing.Color.White;
+			this.btnUpdateSubmit.HoverState.FillColor = System.Drawing.Color.RoyalBlue;
+			this.btnUpdateSubmit.Location = new System.Drawing.Point(67, 615);
+			this.btnUpdateSubmit.Name = "btnUpdateSubmit";
+			this.btnUpdateSubmit.Size = new System.Drawing.Size(214, 45);
+			this.btnUpdateSubmit.TabIndex = 64;
+			this.btnUpdateSubmit.Text = "Update";
+			this.btnUpdateSubmit.Click += new System.EventHandler(this.btnUpdateSubmit_Click);
+			// 
+			// btnClose
+			// 
+			this.btnClose.BackColor = System.Drawing.Color.Transparent;
+			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
+			this.btnClose.ImageRotate = 0F;
+			this.btnClose.Location = new System.Drawing.Point(18, 12);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(20, 32);
+			this.btnClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.btnClose.TabIndex = 11;
+			this.btnClose.TabStop = false;
+			this.btnClose.UseTransparentBackground = true;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.BackColor = System.Drawing.Color.Transparent;
+			this.label1.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.White;
+			this.label1.Location = new System.Drawing.Point(132, 19);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(87, 25);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Update";
 			// 
 			// guna2HtmlLabel5
 			// 
@@ -529,6 +790,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.pnlUpdate.ResumeLayout(false);
+			this.pnlUpdate.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
 			this.guna2Panel1.ResumeLayout(false);
 			this.guna2Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).EndInit();
@@ -561,5 +825,20 @@
 		private Guna.UI2.WinForms.Guna2Button btnTeachers;
 		private Guna.UI2.WinForms.Guna2Button btnStudents;
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
+		private System.Windows.Forms.Panel pnlUpdate;
+		private System.Windows.Forms.Label label9;
+		private Guna.UI2.WinForms.Guna2Button btnUpdateSubmit;
+		private Guna.UI2.WinForms.Guna2PictureBox btnClose;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label2;
+		private Guna.UI2.WinForms.Guna2ComboBox cmbCredits;
+		private Guna.UI2.WinForms.Guna2TextBox txtDescription;
+		private Guna.UI2.WinForms.Guna2TextBox txtCourseName;
+		private System.Windows.Forms.Label label8;
+		private Guna.UI2.WinForms.Guna2ComboBox cmbDepartment;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private Guna.UI2.WinForms.Guna2ComboBox cmbTeacher;
 	}
 }

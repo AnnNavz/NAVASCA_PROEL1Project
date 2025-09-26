@@ -279,7 +279,75 @@ namespace NAVASCA_PROEL1Project
 
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
+			string searchTerm = txtSearch.Text.Trim();
 
+			if (string.IsNullOrEmpty(searchTerm))
+			{
+				LoadData();
+				return;
+			}
+
+			// Base SQL query (for students)
+			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status " +
+							  "FROM Profiles AS p " +
+							  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+							  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+							  "WHERE r.RoleName = 'Student' AND p.Status= 'Pending' AND ";
+
+			// Building the dynamic WHERE clause
+			if (int.TryParse(searchTerm, out int numericSearchTerm))
+			{
+				sqlQuery += "(p.ProfileID = @searchVal OR p.Age = @searchVal)";
+			}
+			else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
+			{
+				sqlQuery += "p.Gender = @searchVal";
+			}
+			else
+			{
+				sqlQuery += "(p.FirstName LIKE @searchVal OR p.LastName LIKE @searchVal OR p.Phone LIKE @searchVal OR p.Address LIKE @searchVal OR p.Email LIKE @searchVal OR p.Status LIKE @searchVal)";
+			}
+
+			// *** FIX: Replaced invalid teacher ORDER BY with a simple, valid one ***
+			sqlQuery += " ORDER BY p.ProfileID";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
+
+					// Add parameters based on the search type
+					// Using a single parameter name (@searchVal) for consistency
+					if (int.TryParse(searchTerm, out int numericSearchTerm2))
+					{
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", numericSearchTerm2);
+					}
+					else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
+					{
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", searchTerm);
+					}
+					else
+					{
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", "%" + searchTerm + "%");
+					}
+
+					DataTable dataTable = new DataTable();
+					dataAdapter.Fill(dataTable);
+
+					ApprovalData.DataSource = dataTable; // Assuming ApprovalData is the student DataGridView
+
+					if (dataTable.Rows.Count == 0)
+					{
+						MessageBox.Show("No users found matching your search criteria.", "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred during search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 		}
 
 		private void btnLogout_Click(object sender, EventArgs e)

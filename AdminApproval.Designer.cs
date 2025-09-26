@@ -29,10 +29,10 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminApproval));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnApproval = new Guna.UI2.WinForms.Guna2Button();
 			this.btnHome = new Guna.UI2.WinForms.Guna2Button();
@@ -51,8 +51,6 @@
 			this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
 			this.btnSearch = new Guna.UI2.WinForms.Guna2PictureBox();
-			this.btnUpdate = new Guna.UI2.WinForms.Guna2Button();
-			this.btnAdd = new Guna.UI2.WinForms.Guna2Button();
 			this.ApprovalData = new Guna.UI2.WinForms.Guna2DataGridView();
 			this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
 			this.guna2Panel1.SuspendLayout();
@@ -295,8 +293,6 @@
 			this.panel1.Controls.Add(this.guna2HtmlLabel5);
 			this.panel1.Controls.Add(this.btnDelete);
 			this.panel1.Controls.Add(this.btnSearch);
-			this.panel1.Controls.Add(this.btnUpdate);
-			this.panel1.Controls.Add(this.btnAdd);
 			this.panel1.Controls.Add(this.ApprovalData);
 			this.panel1.Controls.Add(this.txtSearch);
 			this.panel1.Location = new System.Drawing.Point(219, 0);
@@ -333,9 +329,9 @@
 			this.guna2HtmlLabel5.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.guna2HtmlLabel5.Location = new System.Drawing.Point(38, 21);
 			this.guna2HtmlLabel5.Name = "guna2HtmlLabel5";
-			this.guna2HtmlLabel5.Size = new System.Drawing.Size(98, 27);
+			this.guna2HtmlLabel5.Size = new System.Drawing.Size(214, 27);
 			this.guna2HtmlLabel5.TabIndex = 22;
-			this.guna2HtmlLabel5.Text = "Approval";
+			this.guna2HtmlLabel5.Text = "Approval of Students";
 			// 
 			// btnDelete
 			// 
@@ -374,87 +370,47 @@
 			this.btnSearch.UseTransparentBackground = true;
 			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
-			// btnUpdate
-			// 
-			this.btnUpdate.Animated = true;
-			this.btnUpdate.BackColor = System.Drawing.Color.Transparent;
-			this.btnUpdate.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(126)))), ((int)(((byte)(61)))));
-			this.btnUpdate.BorderRadius = 18;
-			this.btnUpdate.BorderThickness = 1;
-			this.btnUpdate.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnUpdate.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnUpdate.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnUpdate.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnUpdate.FillColor = System.Drawing.Color.Orange;
-			this.btnUpdate.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
-			this.btnUpdate.ForeColor = System.Drawing.Color.White;
-			this.btnUpdate.Location = new System.Drawing.Point(205, 639);
-			this.btnUpdate.Name = "btnUpdate";
-			this.btnUpdate.Size = new System.Drawing.Size(148, 39);
-			this.btnUpdate.TabIndex = 15;
-			this.btnUpdate.Text = "Update Subject";
-			// 
-			// btnAdd
-			// 
-			this.btnAdd.Animated = true;
-			this.btnAdd.BackColor = System.Drawing.Color.Transparent;
-			this.btnAdd.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(126)))), ((int)(((byte)(61)))));
-			this.btnAdd.BorderRadius = 18;
-			this.btnAdd.BorderThickness = 1;
-			this.btnAdd.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnAdd.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnAdd.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnAdd.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnAdd.FillColor = System.Drawing.Color.Orange;
-			this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
-			this.btnAdd.ForeColor = System.Drawing.Color.White;
-			this.btnAdd.Location = new System.Drawing.Point(38, 639);
-			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.Size = new System.Drawing.Size(147, 39);
-			this.btnAdd.TabIndex = 14;
-			this.btnAdd.Text = "Add Subject";
-			// 
 			// ApprovalData
 			// 
 			this.ApprovalData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.ApprovalData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.ApprovalData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
 			this.ApprovalData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(234)))), ((int)(((byte)(243)))));
 			this.ApprovalData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ApprovalData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ApprovalData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.ApprovalData.ColumnHeadersHeight = 35;
 			this.ApprovalData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.ApprovalData.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.ApprovalData.DefaultCellStyle = dataGridViewCellStyle7;
 			this.ApprovalData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(222)))), ((int)(((byte)(251)))));
 			this.ApprovalData.Location = new System.Drawing.Point(38, 146);
 			this.ApprovalData.Name = "ApprovalData";
 			this.ApprovalData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.ApprovalData.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.ApprovalData.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
 			this.ApprovalData.RowHeadersVisible = false;
 			this.ApprovalData.RowTemplate.Height = 30;
 			this.ApprovalData.Size = new System.Drawing.Size(688, 465);
@@ -544,8 +500,6 @@
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
 		private Guna.UI2.WinForms.Guna2Button btnDelete;
 		private Guna.UI2.WinForms.Guna2PictureBox btnSearch;
-		private Guna.UI2.WinForms.Guna2Button btnUpdate;
-		private Guna.UI2.WinForms.Guna2Button btnAdd;
 		private Guna.UI2.WinForms.Guna2DataGridView ApprovalData;
 		private Guna.UI2.WinForms.Guna2TextBox txtSearch;
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
