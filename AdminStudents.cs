@@ -17,9 +17,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminStudents()
 		{
 			InitializeComponent();
+			StudentData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadData();
-			StudentData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			StudentData.ReadOnly = true;
 
 
 		}
@@ -79,8 +78,6 @@ namespace NAVASCA_PROEL1Project
 							col.DataPropertyName = col.Name;
 						}
 					}
-					StudentData.DataSource = dataTable;
-					StudentData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 				}
 				catch (Exception ex)
 				{

@@ -17,9 +17,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminTeachers()
 		{
 			InitializeComponent();
+			TeachersData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadData();
-			TeachersData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			TeachersData.ReadOnly = true;
 		}
 
 		string connectionString = Database.ConnectionString;
@@ -101,8 +100,8 @@ namespace NAVASCA_PROEL1Project
 							col.DataPropertyName = col.Name;
 						}
 					}
+
 					TeachersData.DataSource = dataTable;
-					TeachersData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 				}
 				catch (Exception ex)
 				{

@@ -16,8 +16,7 @@ namespace NAVASCA_PROEL1Project
 		public AdminLogs()
 		{
 			InitializeComponent();
-			LogsData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			LogsData.ReadOnly = true;
+			LogsData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadLogs();
 		}
 
@@ -42,7 +41,7 @@ namespace NAVASCA_PROEL1Project
 							  "WHEN 'Update Student' THEN 5 " + 
 							  "WHEN 'Update Teacher' THEN 6 " + 
 							  "ELSE 7 END, " +
-							  "l.Date DESC, l.Time DESC";
+							  "l.LogID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

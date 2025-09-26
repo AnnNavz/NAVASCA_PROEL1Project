@@ -16,9 +16,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminApproval()
 		{
 			InitializeComponent();
+			ApprovalData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadData();
-			ApprovalData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			ApprovalData.ReadOnly = true;
 		}
 
 
@@ -86,8 +85,6 @@ namespace NAVASCA_PROEL1Project
 
 					// Hide the Status column
 					ApprovalData.Columns["Status"].Visible = false;
-
-					ApprovalData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 				}
 				catch (Exception ex)
 				{

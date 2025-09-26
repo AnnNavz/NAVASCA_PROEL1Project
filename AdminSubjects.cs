@@ -17,10 +17,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminSubjects()
 		{
 			InitializeComponent();
+			CoursesData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadCourses();
-
-			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			CoursesData.ReadOnly = true;
 
 			DataTable departmentsData = DatabaseManager.GetDepartments();
 			cmbDepartment.DataSource = departmentsData;
@@ -58,9 +56,6 @@ namespace NAVASCA_PROEL1Project
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
-
-					CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-					CoursesData.ReadOnly = true;
 
 					CoursesData.DataSource = dataTable;
 					SetupCoursesDataGridView();
@@ -275,8 +270,6 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			// *** FIX: Retrieve IDs directly from SelectedValue after ComboBox binding ***
-			// This is safer and avoids relying on name splitting.
 			if (cmbDepartment.SelectedValue == null || cmbTeacher.SelectedValue == null)
 			{
 				MessageBox.Show("Selected Department or Instructor is not a valid item.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -316,8 +309,6 @@ namespace NAVASCA_PROEL1Project
 					if (rowsAffected > 0)
 					{
 						MessageBox.Show("Course details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-						CoursesData.ReadOnly = true;
 						LoadCourses();
 
 
@@ -334,77 +325,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private int GetDepartmentID(string departmentName)
-		{
-			int departmentID = -1;
-			string sqlQuery = "SELECT DepartmentID FROM Departments WHERE DepartmentName = @DepartmentName";
-
-			using (SqlConnection conn = new SqlConnection(connectionString))
-			{
-				try
-				{
-					conn.Open();
-					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-					cmd.Parameters.AddWithValue("@DepartmentName", departmentName);
-					object result = cmd.ExecuteScalar();
-					if (result != null)
-					{
-						departmentID = Convert.ToInt32(result);
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("Error retrieving Department ID: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-			return departmentID;
-		}
-
-		private int GetInstructorID(string fullName)
-		{
-			int instructorID = -1;
-
-			string[] names = fullName.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-			if (names.Length == 0) return -1;
-
-			string firstName = names[0];
-
-			string lastName = "";
-			if (names.Length > 1)
-			{
-				lastName = string.Join(" ", names, 1, names.Length - 1);
-			}
-
-			string sqlQuery = "SELECT i.InstructorID FROM Instructors AS i " +
-							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
-							  "WHERE p.FirstName = @FirstName AND p.LastName = @LastName";
-
-			using (SqlConnection conn = new SqlConnection(connectionString))
-			{
-				try
-				{
-					conn.Open();
-					SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-					cmd.Parameters.AddWithValue("@FirstName", firstName);
-					cmd.Parameters.AddWithValue("@LastName", lastName);
-
-					object result = cmd.ExecuteScalar();
-					if (result != null)
-					{
-						instructorID = Convert.ToInt32(result);
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("An error occurred while getting InstructorID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-			return instructorID;
-		}
-
-
-
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
@@ -418,10 +338,8 @@ namespace NAVASCA_PROEL1Project
 			{
 				DataGridViewRow row = CoursesData.Rows[e.RowIndex];
 
-				// Store CourseID
 				selectedCourseId = row.Cells["CourseID"].Value.ToString();
 
-				// Retrieve display values from DataGridView
 				string courseName = row.Cells["CourseName"].Value.ToString();
 				string courseCode = row.Cells["CourseCode"].Value.ToString();
 				string credits = row.Cells["Credits"].Value.ToString();
@@ -429,39 +347,25 @@ namespace NAVASCA_PROEL1Project
 				string department = row.Cells["DepartmentName"].Value.ToString();
 				string instructor = row.Cells["InstructorName"].Value.ToString();
 
-				// 1. Populate simple fields
 				txtCourseName.Text = courseName;
 				txtCourseCode.Text = courseCode;
-				cmbCredits.Text = credits; // Assuming cmbCredits is correct
+				cmbCredits.Text = credits; 
 				txtDescription.Text = description;
 
-				// 2. Safely set Department ComboBox selection
-				// Temporarily detach the event handler to prevent it from filtering cmbTeacher prematurely
 				cmbDepartment.SelectedIndexChanged -= cmbDepartment_SelectedIndexChanged;
-
-				// Find and select the item by its text value
 				cmbDepartment.SelectedIndex = cmbDepartment.FindStringExact(department);
-
-				// Re-attach the event handler
 				cmbDepartment.SelectedIndexChanged += cmbDepartment_SelectedIndexChanged;
 
-
-				// 3. Manually load the Instructor list now that the Department is set
-				// Call the filtering logic directly to populate cmbTeacher based on the selected Department
 				if (cmbDepartment.SelectedValue != null)
 				{
 					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
 
-					// This logic is copied from cmbDepartment_SelectedIndexChanged
 					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
 					cmbTeacher.DataSource = instructorsData;
 					cmbTeacher.DisplayMember = "FullName";
 					cmbTeacher.ValueMember = "InstructorID";
 				}
 
-				// 4. Safely set Teacher ComboBox selection
-				// Now find and select the Instructor by the full name (e.g., "Tyler the Creator")
-				// Use FindStringExact or FindString
 				cmbTeacher.SelectedIndex = cmbTeacher.FindStringExact(instructor);
 			}
 
