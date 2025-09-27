@@ -31,7 +31,6 @@ namespace NAVASCA_PROEL1Project
 								 "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 								 "WHERE r.RoleName = 'Student' AND p.Status = 'Pending'";
 
-			// SQL query to load all pending student data for the DataGridView
 			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
@@ -82,8 +81,6 @@ namespace NAVASCA_PROEL1Project
 						}
 					}
 					ApprovalData.DataSource = dataTable;
-
-					// Hide the Status column
 					ApprovalData.Columns["Status"].Visible = false;
 				}
 				catch (Exception ex)
