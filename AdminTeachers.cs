@@ -49,13 +49,7 @@ namespace NAVASCA_PROEL1Project
 									   "INNER JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " +
 									   "WHERE r.RoleName IN ('Instructor') AND p.Status = 'Active' " +
 									   "ORDER BY " +
-							           "CASE d.DepartmentName " +
-							           "WHEN 'College of Computer Studies' THEN 1 " +
-							           "WHEN 'College of Business and Management' THEN 2 " +
-							           "WHEN 'College of Arts, Sciences, and Pedagogy' THEN 3 " +
-							           "WHEN 'College of Nursing' THEN 4 " +
-							           "ELSE 5 END, " +
-			                           "p.ProfileID";
+									   "p.ProfileID DESC";
 
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -307,11 +301,32 @@ namespace NAVASCA_PROEL1Project
 			errorProvider1.Clear();
 			errorProvider2.Clear();
 			errorProvider3.Clear();
+			errorProvider4.Clear();
+			errorProvider5.Clear();
+			errorProvider6.Clear();
+			errorProvider7.Clear();
+			errorProvider8.Clear();
 
 
 			if (string.IsNullOrEmpty(selectedProfileId))
 			{
 				MessageBox.Show("Please select a teacher to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			bool requiredFieldsMissing = false;
+
+			if (string.IsNullOrWhiteSpace(txtFirstname.Text)) { errorProvider1.SetError(txtFirstname, "First name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtLastname.Text)) { errorProvider2.SetError(txtLastname, "Last name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbGender.Text)) { errorProvider3.SetError(cmbGender, "Gender is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAge.Text)) { errorProvider4.SetError(txtAge, "Age is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtPhone.Text)) { errorProvider5.SetError(txtPhone, "Phone number is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAddress.Text)) { errorProvider6.SetError(txtAddress, "Address is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtEmail.Text)) { errorProvider7.SetError(txtEmail, "Email is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbDepartment.Text)) { errorProvider8.SetError(txtEmail, "Department is required."); requiredFieldsMissing = true; }
+
+			if (requiredFieldsMissing)
+			{
 				return;
 			}
 
@@ -416,12 +431,8 @@ namespace NAVASCA_PROEL1Project
 						if (rowsAffected > 0)
 						{
 							// Create log description
-							string logDescription = $"Updated teacher with ProfileID: {selectedProfileID} and assigned to Department: {selectedDepartmentName}";
-
-							// Assuming AddLogEntry is a pre-existing method
-							// You will need to replace `currentAdminID` with the actual ID of the logged-in administrator.
-							int currentAdminID = 1;
-							AddLogEntry(currentAdminID, "Update Teacher", logDescription);
+							string logDescription = $"Updated a teacher.";
+							AddLogEntry(selectedProfileID, "Update Teacher", logDescription);
 
 							MessageBox.Show("Teacher updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 							LoadData();

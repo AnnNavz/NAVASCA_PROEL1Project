@@ -61,55 +61,20 @@ namespace NAVASCA_PROEL1Project
 			enrollDate = dateTimePicker1.Value;
 
 
+			bool requiredFieldsMissing = false;
 
+			if (string.IsNullOrWhiteSpace(txtFirstname.Text)) { errorProvider1.SetError(txtFirstname, "First name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtLastname.Text)) { errorProvider2.SetError(txtLastname, "Last name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbGender.Text)) { errorProvider3.SetError(cmbGender, "Gender is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAge.Text)) { errorProvider4.SetError(txtAge, "Age is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtPhone.Text)) { errorProvider5.SetError(txtPhone, "Phone number is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAddress.Text)) { errorProvider6.SetError(txtAddress, "Address is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtEmail.Text)) { errorProvider7.SetError(txtEmail, "Email is required."); requiredFieldsMissing = true; }
 
-			if (string.IsNullOrEmpty(txtFirstname.Text) || string.IsNullOrEmpty(txtLastname.Text) || string.IsNullOrEmpty(cmbGender.Text) || string.IsNullOrEmpty(txtAge.Text)
-				 || string.IsNullOrEmpty(txtPhone.Text) || string.IsNullOrEmpty(txtAddress.Text) || string.IsNullOrEmpty(txtEmail.Text))
+			if (requiredFieldsMissing)
 			{
-
-
-				if (string.IsNullOrWhiteSpace(txtFirstname.Text))
-				{
-					errorProvider1.SetError(txtFirstname, "First name is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(txtLastname.Text))
-				{
-					errorProvider2.SetError(txtLastname, "Last name is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(cmbGender.Text))
-				{
-					errorProvider3.SetError(cmbGender, "Gender is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(txtAge.Text))
-				{
-					errorProvider4.SetError(txtAge, "Age is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(txtPhone.Text))
-				{
-					errorProvider5.SetError(txtPhone, "Phone number is required.");
-				}
-
-				if (string.IsNullOrWhiteSpace(txtAddress.Text))
-				{
-					errorProvider6.SetError(txtAddress, "Address is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(txtEmail.Text))
-				{
-					errorProvider7.SetError(txtEmail, "Email is required.");
-				}
-
+				return;
 			}
-
 
 
 

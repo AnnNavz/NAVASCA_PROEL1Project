@@ -127,77 +127,54 @@ namespace NAVASCA_PROEL1Project
 			errorProvider4.Clear();
 			errorProvider5.Clear();
 
-			if (string.IsNullOrEmpty(txtCourseName.Text) || string.IsNullOrEmpty(cmbCredits.Text) || string.IsNullOrEmpty(txtDescription.Text) || string.IsNullOrEmpty(cmbDepartment.Text)
-				 || string.IsNullOrEmpty(cmbTeacher.Text))
+
+			bool requiredFieldsMissing = false;
+
+			if (string.IsNullOrWhiteSpace(txtCourseName.Text)) { errorProvider1.SetError(txtCourseName, "Course name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbCredits.Text)) { errorProvider2.SetError(cmbCredits, "Credits is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtDescription.Text)) { errorProvider3.SetError(txtDescription, "Description is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbDepartment.Text)) { errorProvider4.SetError(cmbDepartment, "Department is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbTeacher.Text)) { errorProvider5.SetError(cmbTeacher, "Teacher is required."); requiredFieldsMissing = true; }
+
+			if (requiredFieldsMissing)
 			{
-
-
-				if (string.IsNullOrWhiteSpace(txtCourseName.Text))
-				{
-					errorProvider1.SetError(txtCourseName, "Course Name is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(cmbCredits.Text))
-				{
-					errorProvider2.SetError(cmbCredits, "Credits is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(txtDescription.Text))
-				{
-					errorProvider3.SetError(txtDescription, "Description is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(cmbDepartment.Text))
-				{
-					errorProvider4.SetError(cmbDepartment, "Department is required.");
-
-				}
-
-				if (string.IsNullOrWhiteSpace(cmbTeacher.Text))
-				{
-					errorProvider5.SetError(cmbTeacher, "Teacher is required.");
-				}
+				return;
 			}
-			else 
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
+				string courseName = txtCourseName.Text;
+				string generatedCode = CourseCodeGenerator.GenerateCode(courseName);
+				string status = "Active";
 
 
-				using (SqlConnection conn = new SqlConnection(connectionString))
-				{
-					string courseName = txtCourseName.Text;
-					string generatedCode = CourseCodeGenerator.GenerateCode(courseName);
-					string status = "Active";
+				conn.Open();
 
 
-					conn.Open();
+				SqlCommand cmd = new SqlCommand("AddSubject_SP", conn);
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				cmd.Parameters.AddWithValue("@CourseName", txtCourseName.Text);
+				cmd.Parameters.AddWithValue("@CourseCode", generatedCode);
+				cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
+				cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
+				cmd.Parameters.AddWithValue("@Teacher", cmbTeacher.Text);
+				cmd.Parameters.AddWithValue("@Department", cmbDepartment.Text);
+				cmd.Parameters.AddWithValue("@Status", status);
 
 
-					SqlCommand cmd = new SqlCommand("AddSubject_SP", conn);
-					cmd.CommandType = CommandType.StoredProcedure;
+				cmd.ExecuteNonQuery();
+				MessageBox.Show("Added Subject Successful!" + "\n CourseCode: " + generatedCode,
+								"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-					cmd.Parameters.AddWithValue("@CourseName", txtCourseName.Text);
-					cmd.Parameters.AddWithValue("@CourseCode", generatedCode);
-					cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
-					cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
-					cmd.Parameters.AddWithValue("@Teacher", cmbTeacher.Text);
-					cmd.Parameters.AddWithValue("@Department", cmbDepartment.Text);
-					cmd.Parameters.AddWithValue("@Status", status);
-
-
-					cmd.ExecuteNonQuery();
-					MessageBox.Show("Added Subject Successful!" + "\n CourseCode: " + generatedCode,
-									"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					AdminSubjects adminSubjects = new AdminSubjects();
-					adminSubjects.Show();
-					this.Hide();
-
-				}
+				AdminSubjects adminSubjects = new AdminSubjects();
+				adminSubjects.Show();
+				this.Hide();
 
 			}
+
+
+
 
 
 		}

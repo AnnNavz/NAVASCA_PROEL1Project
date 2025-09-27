@@ -37,7 +37,7 @@ namespace NAVASCA_PROEL1Project
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 									   "WHERE r.RoleName IN ('Student', 'Instructor') AND p.Status = 'Pending' " +
-									   "ORDER BY p.ProfileID";
+									   "ORDER BY p.ProfileID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

@@ -242,6 +242,25 @@
         SUVORK5CYII=
 </value>
   </data>
+  <data name="btnSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAL8SURBVFhH7VZb
+        axNBFM6f8MEr/h1BxZeSXdoigi+2VlHsg/imm23jpVBBTayt4AVFBavYWi9QERQjaNvspolJrNTGVoux
+        pKliTdLxfONENptZs5v4mA8+EubcZs6cc3Z8TTThBS29sS1qwOjyB4wx+k0oAWMFxH+s+bXofkUzNgv1
+        /4cWbXKjEjDDFKxIZDVYUnXzltIzsVWYNwZVj+4ip3lbkJqkrCwremyncFMfKK0HyVnJ7twDS3QlB4Q7
+        bxAnrwpOJ2PHhtLs/P05FnqQYSeuz7C2XrNCx8aS50y0Bqc2kWFV2k/fnmUL2VVmR/5HkV19usBUvVK/
+        TH4dwcQG4b42VM0Ysju5Mf6ZrVGwQnGNPTeWWHgkw7MwGvnKNwBEEjnW2iPPBl3ngHD/b6DVyKCi2nFy
+        BP+ytMqOhJMVjsG9fdPM/LDCNzH8YrFKLlhEZkUYZ6BorIa48/nsT35yWfAy95yK8Q3+Ir2OswmpDrVy
+        pwjjDEWLPrQaHR1M85Mh7dZ1GQfHPnHdy4/mpXK/ZoyIMM4gxZTV6Ny9Oe4Ud25dl7H7YorrPnmTlcox
+        MUUYZ5BiRfWj1QAUnHVdxkMXklx3fOqbVE7MizDOgJLV6Pi1Ge4U1W5dl7H/7keue5M6RiYn5kQYZ1Ch
+        vLMaYcigzUBUu1VmJWZAMvOdb6B7ICXVIcZFGGfYixDEkAHQaqh2uxzBkSEgEs9Vyct0VYT8k2ozRIDX
+        NGQAtBqqHQV3OJTkaS+fHJh8n2ftDqPZrxv7RBhn4HtOylWfXUy44ZeLvM9leEUnR3BgIr0s20TB1SAC
+        aBOXbMZ/iSGDPn9MrfaMqh0Fh2xA1h40HTdBozgk3NcGHiD8AyKMvdC6iTN3ZsvrubbA9Hrh3h38geg2
+        MnTzAqoiTt5HwXef5AVbUjVzh3DrDeK70NCDhDLZJdzVBzwm6ryOHFX9duGmMbTob9cputFPTgu2IDLi
+        GXbF8527wZ+XktlJHKVAcSLGNhjHkKG77nDdak00weHz/QYVhky7clRd1QAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btnClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -265,30 +284,11 @@
         QWdVR1G/nm4czL4OHUfnVPIo/QI9DV1dvwBSCQsTZAsIJQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="btnSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAL8SURBVFhH7VZb
-        axNBFM6f8MEr/h1BxZeSXdoigi+2VlHsg/imm23jpVBBTayt4AVFBavYWi9QERQjaNvspolJrNTGVoux
-        pKliTdLxfONENptZs5v4mA8+EubcZs6cc3Z8TTThBS29sS1qwOjyB4wx+k0oAWMFxH+s+bXofkUzNgv1
-        /4cWbXKjEjDDFKxIZDVYUnXzltIzsVWYNwZVj+4ip3lbkJqkrCwremyncFMfKK0HyVnJ7twDS3QlB4Q7
-        bxAnrwpOJ2PHhtLs/P05FnqQYSeuz7C2XrNCx8aS50y0Bqc2kWFV2k/fnmUL2VVmR/5HkV19usBUvVK/
-        TH4dwcQG4b42VM0Ysju5Mf6ZrVGwQnGNPTeWWHgkw7MwGvnKNwBEEjnW2iPPBl3ngHD/b6DVyKCi2nFy
-        BP+ytMqOhJMVjsG9fdPM/LDCNzH8YrFKLlhEZkUYZ6BorIa48/nsT35yWfAy95yK8Q3+Ir2OswmpDrVy
-        pwjjDEWLPrQaHR1M85Mh7dZ1GQfHPnHdy4/mpXK/ZoyIMM4gxZTV6Ny9Oe4Ud25dl7H7YorrPnmTlcox
-        MUUYZ5BiRfWj1QAUnHVdxkMXklx3fOqbVE7MizDOgJLV6Pi1Ge4U1W5dl7H/7keue5M6RiYn5kQYZ1Ch
-        vLMaYcigzUBUu1VmJWZAMvOdb6B7ICXVIcZFGGfYixDEkAHQaqh2uxzBkSEgEs9Vyct0VYT8k2ozRIDX
-        NGQAtBqqHQV3OJTkaS+fHJh8n2ftDqPZrxv7RBhn4HtOylWfXUy44ZeLvM9leEUnR3BgIr0s20TB1SAC
-        aBOXbMZ/iSGDPn9MrfaMqh0Fh2xA1h40HTdBozgk3NcGHiD8AyKMvdC6iTN3ZsvrubbA9Hrh3h38geg2
-        MnTzAqoiTt5HwXef5AVbUjVzh3DrDeK70NCDhDLZJdzVBzwm6ryOHFX9duGmMbTob9cputFPTgu2IDLi
-        GXbF8527wZ+XktlJHKVAcSLGNhjHkKG77nDdak00weHz/QYVhky7clRd1QAAAABJRU5ErkJggg==
-</value>
-  </data>
   <metadata name="errorProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+    <value>132</value>
   </metadata>
   <data name="guna2Panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -918,6 +918,12 @@
         4KRtAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="errorProvider2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>146, 17</value>
+  </metadata>
+  <metadata name="errorProvider3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>275, 17</value>
+  </metadata>
   <data name="guna2PictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAAAAAAAD/4QAqRXhpZgAATU0AKgAAAAgAAQExAAIAAAAHAAAAGgAAAABQaWNh
@@ -1280,10 +1286,19 @@
         rjUzsZA6laTsJR//2Q==
 </value>
   </data>
-  <metadata name="errorProvider2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>146, 17</value>
+  <metadata name="errorProvider4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>404, 17</value>
   </metadata>
-  <metadata name="errorProvider3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>275, 17</value>
+  <metadata name="errorProvider5.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>533, 17</value>
+  </metadata>
+  <metadata name="errorProvider6.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>662, 17</value>
+  </metadata>
+  <metadata name="errorProvider7.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>791, 17</value>
+  </metadata>
+  <metadata name="errorProvider8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>920, 17</value>
   </metadata>
 </root>

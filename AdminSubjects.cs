@@ -46,7 +46,7 @@ namespace NAVASCA_PROEL1Project
 							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
 							  "WHERE c.Status = 'Active' " +
-							  "ORDER BY c.CourseName";
+							  "ORDER BY c.CourseName DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

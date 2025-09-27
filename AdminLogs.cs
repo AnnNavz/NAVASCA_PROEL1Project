@@ -33,15 +33,7 @@ namespace NAVASCA_PROEL1Project
 							  "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
 							  "WHERE r.RoleName IN ('Student', 'Instructor') " + 
 							  "ORDER BY " +
-							  "CASE l.Action " +
-							  "WHEN 'Add Student' THEN 1 " +
-							  "WHEN 'Add Teacher' THEN 2 " +
-							  "WHEN 'Delete Student' THEN 3 " +
-							  "WHEN 'Delete Teacher' THEN 4 " + 
-							  "WHEN 'Update Student' THEN 5 " + 
-							  "WHEN 'Update Teacher' THEN 6 " + 
-							  "ELSE 7 END, " +
-							  "l.LogID";
+							  "l.LogID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

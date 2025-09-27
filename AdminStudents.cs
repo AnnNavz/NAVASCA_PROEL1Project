@@ -28,17 +28,19 @@ namespace NAVASCA_PROEL1Project
 		private void LoadData()
 		{
 			string sqlQuery_TotalCount = "SELECT COUNT(p.ProfileID) " +
-										  "FROM Profiles AS p " +
-										  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
-										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-										  "WHERE r.RoleName = 'Student' AND p.Status = 'Active'";
+								  "FROM Profiles AS p " +
+								  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+								  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+								  "WHERE r.RoleName = 'Student' AND p.Status = 'Active'";
 
 			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 									   "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' " +
-									   "ORDER BY p.ProfileID";
+									   "ORDER BY " +
+									   "p.ProfileID DESC";
+
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -47,8 +49,8 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 
 					SqlCommand countCmd = new SqlCommand(sqlQuery_TotalCount, conn);
-					int activeStudentCount = (int)countCmd.ExecuteScalar();
-					lblTotal.Text = activeStudentCount.ToString();
+					int activeTeacherCount = (int)countCmd.ExecuteScalar();
+					lblTotal.Text = activeTeacherCount.ToString();
 
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery_LoadData, conn);
 					DataTable dataTable = new DataTable();
@@ -58,6 +60,7 @@ namespace NAVASCA_PROEL1Project
 					StudentData.Columns.Clear();
 					StudentData.ReadOnly = true;
 
+					// Add the new 'Department Name' column
 					StudentData.Columns.Add("ProfileID", "Profile ID");
 					StudentData.Columns.Add("FirstName", "First Name");
 					StudentData.Columns.Add("LastName", "Last Name");
@@ -68,8 +71,10 @@ namespace NAVASCA_PROEL1Project
 					StudentData.Columns.Add("Email", "Email");
 					StudentData.Columns.Add("Status", "Status");
 
-
 					StudentData.Columns["Status"].Visible = false;
+
+
+
 
 					foreach (DataGridViewColumn col in StudentData.Columns)
 					{
@@ -78,6 +83,8 @@ namespace NAVASCA_PROEL1Project
 							col.DataPropertyName = col.Name;
 						}
 					}
+
+					StudentData.DataSource = dataTable;
 				}
 				catch (Exception ex)
 				{
@@ -267,11 +274,30 @@ namespace NAVASCA_PROEL1Project
 			errorProvider1.Clear();
 			errorProvider2.Clear();
 			errorProvider3.Clear();
+			errorProvider4.Clear();
+			errorProvider5.Clear();
+			errorProvider6.Clear();
+			errorProvider7.Clear();
 
 
 			if (string.IsNullOrEmpty(selectedProfileId))
 			{
 				MessageBox.Show("Please select a student to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			bool requiredFieldsMissing = false;
+
+			if (string.IsNullOrWhiteSpace(txtFirstname.Text)) { errorProvider1.SetError(txtFirstname, "First name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtLastname.Text)) { errorProvider2.SetError(txtLastname, "Last name is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbGender.Text)) { errorProvider3.SetError(cmbGender, "Gender is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAge.Text)) { errorProvider4.SetError(txtAge, "Age is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtPhone.Text)) { errorProvider5.SetError(txtPhone, "Phone number is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtAddress.Text)) { errorProvider6.SetError(txtAddress, "Address is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtEmail.Text)) { errorProvider7.SetError(txtEmail, "Email is required."); requiredFieldsMissing = true; }
+
+			if (requiredFieldsMissing)
+			{
 				return;
 			}
 
@@ -284,6 +310,10 @@ namespace NAVASCA_PROEL1Project
 				string newEmail = txtEmail.Text;
 				string age = txtAge.Text;
 				string phone = txtPhone.Text;
+
+
+
+
 
 
 				bool allValid = true;

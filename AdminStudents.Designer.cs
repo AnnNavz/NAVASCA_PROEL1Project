@@ -78,6 +78,10 @@
 			this.btnStudents = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+			this.errorProvider4 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.errorProvider5 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.errorProvider6 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.panel1.SuspendLayout();
 			this.pnlUpdate.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
@@ -88,6 +92,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).BeginInit();
 			this.guna2Panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -867,6 +875,22 @@
 			this.guna2HtmlLabel1.TabIndex = 1;
 			this.guna2HtmlLabel1.Text = "Navasca, Ann \r\nShirley A.";
 			// 
+			// errorProvider4
+			// 
+			this.errorProvider4.ContainerControl = this;
+			// 
+			// errorProvider5
+			// 
+			this.errorProvider5.ContainerControl = this;
+			// 
+			// errorProvider6
+			// 
+			this.errorProvider6.ContainerControl = this;
+			// 
+			// errorProvider7
+			// 
+			this.errorProvider7.ContainerControl = this;
+			// 
 			// AdminStudents
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -891,6 +915,10 @@
 			this.guna2Panel1.ResumeLayout(false);
 			this.guna2Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -943,5 +971,9 @@
 		private Guna.UI2.WinForms.Guna2Button btnStudents;
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+		private System.Windows.Forms.ErrorProvider errorProvider4;
+		private System.Windows.Forms.ErrorProvider errorProvider5;
+		private System.Windows.Forms.ErrorProvider errorProvider6;
+		private System.Windows.Forms.ErrorProvider errorProvider7;
 	}
 }
