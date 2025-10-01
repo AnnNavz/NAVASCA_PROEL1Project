@@ -62,9 +62,13 @@ namespace NAVASCA_PROEL1Project
 			//string hashedOldPassword = HashPassword(oldPassword);
 			string hashedNewPassword = HashPassword(newPassword);
 
-			if (string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
+			bool requiredFieldsMissing = false;
+
+			if (string.IsNullOrWhiteSpace(txtNew.Text)) { errorProvider1.SetError(txtNew, "New password is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(txtConfirm.Text)) { errorProvider2.SetError(txtConfirm, "Confirm password is required."); requiredFieldsMissing = true; }
+
+			if (requiredFieldsMissing)
 			{
-				MessageBox.Show("All fields are required.", "Validation Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 

@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ForgotConfirmPassword));
 			this.picBack = new System.Windows.Forms.PictureBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -36,7 +37,11 @@
 			this.txtNew = new Guna.UI2.WinForms.Guna2TextBox();
 			this.txtConfirm = new Guna.UI2.WinForms.Guna2TextBox();
 			this.btnConfirm = new Guna.UI2.WinForms.Guna2Button();
+			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// picBack
@@ -153,6 +158,14 @@
 			this.btnConfirm.Text = "Confirm";
 			this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click_1);
 			// 
+			// errorProvider1
+			// 
+			this.errorProvider1.ContainerControl = this;
+			// 
+			// errorProvider2
+			// 
+			this.errorProvider2.ContainerControl = this;
+			// 
 			// ForgotConfirmPassword
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,6 +183,8 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ForgotConfirmPassword";
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -184,5 +199,7 @@
 		private Guna.UI2.WinForms.Guna2TextBox txtNew;
 		private Guna.UI2.WinForms.Guna2TextBox txtConfirm;
 		private Guna.UI2.WinForms.Guna2Button btnConfirm;
+		private System.Windows.Forms.ErrorProvider errorProvider1;
+		private System.Windows.Forms.ErrorProvider errorProvider2;
 	}
 }
