@@ -80,7 +80,7 @@ namespace NAVASCA_PROEL1Project
 							col.DataPropertyName = col.Name;
 						}
 					}
-					ApprovalData.DataSource = dataTable;
+					ApprovalData.DataSource = dataTable;	
 					ApprovalData.Columns["Status"].Visible = false;
 				}
 				catch (Exception ex)
@@ -140,58 +140,78 @@ namespace NAVASCA_PROEL1Project
 
 		private void ApprovalData_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex >= 0 && ApprovalData.Columns[e.ColumnIndex].Name == "StatusActionButton")
+
+			DateTime enrollmentDate = DateTime.Today;
+
+			if (e.RowIndex >= 0 && ApprovalData.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+				ApprovalData.Columns[e.ColumnIndex].Name == "StatusActionButton")
 			{
 				DataGridViewRow row = ApprovalData.Rows[e.RowIndex];
+
 				string profileId = row.Cells["ProfileID"].Value.ToString();
 				string currentStatus = row.Cells["Status"].Value.ToString();
 				string newStatus = string.Empty;
 
+				// Check if the current status is 'Pending'
 				if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
 				{
-					DialogResult result = MessageBox.Show($"Do you want to activate this student?", "Approve Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+					DialogResult result = MessageBox.Show("Do you want to activate this student?", "Approve Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
 					if (result == DialogResult.Yes)
 					{
 						newStatus = "Active";
 					}
 					else
 					{
-						return;
+						return; // User canceled
 					}
 				}
-				
-				if (!string.IsNullOrEmpty(newStatus))
+
+				if (string.IsNullOrEmpty(newStatus))
 				{
+					return; // Status was not 'Pending' or newStatus was not set
+				}
 
-					using (SqlConnection conn = new SqlConnection(connectionString))
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					try
 					{
-						try
+						conn.Open();
+
+						// --- 1. UPDATE Profiles Status ---
+						string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
+						using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
 						{
-							conn.Open();
-							string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
-							using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+							cmd.Parameters.AddWithValue("@newStatus", newStatus);
+							cmd.Parameters.AddWithValue("@profileId", profileId);
+
+							int rowsAffected = cmd.ExecuteNonQuery();
+
+							if (rowsAffected > 0)
 							{
-								cmd.Parameters.AddWithValue("@newStatus", newStatus);
-								cmd.Parameters.AddWithValue("@profileId", profileId);
-
-								int rowsAffected = cmd.ExecuteNonQuery();
-
-								if (rowsAffected > 0)
+								// --- 2. INSERT into Students Table (Only if Status update was successful) ---
+								string insertStudentQuery = "INSERT INTO Students (ProfileID, EnrollmentDate) VALUES (@profileId, @enrollmentDate)";
+								using (SqlCommand insertCmd = new SqlCommand(insertStudentQuery, conn))
 								{
-									MessageBox.Show($"Successfully updated status to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+									insertCmd.Parameters.AddWithValue("@profileId", profileId);
+									// Use the date variable set at the start of the method
+									insertCmd.Parameters.AddWithValue("@enrollmentDate", enrollmentDate);
 
-									LoadData();
+									insertCmd.ExecuteNonQuery();
 								}
-								else
-								{
-									MessageBox.Show("No rows were affected. The update may have failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-								}
+
+								MessageBox.Show($"Successfully updated to '{newStatus}' and enrolled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+								LoadData(); // Refresh the DataGridView
+							}
+							else
+							{
+								MessageBox.Show("No rows were affected. The update may have failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 							}
 						}
-						catch (Exception ex)
-						{
-							MessageBox.Show("An error occurred while updating the database: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("An error occurred while updating the database: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
 			}
@@ -352,6 +372,11 @@ namespace NAVASCA_PROEL1Project
 				login.Show();
 				this.Close();
 			}
+		}
+
+		private void AdminApproval_Load(object sender, EventArgs e)
+		{
+			dateTimePicker1.Value = DateTime.Now;
 		}
 	}
 }

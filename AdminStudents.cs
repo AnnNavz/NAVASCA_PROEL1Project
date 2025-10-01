@@ -24,6 +24,7 @@ namespace NAVASCA_PROEL1Project
 		}
 
 		string connectionString = Database.ConnectionString;
+		private string selectedStudentId;
 
 		private void LoadData()
 		{
@@ -33,13 +34,13 @@ namespace NAVASCA_PROEL1Project
 								  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 								  "WHERE r.RoleName = 'Student' AND p.Status = 'Active'";
 
-			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
-									   "FROM Profiles AS p " +
-									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
-									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-									   "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' " +
-									   "ORDER BY " +
-									   "p.ProfileID DESC";
+			string sqlQuery_LoadData = "SELECT s.StudentID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
+						               "FROM Profiles AS p " +
+						               "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+						               "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+						               "INNER JOIN Students AS s ON p.ProfileID = s.ProfileID " +
+						               "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' " +
+						               "ORDER BY s.StudentID DESC";
 
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -60,8 +61,7 @@ namespace NAVASCA_PROEL1Project
 					StudentData.Columns.Clear();
 					StudentData.ReadOnly = true;
 
-					// Add the new 'Department Name' column
-					StudentData.Columns.Add("ProfileID", "Profile ID");
+					StudentData.Columns.Add("StudentID", "Student ID");
 					StudentData.Columns.Add("FirstName", "First Name");
 					StudentData.Columns.Add("LastName", "Last Name");
 					StudentData.Columns.Add("Age", "Age");
@@ -97,15 +97,42 @@ namespace NAVASCA_PROEL1Project
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
+
+			string getProfileIDQuery = "SELECT ProfileID FROM Students WHERE StudentID = @studentID_int";
+			int profileID = 0; // Initialize ProfileID
+
+			try
+			{
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
+					{
+						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId); // Use the validated INT ID
+						conn.Open();
+						// Get the ProfileID (which is needed for the simpler update)
+						object result = cmd.ExecuteScalar();
+						if (result != null)
+						{
+							profileID = Convert.ToInt32(result);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Could not find the Profile ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			try
 			{
 				if (StudentData.SelectedRows.Count > 0)
 				{
 					DataGridViewRow selectedRow = StudentData.SelectedRows[0];
 
-					string profileId = selectedRow.Cells["ProfileID"].Value.ToString();
 
 					string currentStatus = string.Empty;
+
 					if (selectedRow.Cells["Status"].Value != null)
 					{
 						currentStatus = selectedRow.Cells["Status"].Value.ToString();
@@ -117,10 +144,8 @@ namespace NAVASCA_PROEL1Project
 					if (confirmResult == DialogResult.Yes)
 					{
 						string newStatus = "Inactive";
-						UpdateUserStatus(profileId, newStatus);
+						UpdateUserStatus(profileID, newStatus);
 
-						string logDescription = $"Deactivated a student";
-						AddLogEntry(Convert.ToInt32(profileId), "Delete Student", logDescription);
 					}
 				}
 				else
@@ -135,7 +160,7 @@ namespace NAVASCA_PROEL1Project
 
 		}
 
-		private void UpdateUserStatus(string profileId, string newStatus)
+		private void UpdateUserStatus(int profileId, string newStatus)
 		{
 			
 
@@ -174,6 +199,7 @@ namespace NAVASCA_PROEL1Project
 
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
+
 			string searchTerm = txtSearch.Text.Trim();
 
 			if (string.IsNullOrEmpty(searchTerm))
@@ -182,26 +208,38 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status " +
-							  "FROM Profiles p " +
-							  "INNER JOIN Users u ON p.ProfileID = u.ProfileID " +
-							  "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
-							  "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' AND ";
+			// --- 1. RUN CHECKS ONCE ---
+			bool isNumeric = int.TryParse(searchTerm, out int numericSearchTerm);
+			bool isGender = searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase);
 
-			if (int.TryParse(searchTerm, out int numericSearchTerm))
+
+			string sqlQuery = "SELECT s.StudentID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status " +
+									   "FROM Profiles AS p " +
+									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
+									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
+									   "INNER JOIN Students AS s ON p.ProfileID = s.ProfileID " +
+									   "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' AND ";
+									   
+
+			// --- 2. Build the WHERE clause using the check results ---
+			if (isNumeric)
 			{
-				sqlQuery += " (p.ProfileID = @searchTerm OR p.Age = @searchTerm)";
+				// Use @searchVal for consistency
+				sqlQuery += " (p.ProfileID = @searchVal OR p.Age = @searchVal)";
 			}
-			else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
+			else if (isGender)
 			{
-				sqlQuery += " p.Gender = @exactSearchTerm";
+				// Use @searchVal for consistency
+				sqlQuery += " p.Gender = @searchVal";
 			}
 			else
 			{
-				sqlQuery += " (p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR p.Phone LIKE @searchTerm OR p.Address LIKE @searchTerm OR p.Email LIKE @searchTerm OR p.Status LIKE @searchTerm)";
+				// Use @searchVal for consistency
+				sqlQuery += " (p.FirstName LIKE @searchVal OR p.LastName LIKE @searchVal OR p.Phone LIKE @searchVal OR p.Address LIKE @searchVal OR p.Email LIKE @searchVal OR p.Status LIKE @searchVal)";
 			}
 
-			sqlQuery += "ORDER BY p.ProfileID";
+			// Fix: Add a space before ORDER BY
+			sqlQuery += " ORDER BY s.StudentID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -210,18 +248,21 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					// Add parameters based on the search type
-					if (int.TryParse(searchTerm, out int numericSearchTerm2))
+					// --- 3. Add parameters based on the check results ---
+					if (isNumeric)
 					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", numericSearchTerm2);
+						// Use the stored INT result
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", numericSearchTerm);
 					}
-					else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
+					else if (isGender)
 					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@exactSearchTerm", searchTerm);
+						// Use the raw string
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", searchTerm);
 					}
 					else
 					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+						// Use the LIKE wildcard
+						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", "%" + searchTerm + "%");
 					}
 
 					DataTable dataTable = new DataTable();
@@ -261,12 +302,13 @@ namespace NAVASCA_PROEL1Project
 		string phonePattern = @"^(?:\+63|0)?9\d{9}$";
 		string agePattern = @"^(1[0-9]{2}|[1-9]?[0-9])$";
 
-		private string selectedProfileId;
+	
 
 		public static bool IsValid(string input, string pattern)
 		{
 			return Regex.IsMatch(input, pattern);
 		}
+
 
 		private void btnSubmit_Click(object sender, EventArgs e)
 		{
@@ -280,7 +322,7 @@ namespace NAVASCA_PROEL1Project
 			errorProvider7.Clear();
 
 
-			if (string.IsNullOrEmpty(selectedProfileId))
+			if (string.IsNullOrEmpty(selectedStudentId))
 			{
 				MessageBox.Show("Please select a student to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
@@ -301,6 +343,32 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
+			string getProfileIDQuery = "SELECT ProfileID FROM Students WHERE StudentID = @studentID_int";
+			int profileID = 0; // Initialize ProfileID
+
+			try
+			{
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
+					{
+						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId); // Use the validated INT ID
+						conn.Open();
+						// Get the ProfileID (which is needed for the simpler update)
+						object result = cmd.ExecuteScalar();
+						if (result != null)
+						{
+							profileID = Convert.ToInt32(result);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Could not find the Profile ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			try
 			{
 				string firstName = txtFirstname.Text;
@@ -310,10 +378,6 @@ namespace NAVASCA_PROEL1Project
 				string newEmail = txtEmail.Text;
 				string age = txtAge.Text;
 				string phone = txtPhone.Text;
-
-
-
-
 
 
 				bool allValid = true;
@@ -344,30 +408,33 @@ namespace NAVASCA_PROEL1Project
 
 				string originalEmail = StudentData.SelectedRows[0].Cells["Email"].Value.ToString();
 
-				
+
 				if (newEmail != originalEmail)
 				{
-					if (IsEmailTaken(newEmail, selectedProfileId))
+					if (IsEmailTaken(newEmail, profileID))
 					{
 						MessageBox.Show("This email address is already in use by another user.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						return;
 					}
 				}
 
-				
-				string sqlQuery = "UPDATE Profiles SET " +
-								  "FirstName = @firstName, " +
-								  "LastName = @lastName, " +
-								  "Age = @age, " +
-								  "Gender = @gender, " +
-								  "Phone = @phone, " +
-								  "Address = @address, " +
-								  "Email = @email " +
-								  "WHERE ProfileID = @profileId";
+
+
+
+				string simpleUpdateQuery =
+	                                "UPDATE Profiles SET " +
+	                                "FirstName = @firstName, " +
+	                                "LastName = @lastName, " +
+	                                "Age = @age, " +
+	                                "Gender = @gender, " +
+	                                "Phone = @phone, " +
+	                                "Address = @address, " +
+	                                "Email = @email " +
+	                                "WHERE ProfileID = @profileID";
 
 				using (SqlConnection conn = new SqlConnection(connectionString))
 				{
-					using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+					using (SqlCommand cmd = new SqlCommand(simpleUpdateQuery, conn))
 					{
 						cmd.Parameters.AddWithValue("@firstName", firstName);
 						cmd.Parameters.AddWithValue("@lastName", lastName);
@@ -376,7 +443,7 @@ namespace NAVASCA_PROEL1Project
 						cmd.Parameters.AddWithValue("@phone", phone);
 						cmd.Parameters.AddWithValue("@address", address);
 						cmd.Parameters.AddWithValue("@email", newEmail);
-						cmd.Parameters.AddWithValue("@profileId", selectedProfileId);
+						cmd.Parameters.AddWithValue("@profileID", profileID);
 
 						conn.Open();
 						int rowsAffected = cmd.ExecuteNonQuery();
@@ -387,8 +454,6 @@ namespace NAVASCA_PROEL1Project
 							LoadData();
 							pnlUpdate.Visible = false;
 
-							string logDescription = $"Updated a student";
-							AddLogEntry(Convert.ToInt32(selectedProfileId), "Update Student", logDescription);
 						}
 						else
 						{
@@ -403,9 +468,9 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private bool IsEmailTaken(string email, string currentProfileId)
+		private bool IsEmailTaken(string email, int currentProfileId)
 		{
-			
+
 			string sqlQuery = "SELECT COUNT(*) FROM Profiles WHERE Email = @email AND ProfileID != @currentProfileId";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -421,6 +486,7 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
+
 		private void StudentData_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 
@@ -428,7 +494,7 @@ namespace NAVASCA_PROEL1Project
 			{
 				DataGridViewRow row = StudentData.Rows[e.RowIndex];
 
-				selectedProfileId = row.Cells["ProfileID"].Value.ToString();
+				selectedStudentId = row.Cells["StudentID"].Value.ToString();
 
 				string firstName = row.Cells["FirstName"].Value.ToString();
 				string lastName = row.Cells["LastName"].Value.ToString();
@@ -450,16 +516,16 @@ namespace NAVASCA_PROEL1Project
 
 		}
 
-		private void AddLogEntry(int profileID, string action, string description)
+		private void AddLogEntry(string Name, string action, string description)
 		{
 			
-			string sqlQuery = "INSERT INTO Logs (ProfileID, Action, Description) VALUES (@profileId, @action, @description)";
+			string sqlQuery = "INSERT INTO Logs (Name, Action, Description) VALUES (@Name, @action, @description)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
 				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
 				{
-					cmd.Parameters.AddWithValue("@profileId", profileID);
+					cmd.Parameters.AddWithValue("@Name", Name);
 					cmd.Parameters.AddWithValue("@action", action);
 					cmd.Parameters.AddWithValue("@description", description);
 

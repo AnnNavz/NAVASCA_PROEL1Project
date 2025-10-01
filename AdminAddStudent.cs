@@ -53,6 +53,7 @@ namespace NAVASCA_PROEL1Project
 			enrollDate = dateTimePicker1.Value;
 			string action = "Add Student";
 			string description = "Added a new student";
+			string AddName = txtFirstname.Text + " " + txtLastname.Text;
 
 
 			bool requiredFieldsMissing = false;
@@ -152,6 +153,7 @@ namespace NAVASCA_PROEL1Project
 					cmd.Parameters.AddWithValue("@EnrollmentDate", enrollDate);
 					cmd.Parameters.AddWithValue("@Action", action);
 					cmd.Parameters.AddWithValue("@Description", description);
+					cmd.Parameters.AddWithValue("@AddName", AddName);
 
 
 					cmd.ExecuteNonQuery();

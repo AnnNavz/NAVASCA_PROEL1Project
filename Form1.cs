@@ -31,11 +31,6 @@ namespace NAVASCA_PROEL1Project
 		string agePattern = @"^(1[0-9]{2}|[1-9]?[0-9])$";
 
 
-		private void Form1_Load(object sender, EventArgs e)
-		{
-			dateTimePicker1.Value = DateTime.Now;
-		}
-
 		public static bool IsValid(string input, string pattern)
         {
             return Regex.IsMatch(input, pattern);
@@ -57,8 +52,6 @@ namespace NAVASCA_PROEL1Project
 			string age = txtAge.Text;
 			string phone = txtPhone.Text;
 			string email = txtEmail.Text;
-			DateTime enrollDate;
-			enrollDate = dateTimePicker1.Value;
 
 
 			bool requiredFieldsMissing = false;
@@ -154,7 +147,6 @@ namespace NAVASCA_PROEL1Project
 				cmd.Parameters.AddWithValue("@email", txtEmail.Text);
 				cmd.Parameters.AddWithValue("@Username", generatedUserID);
 				cmd.Parameters.AddWithValue("@HashedPassword", hashedPassword);
-				cmd.Parameters.AddWithValue("@EnrollmentDate", enrollDate);
 
 
 				cmd.ExecuteNonQuery();
