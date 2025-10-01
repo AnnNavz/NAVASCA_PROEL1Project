@@ -22,6 +22,7 @@ namespace NAVASCA_PROEL1Project
 		}
 
 		string connectionString = Database.ConnectionString;
+		private string selectedInstructorId;
 
 
 		private void btnAdd_Click(object sender, EventArgs e)
@@ -41,7 +42,7 @@ namespace NAVASCA_PROEL1Project
 								  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 								  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
-			string sqlQuery_LoadData = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status, d.DepartmentName " +
+			string sqlQuery_LoadData = "SELECT i.InstructorID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, ISNULL(p.Status, 'Unknown') AS Status, d.DepartmentName " +
 									   "FROM Profiles AS p " +
 									   "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 									   "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
@@ -71,7 +72,7 @@ namespace NAVASCA_PROEL1Project
 					TeachersData.ReadOnly = true;
 
 					// Add the new 'Department Name' column
-					TeachersData.Columns.Add("ProfileID", "Profile ID");
+					TeachersData.Columns.Add("InstructorID", "Instructor ID");
 					TeachersData.Columns.Add("FirstName", "First Name");
 					TeachersData.Columns.Add("LastName", "Last Name");
 					TeachersData.Columns.Add("Age", "Age");
@@ -107,13 +108,39 @@ namespace NAVASCA_PROEL1Project
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
+
+			string getProfileIDQuery = "SELECT ProfileID FROM Instructors WHERE InstructorID = @instructorID_int";
+			int profileID = 0; // Initialize ProfileID
+
+			try
+			{
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
+					{
+						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId); // Use the validated INT ID
+						conn.Open();
+						// Get the ProfileID (which is needed for the simpler update)
+						object result = cmd.ExecuteScalar();
+						if (result != null)
+						{
+							profileID = Convert.ToInt32(result);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Could not find the Profile ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			try
 			{
 				if (TeachersData.SelectedRows.Count > 0)
 				{
 					DataGridViewRow selectedRow = TeachersData.SelectedRows[0];
 
-					string profileId = selectedRow.Cells["ProfileID"].Value.ToString();
 
 					string currentStatus = string.Empty;
 					if (selectedRow.Cells["Status"].Value != null)
@@ -127,10 +154,10 @@ namespace NAVASCA_PROEL1Project
 					if (confirmResult == DialogResult.Yes)
 					{
 						string newStatus = "Inactive";
-						UpdateUserStatus(profileId, newStatus);
+						UpdateUserStatus(profileID, newStatus);
 
-						string logDescription = $"Deactivated a teacher";
-						AddLogEntry(Convert.ToInt32(profileId), "Delete Teacher", logDescription);
+						//string logDescription = $"Deactivated a teacher";
+						//AddLogEntry(Convert.ToInt32(profileId), "Delete Teacher", logDescription);
 					}
 				}
 				else
@@ -145,7 +172,7 @@ namespace NAVASCA_PROEL1Project
 		}
 
 
-		private void UpdateUserStatus(string profileId, string newStatus)
+		private void UpdateUserStatus(int profileId, string newStatus)
 		{
 			
 
@@ -193,7 +220,7 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			// Original SQL Query structure modified to include DepartmentName and necessary joins
-			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status, d.DepartmentName " +
+			string sqlQuery = "SELECT i.InstructorID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status, d.DepartmentName " +
 							  "FROM Profiles AS p " +
 							  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 							  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
@@ -218,14 +245,7 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			// *** KEPT ORIGINAL ORDER BY (which is department logic for teachers) ***
-			sqlQuery += " ORDER BY " +
-						"CASE d.DepartmentName " +
-						"WHEN 'College of Computer Studies' THEN 1 " +
-						"WHEN 'College of Business and Management' THEN 2 " +
-						"WHEN 'College of Arts, Sciences, and Pedagogy' THEN 3 " +
-						"WHEN 'College of Nursing' THEN 4 " +
-						"ELSE 5 END, " +
-						"p.ProfileID";
+			sqlQuery += " ORDER BY i.InstructorID DESC";
 
 			// ... (rest of the code for SQL connection, parameters, and DataAdapter remains the same)
 
@@ -288,7 +308,7 @@ namespace NAVASCA_PROEL1Project
 		string phonePattern = @"^(?:\+63|0)?9\d{9}$";
 		string agePattern = @"^(1[0-9]{2}|[1-9]?[0-9])$";
 
-		private string selectedProfileId;
+		
 
 		public static bool IsValid(string input, string pattern)
 		{
@@ -308,7 +328,7 @@ namespace NAVASCA_PROEL1Project
 			errorProvider8.Clear();
 
 
-			if (string.IsNullOrEmpty(selectedProfileId))
+			if (string.IsNullOrEmpty(selectedInstructorId))
 			{
 				MessageBox.Show("Please select a teacher to update.", "No Student Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
@@ -327,6 +347,32 @@ namespace NAVASCA_PROEL1Project
 
 			if (requiredFieldsMissing)
 			{
+				return;
+			}
+
+			string getProfileIDQuery = "SELECT ProfileID FROM Instructors WHERE InstructorID = @instructorID_int";
+			int profileID = 0; // Initialize ProfileID
+
+			try
+			{
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
+					{
+						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId); // Use the validated INT ID
+						conn.Open();
+						// Get the ProfileID (which is needed for the simpler update)
+						object result = cmd.ExecuteScalar();
+						if (result != null)
+						{
+							profileID = Convert.ToInt32(result);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Could not find the Profile ID: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -372,7 +418,7 @@ namespace NAVASCA_PROEL1Project
 
 				if (newEmail != originalEmail)
 				{
-					if (IsEmailTaken(newEmail, selectedProfileId))
+					if (IsEmailTaken(newEmail, profileID))
 					{
 						MessageBox.Show("This email address is already in use by another user.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						return;
@@ -390,8 +436,6 @@ namespace NAVASCA_PROEL1Project
 					return;
 				}
 
-				// Assuming you have a variable for the ProfileID of the selected teacher
-				int selectedProfileID = (int)TeachersData.SelectedRows[0].Cells["ProfileID"].Value;
 
 
 				// SQL query to update both the Profiles and Instructors tables
@@ -421,7 +465,7 @@ namespace NAVASCA_PROEL1Project
 						cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
 						cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
 						cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-						cmd.Parameters.AddWithValue("@profileId", selectedProfileID);
+						cmd.Parameters.AddWithValue("@profileId",profileID);
 
 						// Add parameter for the Instructors table update
 						cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
@@ -431,8 +475,8 @@ namespace NAVASCA_PROEL1Project
 						if (rowsAffected > 0)
 						{
 							// Create log description
-							string logDescription = $"Updated a teacher.";
-							AddLogEntry(selectedProfileID, "Update Teacher", logDescription);
+							//string logDescription = $"Updated a teacher.";
+							//AddLogEntry(selectedProfileID, "Update Teacher", logDescription);
 
 							MessageBox.Show("Teacher updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 							LoadData();
@@ -459,7 +503,7 @@ namespace NAVASCA_PROEL1Project
 
 
 
-		private bool IsEmailTaken(string email, string currentProfileId)
+		private bool IsEmailTaken(string email, int currentProfileId)
 		{
 			
 			string sqlQuery = "SELECT COUNT(*) FROM Profiles WHERE Email = @email AND ProfileID != @currentProfileId";
@@ -510,7 +554,7 @@ namespace NAVASCA_PROEL1Project
 			{
 				DataGridViewRow row = TeachersData.Rows[e.RowIndex];
 
-				selectedProfileId = row.Cells["ProfileID"].Value.ToString();
+				selectedInstructorId = row.Cells["InstructorID"].Value.ToString();
 
 				string firstName = row.Cells["FirstName"].Value.ToString();
 				string lastName = row.Cells["LastName"].Value.ToString();
@@ -532,31 +576,31 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void AddLogEntry(int profileID, string action, string description)
-		{
+		//private void AddLogEntry(int profileID, string action, string description)
+		//{
 			
-			string sqlQuery = "INSERT INTO Logs (ProfileID, Action, Description) VALUES (@profileId, @action, @description)";
+		//	string sqlQuery = "INSERT INTO Logs (ProfileID, Action, Description) VALUES (@profileId, @action, @description)";
 
-			using (SqlConnection conn = new SqlConnection(connectionString))
-			{
-				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
-				{
-					cmd.Parameters.AddWithValue("@profileId", profileID);
-					cmd.Parameters.AddWithValue("@action", action);
-					cmd.Parameters.AddWithValue("@description", description);
+		//	using (SqlConnection conn = new SqlConnection(connectionString))
+		//	{
+		//		using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+		//		{
+		//			cmd.Parameters.AddWithValue("@profileId", profileID);
+		//			cmd.Parameters.AddWithValue("@action", action);
+		//			cmd.Parameters.AddWithValue("@description", description);
 
-					try
-					{
-						conn.Open();
-						cmd.ExecuteNonQuery();
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show("Error logging action: " + ex.Message);
-					}
-				}
-			}
-		}
+		//			try
+		//			{
+		//				conn.Open();
+		//				cmd.ExecuteNonQuery();
+		//			}
+		//			catch (Exception ex)
+		//			{
+		//				MessageBox.Show("Error logging action: " + ex.Message);
+		//			}
+		//		}
+		//	}
+		//}
 
 		private void btnApproval_Click(object sender, EventArgs e)
 		{

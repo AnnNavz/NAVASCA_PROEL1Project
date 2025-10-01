@@ -62,8 +62,10 @@ namespace NAVASCA_PROEL1Project
 			DateTime hireDate;
 			hireDate = dateTimePicker1.Value;
 
+
 			string action = "Add Teacher";
 			string description = "Added a new teacher";
+			string AddName = txtFirstname.Text + " " + txtLastname.Text;
 
 			bool requiredFieldsMissing = false;
 
@@ -165,6 +167,7 @@ namespace NAVASCA_PROEL1Project
 					cmd.Parameters.AddWithValue("@HiredDate", hireDate);
 					cmd.Parameters.AddWithValue("@Action", action);
 					cmd.Parameters.AddWithValue("@Description", description);
+					cmd.Parameters.AddWithValue("@AddName", AddName);
 
 
 					cmd.ExecuteNonQuery();

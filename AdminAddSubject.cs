@@ -127,6 +127,10 @@ namespace NAVASCA_PROEL1Project
 			errorProvider4.Clear();
 			errorProvider5.Clear();
 
+			string action = "Add Subject";
+			string description = "Added a new subject";
+			string AddName = txtCourseName.Text;
+
 
 			bool requiredFieldsMissing = false;
 
@@ -161,6 +165,9 @@ namespace NAVASCA_PROEL1Project
 				cmd.Parameters.AddWithValue("@Teacher", cmbTeacher.Text);
 				cmd.Parameters.AddWithValue("@Department", cmbDepartment.Text);
 				cmd.Parameters.AddWithValue("@Status", status);
+				cmd.Parameters.AddWithValue("@Action", action);
+				cmd.Parameters.AddWithValue("@AddDescription", description);
+				cmd.Parameters.AddWithValue("@AddName", AddName);
 
 
 				cmd.ExecuteNonQuery();
