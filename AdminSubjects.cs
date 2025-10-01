@@ -38,6 +38,9 @@ namespace NAVASCA_PROEL1Project
 
 		private void LoadCourses()
 		{
+			string sqlQuery_TotalSubjectCount = "SELECT COUNT(CourseID)" +
+												"FROM Courses " +
+												"WHERE Status = 'Active'";
 
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
 							  "p.FirstName, p.LastName, d.DepartmentName, c.Status " +
@@ -53,6 +56,11 @@ namespace NAVASCA_PROEL1Project
 				try
 				{
 					conn.Open();
+
+					SqlCommand countSubjectcmd = new SqlCommand(sqlQuery_TotalSubjectCount, conn);
+					int SubjectCount = (int)countSubjectcmd.ExecuteScalar();
+					lblTotalSubjects.Text = SubjectCount.ToString();
+
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);

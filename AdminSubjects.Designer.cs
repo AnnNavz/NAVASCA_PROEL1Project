@@ -72,6 +72,8 @@
 			this.btnSubjects = new Guna.UI2.WinForms.Guna2Button();
 			this.btnTeachers = new Guna.UI2.WinForms.Guna2Button();
 			this.btnStudents = new Guna.UI2.WinForms.Guna2Button();
+			this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+			this.lblTotalSubjects = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
 			this.panel1.SuspendLayout();
@@ -255,6 +257,8 @@
 			// panel1
 			// 
 			this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+			this.panel1.Controls.Add(this.guna2HtmlLabel6);
+			this.panel1.Controls.Add(this.lblTotalSubjects);
 			this.panel1.Controls.Add(this.pnlUpdate);
 			this.panel1.Controls.Add(this.guna2HtmlLabel5);
 			this.panel1.Controls.Add(this.btnDelete);
@@ -800,6 +804,28 @@
 			this.btnStudents.Text = "View Students";
 			this.btnStudents.Click += new System.EventHandler(this.btnStudents_Click);
 			// 
+			// guna2HtmlLabel6
+			// 
+			this.guna2HtmlLabel6.BackColor = System.Drawing.Color.Transparent;
+			this.guna2HtmlLabel6.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.guna2HtmlLabel6.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.guna2HtmlLabel6.Location = new System.Drawing.Point(38, 101);
+			this.guna2HtmlLabel6.Name = "guna2HtmlLabel6";
+			this.guna2HtmlLabel6.Size = new System.Drawing.Size(150, 25);
+			this.guna2HtmlLabel6.TabIndex = 25;
+			this.guna2HtmlLabel6.Text = "Active Subjects:";
+			// 
+			// lblTotalSubjects
+			// 
+			this.lblTotalSubjects.BackColor = System.Drawing.Color.Transparent;
+			this.lblTotalSubjects.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTotalSubjects.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblTotalSubjects.Location = new System.Drawing.Point(193, 97);
+			this.lblTotalSubjects.Name = "lblTotalSubjects";
+			this.lblTotalSubjects.Size = new System.Drawing.Size(16, 32);
+			this.lblTotalSubjects.TabIndex = 24;
+			this.lblTotalSubjects.Text = "0";
+			// 
 			// AdminSubjects
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -866,5 +892,7 @@
 		private Guna.UI2.WinForms.Guna2ComboBox cmbTeacher;
 		private System.Windows.Forms.Label label6;
 		private Guna.UI2.WinForms.Guna2TextBox txtCourseCode;
+		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
+		private Guna.UI2.WinForms.Guna2HtmlLabel lblTotalSubjects;
 	}
 }
