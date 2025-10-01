@@ -186,18 +186,26 @@ namespace NAVASCA_PROEL1Project
 										  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 										  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active'";
 
+			string sqlQuery_TotalSubjectCount = "SELECT COUNT(CourseID)" +
+												"FROM Courses " +
+												"WHERE Status = 'Active'";
+
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
 
 				conn.Open();
 
-				SqlCommand countCmd = new SqlCommand(sqlQuery_TotalStudentCount, conn);
-				int StudentCount = (int)countCmd.ExecuteScalar();
+				SqlCommand countStudentcmd = new SqlCommand(sqlQuery_TotalStudentCount, conn);
+				int StudentCount = (int)countStudentcmd.ExecuteScalar();
 				lblStudentTotal.Text = StudentCount.ToString();
 
-				SqlCommand countCMD = new SqlCommand(sqlQuery_TotalTeacherCount, conn);
-				int TeacherCount = (int)countCMD.ExecuteScalar();
+				SqlCommand countTeachercmd = new SqlCommand(sqlQuery_TotalTeacherCount, conn);
+				int TeacherCount = (int)countTeachercmd.ExecuteScalar();
 				lblTeacherTotal.Text = TeacherCount.ToString();
+
+				SqlCommand countSubjectcmd = new SqlCommand(sqlQuery_TotalSubjectCount, conn);
+				int SubjectCount = (int)countSubjectcmd.ExecuteScalar();
+				lblSubjectTotal.Text = SubjectCount.ToString();
 			}
 		}
 

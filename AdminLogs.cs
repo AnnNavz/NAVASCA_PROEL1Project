@@ -25,15 +25,11 @@ namespace NAVASCA_PROEL1Project
 		private void LoadLogs()
 		{
 
-			string sqlQuery = "SELECT l.LogID, p.FirstName, p.LastName, l.Action, l.Description, l.Date, " +
-							  "CONVERT(VARCHAR(8), l.Time, 100) AS Time " +
-							  "FROM Logs l " +
-							  "INNER JOIN Profiles p ON l.ProfileID = p.ProfileID " +
-							  "INNER JOIN Users u ON p.ProfileID = u.ProfileID " +
-							  "INNER JOIN Roles r ON u.RoleID = r.RoleID " +
-							  "WHERE r.RoleName IN ('Student', 'Instructor') " + 
+			string sqlQuery = "SELECT LogID, Name, Action, Description, Date, " +
+							  "CONVERT(VARCHAR(8), Time, 100) AS Time " +
+							  "FROM Logs " +
 							  "ORDER BY " +
-							  "l.LogID DESC";
+							  "LogID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -64,34 +60,24 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			string sqlQuery = "SELECT l.LogID, p.FirstName, p.LastName, l.Action, l.Description, l.Date, " +
-							  "CONVERT(VARCHAR(8), l.Time, 100) AS Time " +
-							  "FROM Logs l " +
-							  "INNER JOIN Profiles p ON l.ProfileID = p.ProfileID ";
+			string sqlQuery = "SELECT LogID, Name, Action, Description, Date, " +
+							  "CONVERT(VARCHAR(8), Time, 100) AS Time " +
+							  "FROM Logs ";
 
 			if (int.TryParse(searchTerm, out int numericSearchTerm))
 			{
-				sqlQuery += "WHERE l.LogID = @searchTerm";
+				sqlQuery += "WHERE LogID = @searchTerm";
 			}
 			else if (DateTime.TryParse(searchTerm, out DateTime dateValue))
 			{
-				sqlQuery += "WHERE l.Date = @searchTerm";
+				sqlQuery += "WHERE Date = @searchTerm";
 			}
 			else
 			{
-				sqlQuery += "WHERE p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR l.Action LIKE @searchTerm OR l.Description LIKE @searchTerm";
+				sqlQuery += "WHERE Name LIKE @searchTerm OR Action LIKE @searchTerm OR Description LIKE @searchTerm ";
 			}
 
-			sqlQuery += " ORDER BY " +
-						"CASE l.Action " +
-						"WHEN 'Add Student' THEN 1 " +
-						"WHEN 'Delete Student' THEN 2 " +
-						"WHEN 'Update Student' THEN 3 " +
-						"WHEN 'Add Teacher' THEN 4 " +
-						"WHEN 'Delete Teacher' THEN 5 " +
-						"WHEN 'Update Teacher' THEN 6 " +
-						"ELSE 7 END, " +
-						"l.Date DESC, l.Time DESC";
+			sqlQuery += " ORDER BY LogID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
