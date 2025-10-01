@@ -16,7 +16,7 @@ namespace NAVASCA_PROEL1Project
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AdminTeachers());
+            Application.Run(new Login());
         }
     }
 }

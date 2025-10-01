@@ -45,7 +45,7 @@ namespace NAVASCA_PROEL1Project
         private void btnRegister_Click(object sender, EventArgs e)
         {
             Form1 register = new Form1();
-            register.ShowDialog();
+            register.Show();
             this.Hide();
         }
 

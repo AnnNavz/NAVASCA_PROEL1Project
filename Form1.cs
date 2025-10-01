@@ -164,7 +164,7 @@ namespace NAVASCA_PROEL1Project
 		private void btnLogin_Click(object sender, EventArgs e)
 		{
 			Login login = new Login();
-			login.ShowDialog();
+			login.Show();
 			this.Hide();
 		}
 

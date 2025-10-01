@@ -38,7 +38,6 @@
 			this.errorProvider6 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.txtEmail = new Guna.UI2.WinForms.Guna2TextBox();
 			this.txtAddress = new Guna.UI2.WinForms.Guna2TextBox();
 			this.cmbGender = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -93,7 +92,6 @@
 			// panel1
 			// 
 			this.panel1.BackColor = System.Drawing.Color.Transparent;
-			this.panel1.Controls.Add(this.dateTimePicker1);
 			this.panel1.Controls.Add(this.txtEmail);
 			this.panel1.Controls.Add(this.txtAddress);
 			this.panel1.Controls.Add(this.cmbGender);
@@ -111,14 +109,6 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(518, 613);
 			this.panel1.TabIndex = 29;
-			// 
-			// dateTimePicker1
-			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(167, 25);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-			this.dateTimePicker1.TabIndex = 43;
-			this.dateTimePicker1.Visible = false;
 			// 
 			// txtEmail
 			// 
@@ -394,7 +384,6 @@
 		private Guna.UI2.WinForms.Guna2TextBox txtAddress;
 		private Guna.UI2.WinForms.Guna2TextBox txtPhone;
 		private Guna.UI2.WinForms.Guna2TextBox txtAge;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 	}
 }
 

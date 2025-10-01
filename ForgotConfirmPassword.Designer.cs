@@ -33,7 +33,6 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.txtOld = new Guna.UI2.WinForms.Guna2TextBox();
 			this.txtNew = new Guna.UI2.WinForms.Guna2TextBox();
 			this.txtConfirm = new Guna.UI2.WinForms.Guna2TextBox();
 			this.btnConfirm = new Guna.UI2.WinForms.Guna2Button();
@@ -72,11 +71,11 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(253, 166);
+			this.label3.Location = new System.Drawing.Point(262, 166);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(295, 38);
+			this.label3.Size = new System.Drawing.Size(266, 38);
 			this.label3.TabIndex = 33;
-			this.label3.Text = "Change Password";
+			this.label3.Text = "Forgot Password";
 			// 
 			// label5
 			// 
@@ -89,28 +88,6 @@
 			this.label5.Size = new System.Drawing.Size(217, 19);
 			this.label5.TabIndex = 42;
 			this.label5.Text = "Back to Email Confirmation";
-			// 
-			// txtOld
-			// 
-			this.txtOld.BackColor = System.Drawing.Color.Transparent;
-			this.txtOld.BorderRadius = 10;
-			this.txtOld.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.txtOld.DefaultText = "";
-			this.txtOld.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-			this.txtOld.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-			this.txtOld.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtOld.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtOld.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtOld.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtOld.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.txtOld.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtOld.Location = new System.Drawing.Point(258, 282);
-			this.txtOld.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.txtOld.Name = "txtOld";
-			this.txtOld.PlaceholderText = "Old Password";
-			this.txtOld.SelectedText = "";
-			this.txtOld.Size = new System.Drawing.Size(278, 33);
-			this.txtOld.TabIndex = 43;
 			// 
 			// txtNew
 			// 
@@ -126,7 +103,7 @@
 			this.txtNew.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.txtNew.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtNew.Location = new System.Drawing.Point(258, 327);
+			this.txtNew.Location = new System.Drawing.Point(258, 294);
 			this.txtNew.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.txtNew.Name = "txtNew";
 			this.txtNew.PlaceholderText = "New Password";
@@ -148,7 +125,7 @@
 			this.txtConfirm.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtConfirm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.txtConfirm.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtConfirm.Location = new System.Drawing.Point(258, 371);
+			this.txtConfirm.Location = new System.Drawing.Point(258, 338);
 			this.txtConfirm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.txtConfirm.Name = "txtConfirm";
 			this.txtConfirm.PlaceholderText = "Confirm Password";
@@ -169,7 +146,7 @@
 			this.btnConfirm.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold);
 			this.btnConfirm.ForeColor = System.Drawing.Color.White;
 			this.btnConfirm.HoverState.FillColor = System.Drawing.Color.RoyalBlue;
-			this.btnConfirm.Location = new System.Drawing.Point(289, 448);
+			this.btnConfirm.Location = new System.Drawing.Point(289, 442);
 			this.btnConfirm.Name = "btnConfirm";
 			this.btnConfirm.Size = new System.Drawing.Size(214, 45);
 			this.btnConfirm.TabIndex = 46;
@@ -185,7 +162,6 @@
 			this.Controls.Add(this.btnConfirm);
 			this.Controls.Add(this.txtConfirm);
 			this.Controls.Add(this.txtNew);
-			this.Controls.Add(this.txtOld);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label3);
@@ -205,7 +181,6 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label5;
-		private Guna.UI2.WinForms.Guna2TextBox txtOld;
 		private Guna.UI2.WinForms.Guna2TextBox txtNew;
 		private Guna.UI2.WinForms.Guna2TextBox txtConfirm;
 		private Guna.UI2.WinForms.Guna2Button btnConfirm;
