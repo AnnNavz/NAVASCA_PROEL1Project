@@ -20,7 +20,7 @@ namespace NAVASCA_PROEL1Project
         }
 
 		string connectionString = Database.ConnectionString;
-		string mailPattern = @"^[\w\.-]+@gmail\.com$";
+		string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$";
 
         public static bool IsValidGmail(string email, string pattern)
         {

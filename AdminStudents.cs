@@ -292,7 +292,7 @@ namespace NAVASCA_PROEL1Project
 			pnlUpdate.Visible = false;
 		}
 
-		string mailPattern = @"^[\w\.-]+@gmail\.com$";
+		string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$";
 		string phonePattern = @"^(?:\+63|0)?9\d{9}$";
 		string agePattern = @"^(1[0-9]{2}|[1-9]?[0-9])$";
 
