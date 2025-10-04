@@ -17,16 +17,19 @@ namespace NAVASCA_PROEL1Project
         public Login()
         {
             InitializeComponent();
-        }
+			lockoutTime = DateTime.Now;
+
+		}
 
 		string connectionString = Database.ConnectionString;
 
 		private int loginAttempts = 0;
         private const int MAX_ATTEMPTS = 3;
+		private DateTime lockoutTime;
 
-       
 
-        private static string HashPassword(string plainPassword)
+
+		private static string HashPassword(string plainPassword)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -76,6 +79,13 @@ namespace NAVASCA_PROEL1Project
 
 			errorProvider1.Clear();
 			errorProvider2.Clear();
+
+			if (DateTime.Now < lockoutTime)
+			{
+				TimeSpan remainingTime = lockoutTime - DateTime.Now;
+				MessageBox.Show($"Maximum login attempts exceeded. Please try again after {remainingTime.Minutes} minutes and {remainingTime.Seconds} seconds.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 
 
 			bool isValid = true;
@@ -171,8 +181,8 @@ namespace NAVASCA_PROEL1Project
 
 						if (loginAttempts >= MAX_ATTEMPTS)
 						{
-							MessageBox.Show("Maximum login attempts exceeded. The application will now close.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-							Application.Exit();
+							lockoutTime = DateTime.Now.AddMinutes(3);
+							MessageBox.Show($"Maximum login attempts exceeded. You are locked out for 3 minutes.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 						}
 						else
 						{

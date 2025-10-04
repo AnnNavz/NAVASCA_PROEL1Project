@@ -87,6 +87,11 @@ namespace NAVASCA_PROEL1Project
 
 				if (result == DialogResult.Yes)
 				{
+
+					string LogName = txtCourseName.Text;
+					string logDescription = $"Deleted a subject.";
+					AddLogEntry(LogName, "Delete Subject", logDescription);
+
 					DeleteCourse(courseID);
 
 					LoadCourses();
@@ -316,6 +321,12 @@ namespace NAVASCA_PROEL1Project
 
 					if (rowsAffected > 0)
 					{
+
+
+						string LogName = txtCourseName.Text;
+						string logDescription = $"Updated a subject.";
+						AddLogEntry(LogName, "Update Subject", logDescription);
+
 						MessageBox.Show("Course details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						LoadCourses();
 
@@ -458,6 +469,33 @@ namespace NAVASCA_PROEL1Project
 				catch (Exception ex)
 				{
 					MessageBox.Show("An error occurred: " + ex.Message);
+				}
+			}
+		}
+
+
+		private void AddLogEntry(string name, string action, string description)
+		{
+
+			string sqlQuery = "INSERT INTO Logs (Name, Action, Description) VALUES (@name, @action, @description)";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
+					cmd.Parameters.AddWithValue("@name", name);
+					cmd.Parameters.AddWithValue("@action", action);
+					cmd.Parameters.AddWithValue("@description", description);
+
+					try
+					{
+						conn.Open();
+						cmd.ExecuteNonQuery();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("Error logging action: " + ex.Message);
+					}
 				}
 			}
 		}

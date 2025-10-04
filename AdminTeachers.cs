@@ -154,8 +154,10 @@ namespace NAVASCA_PROEL1Project
 						string newStatus = "Inactive";
 						UpdateUserStatus(profileID, newStatus);
 
-						//string logDescription = $"Deactivated a teacher";
-						//AddLogEntry(Convert.ToInt32(profileId), "Delete Teacher", logDescription);
+
+						string LogName = txtFirstname.Text + " " + txtLastname.Text;
+						string logDescription = $"Deactivated a Teacher.";
+						AddLogEntry(LogName, "Delete a Teacher", logDescription);
 					}
 				}
 				else
@@ -451,9 +453,9 @@ namespace NAVASCA_PROEL1Project
 
 						if (rowsAffected > 0)
 						{
-							// Create log description
-							//string logDescription = $"Updated a teacher.";
-							//AddLogEntry(selectedProfileID, "Update Teacher", logDescription);
+							string LogName = txtFirstname.Text + " " +  txtLastname.Text;
+							string logDescription = $"Updated a teacher.";
+							AddLogEntry(LogName, "Update Teacher", logDescription);
 
 							MessageBox.Show("Teacher updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 							LoadData();
@@ -553,31 +555,31 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		//private void AddLogEntry(int profileID, string action, string description)
-		//{
-			
-		//	string sqlQuery = "INSERT INTO Logs (ProfileID, Action, Description) VALUES (@profileId, @action, @description)";
+		private void AddLogEntry(string name, string action, string description)
+		{
 
-		//	using (SqlConnection conn = new SqlConnection(connectionString))
-		//	{
-		//		using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
-		//		{
-		//			cmd.Parameters.AddWithValue("@profileId", profileID);
-		//			cmd.Parameters.AddWithValue("@action", action);
-		//			cmd.Parameters.AddWithValue("@description", description);
+			string sqlQuery = "INSERT INTO Logs (Name, Action, Description) VALUES (@name, @action, @description)";
 
-		//			try
-		//			{
-		//				conn.Open();
-		//				cmd.ExecuteNonQuery();
-		//			}
-		//			catch (Exception ex)
-		//			{
-		//				MessageBox.Show("Error logging action: " + ex.Message);
-		//			}
-		//		}
-		//	}
-		//}
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
+					cmd.Parameters.AddWithValue("@name", name);
+					cmd.Parameters.AddWithValue("@action", action);
+					cmd.Parameters.AddWithValue("@description", description);
+
+					try
+					{
+						conn.Open();
+						cmd.ExecuteNonQuery();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("Error logging action: " + ex.Message);
+					}
+				}
+			}
+		}
 
 		private void btnApproval_Click(object sender, EventArgs e)
 		{

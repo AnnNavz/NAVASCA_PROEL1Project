@@ -142,6 +142,11 @@ namespace NAVASCA_PROEL1Project
 
 					if (confirmResult == DialogResult.Yes)
 					{
+
+						string LogName = txtFirstname.Text + " " + txtLastname.Text;
+						string logDescription = $"Deleted a student.";
+						AddLogEntry(LogName, "Delete Student", logDescription);
+
 						string newStatus = "Inactive";
 						UpdateUserStatus(profileID, newStatus);
 
@@ -438,9 +443,16 @@ namespace NAVASCA_PROEL1Project
 
 						if (rowsAffected > 0)
 						{
+
+							string LogName = txtFirstname.Text + " " + txtLastname.Text;
+							string logDescription = $"Updated a student.";
+							AddLogEntry(LogName, "Update Student", logDescription);
+
 							MessageBox.Show("Student profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 							LoadData();
 							pnlUpdate.Visible = false;
+
+
 
 						}
 						else
@@ -506,7 +518,7 @@ namespace NAVASCA_PROEL1Project
 
 		private void AddLogEntry(string Name, string action, string description)
 		{
-			
+
 			string sqlQuery = "INSERT INTO Logs (Name, Action, Description) VALUES (@Name, @action, @description)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
