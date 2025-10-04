@@ -73,7 +73,6 @@ namespace NAVASCA_PROEL1Project
 				{
 					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
 					{
-						// Add the parameter to the command to prevent SQL injection
 						command.Parameters.AddWithValue("@DepartmentID", departmentID);
 						connection.Open();
 						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);

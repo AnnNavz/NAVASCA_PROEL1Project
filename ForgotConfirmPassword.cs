@@ -55,11 +55,9 @@ namespace NAVASCA_PROEL1Project
 		private void btnConfirm_Click_1(object sender, EventArgs e)
 		{
 
-			//string oldPassword = txtOld.Text.Trim();
 			string newPassword = txtNew.Text.Trim();
 			string confirmPassword = txtConfirm.Text.Trim();
 
-			//string hashedOldPassword = HashPassword(oldPassword);
 			string hashedNewPassword = HashPassword(newPassword);
 
 			bool requiredFieldsMissing = false;
