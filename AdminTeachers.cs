@@ -71,7 +71,6 @@ namespace NAVASCA_PROEL1Project
 					TeachersData.Columns.Clear();
 					TeachersData.ReadOnly = true;
 
-					// Add the new 'Department Name' column
 					TeachersData.Columns.Add("InstructorID", "Instructor ID");
 					TeachersData.Columns.Add("FirstName", "First Name");
 					TeachersData.Columns.Add("LastName", "Last Name");
@@ -110,7 +109,7 @@ namespace NAVASCA_PROEL1Project
 		{
 
 			string getProfileIDQuery = "SELECT ProfileID FROM Instructors WHERE InstructorID = @instructorID_int";
-			int profileID = 0; // Initialize ProfileID
+			int profileID = 0;
 
 			try
 			{
@@ -118,9 +117,8 @@ namespace NAVASCA_PROEL1Project
 				{
 					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
 					{
-						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId); // Use the validated INT ID
+						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId);
 						conn.Open();
-						// Get the ProfileID (which is needed for the simpler update)
 						object result = cmd.ExecuteScalar();
 						if (result != null)
 						{
@@ -212,6 +210,8 @@ namespace NAVASCA_PROEL1Project
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
 			string searchTerm = txtSearch.Text.Trim();
+			string parameterName = "";
+			object parameterValue = null; 
 
 			if (string.IsNullOrEmpty(searchTerm))
 			{
@@ -219,35 +219,35 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			// Original SQL Query structure modified to include DepartmentName and necessary joins
 			string sqlQuery = "SELECT i.InstructorID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status, d.DepartmentName " +
 							  "FROM Profiles AS p " +
 							  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 							  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
-							  // *** ADDED JOINS FOR DEPARTMENT NAME ***
-							  // NOTE: Students do not have an InstructorID, so this join will likely exclude many records or result in NULL.
 							  "LEFT JOIN Instructors AS i ON p.ProfileID = i.ProfileID " +
 							  "LEFT JOIN Departments AS d ON i.DepartmentID = d.DepartmentID " +
 							  "WHERE r.RoleName = 'Instructor' AND p.Status = 'Active' AND ";
 
 			if (int.TryParse(searchTerm, out int numericSearchTerm))
 			{
-				sqlQuery += "(p.ProfileID = @numericSearchTerm OR p.Age = @numericSearchTerm)";
+				sqlQuery += "(p.ProfileID = @NumericTerm OR p.Age = @NumericTerm)";
+				parameterName = "@NumericTerm";
+				parameterValue = numericSearchTerm;
 			}
 			else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
 			{
-				sqlQuery += "p.Gender = @exactSearchTerm";
+				sqlQuery += "p.Gender = @ExactTerm";
+				parameterName = "@ExactTerm";
+				parameterValue = searchTerm;
 			}
 			else
 			{
-				// Added d.DepartmentName to the search criteria
-				sqlQuery += "(p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR p.Phone LIKE @searchTerm OR p.Address LIKE @searchTerm OR p.Email LIKE @searchTerm OR p.Status LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
+				sqlQuery += "(p.FirstName LIKE @WildcardTerm OR p.LastName LIKE @WildcardTerm OR p.Phone LIKE @WildcardTerm OR p.Address LIKE @WildcardTerm OR p.Email LIKE @WildcardTerm OR p.Status LIKE @WildcardTerm OR d.DepartmentName LIKE @WildcardTerm)";
+				parameterName = "@WildcardTerm";
+				parameterValue = "%" + searchTerm + "%";
 			}
 
-			// *** KEPT ORIGINAL ORDER BY (which is department logic for teachers) ***
 			sqlQuery += " ORDER BY i.InstructorID DESC";
 
-			// ... (rest of the code for SQL connection, parameters, and DataAdapter remains the same)
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -255,31 +255,15 @@ namespace NAVASCA_PROEL1Project
 				{
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
-
-					// Parameter logic from original code
-					if (int.TryParse(searchTerm, out int numericSearchTerm2))
+					if (parameterName != "")
 					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", numericSearchTerm2);
-					}
-					else if (searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase))
-					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@exactSearchTerm", searchTerm);
-					}
-					else
-					{
-						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+						dataAdapter.SelectCommand.Parameters.AddWithValue(parameterName, parameterValue);
 					}
 
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
-					// Assuming StudentsData is the DataGridView name for students
 					TeachersData.DataSource = dataTable;
-
-					// NOTE: You must update the StudentData column definition 
-					// to include the 'DepartmentName' column for it to appear!
-					// This part is in your LoadData() method, not the search, 
-					// so you must update LoadData() separately to include this column definition.
 
 					if (dataTable.Rows.Count == 0)
 					{
@@ -351,7 +335,7 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			string getProfileIDQuery = "SELECT ProfileID FROM Instructors WHERE InstructorID = @instructorID_int";
-			int profileID = 0; // Initialize ProfileID
+			int profileID = 0;
 
 			try
 			{
@@ -359,9 +343,8 @@ namespace NAVASCA_PROEL1Project
 				{
 					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
 					{
-						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId); // Use the validated INT ID
+						cmd.Parameters.AddWithValue("@instructorID_int", selectedInstructorId); 
 						conn.Open();
-						// Get the ProfileID (which is needed for the simpler update)
 						object result = cmd.ExecuteScalar();
 						if (result != null)
 						{
@@ -427,7 +410,6 @@ namespace NAVASCA_PROEL1Project
 
 				string selectedDepartmentName = cmbDepartment.SelectedItem.ToString();
 
-				// Get the DepartmentID from the department name
 				int departmentID = GetDepartmentID(selectedDepartmentName);
 
 				if (departmentID == -1)
@@ -437,8 +419,6 @@ namespace NAVASCA_PROEL1Project
 				}
 
 
-
-				// SQL query to update both the Profiles and Instructors tables
 				string sqlQuery = "UPDATE Profiles SET " +
 								  "FirstName = @FirstName, " +
 								  "LastName = @LastName, " +
@@ -457,7 +437,6 @@ namespace NAVASCA_PROEL1Project
 						conn.Open();
 						SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
-						// Add parameters for the Profiles table update
 						cmd.Parameters.AddWithValue("@FirstName", txtFirstname.Text);
 						cmd.Parameters.AddWithValue("@LastName", txtLastname.Text);
 						cmd.Parameters.AddWithValue("@Age", txtAge.Text);
@@ -466,8 +445,6 @@ namespace NAVASCA_PROEL1Project
 						cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
 						cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
 						cmd.Parameters.AddWithValue("@profileId",profileID);
-
-						// Add parameter for the Instructors table update
 						cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
 
 						int rowsAffected = cmd.ExecuteNonQuery();

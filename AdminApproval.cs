@@ -152,7 +152,6 @@ namespace NAVASCA_PROEL1Project
 				string currentStatus = row.Cells["Status"].Value.ToString();
 				string newStatus = string.Empty;
 
-				// Check if the current status is 'Pending'
 				if (currentStatus.Equals("Pending", StringComparison.OrdinalIgnoreCase))
 				{
 					DialogResult result = MessageBox.Show("Do you want to activate this student?", "Approve Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -163,13 +162,13 @@ namespace NAVASCA_PROEL1Project
 					}
 					else
 					{
-						return; // User canceled
+						return;
 					}
 				}
 
 				if (string.IsNullOrEmpty(newStatus))
 				{
-					return; // Status was not 'Pending' or newStatus was not set
+					return;
 				}
 
 				using (SqlConnection conn = new SqlConnection(connectionString))
@@ -178,7 +177,6 @@ namespace NAVASCA_PROEL1Project
 					{
 						conn.Open();
 
-						// --- 1. UPDATE Profiles Status ---
 						string updateQuery = "UPDATE Profiles SET Status = @newStatus WHERE ProfileID = @profileId";
 						using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
 						{
@@ -189,19 +187,17 @@ namespace NAVASCA_PROEL1Project
 
 							if (rowsAffected > 0)
 							{
-								// --- 2. INSERT into Students Table (Only if Status update was successful) ---
 								string insertStudentQuery = "INSERT INTO Students (ProfileID, EnrollmentDate) VALUES (@profileId, @enrollmentDate)";
 								using (SqlCommand insertCmd = new SqlCommand(insertStudentQuery, conn))
 								{
 									insertCmd.Parameters.AddWithValue("@profileId", profileId);
-									// Use the date variable set at the start of the method
 									insertCmd.Parameters.AddWithValue("@enrollmentDate", enrollmentDate);
 
 									insertCmd.ExecuteNonQuery();
 								}
 
 								MessageBox.Show($"Successfully updated to '{newStatus}' and enrolled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-								LoadData(); // Refresh the DataGridView
+								LoadData();
 							}
 							else
 							{
@@ -301,14 +297,12 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			// Base SQL query (for students)
 			string sqlQuery = "SELECT p.ProfileID, p.FirstName, p.LastName, p.Age, p.Gender, p.Phone, p.Address, p.Email, p.Status " +
 							  "FROM Profiles AS p " +
 							  "INNER JOIN Users AS u ON p.ProfileID = u.ProfileID " +
 							  "INNER JOIN Roles AS r ON u.RoleID = r.RoleID " +
 							  "WHERE r.RoleName = 'Student' AND p.Status= 'Pending' AND ";
 
-			// Building the dynamic WHERE clause
 			if (int.TryParse(searchTerm, out int numericSearchTerm))
 			{
 				sqlQuery += "(p.ProfileID = @searchVal OR p.Age = @searchVal)";
@@ -322,7 +316,6 @@ namespace NAVASCA_PROEL1Project
 				sqlQuery += "(p.FirstName LIKE @searchVal OR p.LastName LIKE @searchVal OR p.Phone LIKE @searchVal OR p.Address LIKE @searchVal OR p.Email LIKE @searchVal OR p.Status LIKE @searchVal)";
 			}
 
-			// *** FIX: Replaced invalid teacher ORDER BY with a simple, valid one ***
 			sqlQuery += " ORDER BY p.ProfileID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -332,8 +325,6 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					// Add parameters based on the search type
-					// Using a single parameter name (@searchVal) for consistency
 					if (int.TryParse(searchTerm, out int numericSearchTerm2))
 					{
 						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", numericSearchTerm2);
@@ -350,7 +341,7 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
-					ApprovalData.DataSource = dataTable; // Assuming ApprovalData is the student DataGridView
+					ApprovalData.DataSource = dataTable;
 
 					if (dataTable.Rows.Count == 0)
 					{

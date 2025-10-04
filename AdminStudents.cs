@@ -99,7 +99,7 @@ namespace NAVASCA_PROEL1Project
 		{
 
 			string getProfileIDQuery = "SELECT ProfileID FROM Students WHERE StudentID = @studentID_int";
-			int profileID = 0; // Initialize ProfileID
+			int profileID = 0; 
 
 			try
 			{
@@ -107,9 +107,8 @@ namespace NAVASCA_PROEL1Project
 				{
 					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
 					{
-						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId); // Use the validated INT ID
+						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId);
 						conn.Open();
-						// Get the ProfileID (which is needed for the simpler update)
 						object result = cmd.ExecuteScalar();
 						if (result != null)
 						{
@@ -208,7 +207,6 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			// --- 1. RUN CHECKS ONCE ---
 			bool isNumeric = int.TryParse(searchTerm, out int numericSearchTerm);
 			bool isGender = searchTerm.Equals("Male", StringComparison.OrdinalIgnoreCase) || searchTerm.Equals("Female", StringComparison.OrdinalIgnoreCase);
 
@@ -221,24 +219,19 @@ namespace NAVASCA_PROEL1Project
 									   "WHERE r.RoleName IN ('Student') AND p.Status = 'Active' AND ";
 									   
 
-			// --- 2. Build the WHERE clause using the check results ---
 			if (isNumeric)
 			{
-				// Use @searchVal for consistency
 				sqlQuery += " (p.ProfileID = @searchVal OR p.Age = @searchVal)";
 			}
 			else if (isGender)
 			{
-				// Use @searchVal for consistency
 				sqlQuery += " p.Gender = @searchVal";
 			}
 			else
 			{
-				// Use @searchVal for consistency
 				sqlQuery += " (p.FirstName LIKE @searchVal OR p.LastName LIKE @searchVal OR p.Phone LIKE @searchVal OR p.Address LIKE @searchVal OR p.Email LIKE @searchVal OR p.Status LIKE @searchVal)";
 			}
 
-			// Fix: Add a space before ORDER BY
 			sqlQuery += " ORDER BY s.StudentID DESC";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -248,20 +241,16 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					// --- 3. Add parameters based on the check results ---
 					if (isNumeric)
 					{
-						// Use the stored INT result
 						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", numericSearchTerm);
 					}
 					else if (isGender)
 					{
-						// Use the raw string
 						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", searchTerm);
 					}
 					else
 					{
-						// Use the LIKE wildcard
 						dataAdapter.SelectCommand.Parameters.AddWithValue("@searchVal", "%" + searchTerm + "%");
 					}
 
@@ -344,7 +333,7 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			string getProfileIDQuery = "SELECT ProfileID FROM Students WHERE StudentID = @studentID_int";
-			int profileID = 0; // Initialize ProfileID
+			int profileID = 0;
 
 			try
 			{
@@ -352,9 +341,8 @@ namespace NAVASCA_PROEL1Project
 				{
 					using (SqlCommand cmd = new SqlCommand(getProfileIDQuery, conn))
 					{
-						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId); // Use the validated INT ID
+						cmd.Parameters.AddWithValue("@studentID_int", selectedStudentId); 
 						conn.Open();
-						// Get the ProfileID (which is needed for the simpler update)
 						object result = cmd.ExecuteScalar();
 						if (result != null)
 						{
