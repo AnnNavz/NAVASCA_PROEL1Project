@@ -158,8 +158,7 @@ namespace NAVASCA_PROEL1Project
 
 					cmd.ExecuteNonQuery();
 					MessageBox.Show("Add Student Successful!" + "\n Username: " + generatedUserID +
-									"\n Password: " + generatedPassword +
-									"\n The account is pending.",
+									"\n Password: " + generatedPassword ,
 									"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 

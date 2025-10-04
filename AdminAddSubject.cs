@@ -129,6 +129,8 @@ namespace NAVASCA_PROEL1Project
 			string action = "Add Subject";
 			string description = "Added a new subject";
 			string AddName = txtCourseName.Text;
+			string Code = txtCode.Text;
+			string formattedCode = Code.ToUpper();
 
 
 			bool requiredFieldsMissing = false;
@@ -147,18 +149,28 @@ namespace NAVASCA_PROEL1Project
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
 				string courseName = txtCourseName.Text;
-				string generatedCode = CourseCodeGenerator.GenerateCode(courseName);
 				string status = "Active";
 
 
 				conn.Open();
+
+				SqlCommand Checkcmd = new SqlCommand("SELECT COUNT(*) FROM Courses WHERE CourseCode = @code", conn);
+				Checkcmd.Parameters.AddWithValue("@code", txtCode.Text);
+
+				int CodeCount = (int)Checkcmd.ExecuteScalar();
+
+				if (CodeCount > 0)
+				{
+					MessageBox.Show("This course code is already in use.", "Course Code Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
 
 
 				SqlCommand cmd = new SqlCommand("AddSubject_SP", conn);
 				cmd.CommandType = CommandType.StoredProcedure;
 
 				cmd.Parameters.AddWithValue("@CourseName", txtCourseName.Text);
-				cmd.Parameters.AddWithValue("@CourseCode", generatedCode);
+				cmd.Parameters.AddWithValue("@CourseCode", formattedCode);
 				cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
 				cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
 				cmd.Parameters.AddWithValue("@Teacher", cmbTeacher.Text);
@@ -170,7 +182,7 @@ namespace NAVASCA_PROEL1Project
 
 
 				cmd.ExecuteNonQuery();
-				MessageBox.Show("Added Subject Successful!" + "\n CourseCode: " + generatedCode,
+				MessageBox.Show("Added Subject Successful!" + "\n CourseCode: " + formattedCode,
 								"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				AdminSubjects adminSubjects = new AdminSubjects();
@@ -185,27 +197,9 @@ namespace NAVASCA_PROEL1Project
 
 		}
 
-		public static class CourseCodeGenerator
-		{
-			public static string GenerateCode(string courseName)
-			{
-				string cleanedName = Regex.Replace(courseName, "[^a-zA-Z0-9 ]", "");
-				string[] words = cleanedName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-				StringBuilder courseCode = new StringBuilder();
-
-				foreach (string word in words)
-				{
-					string prefix = word.Length >= 3 ? word.Substring(0, 3) : word;
-					courseCode.Append(prefix.ToUpper());
-				}
-
-				return courseCode.ToString();
-			}
+		
 
 
-
-		}
 	}
 	
 }
