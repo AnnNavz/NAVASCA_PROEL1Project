@@ -82,6 +82,16 @@ namespace NAVASCA_PROEL1Project
 
 					StudentData.Columns.Add(enrollmentButtonColumn);
 
+
+					DataGridViewButtonColumn enrollSubjectButtonColumn = new DataGridViewButtonColumn();
+
+					enrollSubjectButtonColumn.HeaderText = "Enroll Subjects";
+					enrollSubjectButtonColumn.Name = "EnrollSub";
+					enrollSubjectButtonColumn.Text = "Subjects";
+					enrollSubjectButtonColumn.UseColumnTextForButtonValue = true;
+
+					StudentData.Columns.Add(enrollSubjectButtonColumn);
+
 					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
 
 					detailsButtonColumn.HeaderText = "Details";
@@ -633,32 +643,98 @@ namespace NAVASCA_PROEL1Project
 				return;
 			}
 
-			int selectedProfileID = Convert.ToInt32(studentIDObject);
+			int selectedStudentID = Convert.ToInt32(studentIDObject);
 			string selectedStudentName= (studentLastNameObject.ToString()) + ", " + (studentFirstNameObject.ToString());
 
-
-			// Check which specific column was clicked using its unique Name
 			string columnName = StudentData.Columns[e.ColumnIndex].Name;
 
 			if (columnName == "Enrollment")
 			{
-				MessageBox.Show($"Opening Enrollment Form for Student: {selectedStudentName}");
-				OpenEnrollmentForm(selectedProfileID);
+
+				if (IsStudentEnrolled(selectedStudentID))
+				{
+					MessageBox.Show("This student is already enrolled.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+
+				MessageBox.Show($"Opening Enrollment Form for Student: {selectedStudentName}", "Enrollment", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OpenEnrollmentForm(selectedStudentID);
+				this.Hide();
+
+			}
+			else if (columnName == "EnrollSub")
+			{
+				if (IsStudentNotEnrolled(selectedStudentID))
+				{
+					MessageBox.Show("This student is not yet enrolled.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+
+				MessageBox.Show($"Opening Enroll Subjects Form for Student: {selectedStudentName}", "Enroll Subjects", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OpenEnrollSub(selectedStudentID);
 				this.Hide();
 
 			}
 			else if (columnName == "Details")
 			{
-				// --- LOGIC FOR THE "VIEW" BUTTON ---
-				MessageBox.Show($"Opening Profile View Form for Profile ID: {selectedStudentName}");
-				// Example: OpenProfileViewForm(selectedProfileID);
+				MessageBox.Show($"Opening the Details for Student: {selectedStudentName}", "Student Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OpenDetails(selectedStudentID);
+				this.Hide();
 			}
 		}
 
-		private void OpenEnrollmentForm(int profileID) // <-- The definition that solves the error
+
+		private bool IsStudentEnrolled(int currentStudentID)
+		{
+
+			string sqlQuery = "SELECT COUNT(*) FROM Enrollment WHERE StudentID = @studentID";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
+					cmd.Parameters.AddWithValue("@studentID", currentStudentID);
+					conn.Open();
+					int count = (int)cmd.ExecuteScalar();
+					return count > 0;
+				}
+			}
+		}
+
+		private bool IsStudentNotEnrolled(int currentStudentID)
+		{
+
+			string sqlQuery = "SELECT COUNT(*) FROM Enrollment WHERE StudentID = @studentID;";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
+					cmd.Parameters.AddWithValue("@studentID", currentStudentID);
+					conn.Open();
+					int count = (int)cmd.ExecuteScalar();
+					return count == 0;
+				}
+			}
+		}
+
+		private void OpenEnrollmentForm(int profileID)
 		{
 			AdminEnrollment enrollmentForm = new AdminEnrollment(profileID);
 			enrollmentForm.Show();
+		}
+
+		private void OpenEnrollSub(int profileID)
+		{
+			AdminEnrollSubjects enrollmentForm = new AdminEnrollSubjects(profileID);
+			enrollmentForm.Show();
+		}
+
+
+		private void OpenDetails(int profileID)
+		{
+			AdminStudentDetails details = new AdminStudentDetails(profileID);
+			details.Show();
 		}
 	}
 }
