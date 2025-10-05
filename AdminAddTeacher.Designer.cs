@@ -74,9 +74,9 @@
 			this.label5.ForeColor = System.Drawing.Color.White;
 			this.label5.Location = new System.Drawing.Point(80, 30);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(181, 19);
+			this.label5.Size = new System.Drawing.Size(139, 19);
 			this.label5.TabIndex = 46;
-			this.label5.Text = "Back to View Teachers";
+			this.label5.Text = "Back to Teachers";
 			// 
 			// picBack
 			// 

@@ -73,6 +73,24 @@ namespace NAVASCA_PROEL1Project
 
 					StudentData.Columns["Status"].Visible = false;
 
+					DataGridViewButtonColumn enrollmentButtonColumn = new DataGridViewButtonColumn();
+
+					enrollmentButtonColumn.HeaderText = "Enrollment";
+					enrollmentButtonColumn.Name = "Enrollment";
+					enrollmentButtonColumn.Text = "Enroll";
+					enrollmentButtonColumn.UseColumnTextForButtonValue = true;
+
+					StudentData.Columns.Add(enrollmentButtonColumn);
+
+					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
+
+					detailsButtonColumn.HeaderText = "Details";
+					detailsButtonColumn.Name = "Details";
+					detailsButtonColumn.Text = "View";
+					detailsButtonColumn.UseColumnTextForButtonValue = true;
+
+					StudentData.Columns.Add(detailsButtonColumn);
+
 
 
 
@@ -598,6 +616,49 @@ namespace NAVASCA_PROEL1Project
 				login.Show();
 				this.Close();
 			}
+		}
+
+		private void StudentData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex < 0) return;
+
+			object studentIDObject = StudentData.Rows[e.RowIndex].Cells["StudentID"].Value;
+			object studentFirstNameObject = StudentData.Rows[e.RowIndex].Cells["FirstName"].Value;
+			object studentLastNameObject = StudentData.Rows[e.RowIndex].Cells["LastName"].Value;
+
+
+			if (studentIDObject == null)
+			{
+				MessageBox.Show("Student ID not found.", "Error");
+				return;
+			}
+
+			int selectedProfileID = Convert.ToInt32(studentIDObject);
+			string selectedStudentName= (studentLastNameObject.ToString()) + ", " + (studentFirstNameObject.ToString());
+
+
+			// Check which specific column was clicked using its unique Name
+			string columnName = StudentData.Columns[e.ColumnIndex].Name;
+
+			if (columnName == "Enrollment")
+			{
+				MessageBox.Show($"Opening Enrollment Form for Student: {selectedStudentName}");
+				OpenEnrollmentForm(selectedProfileID);
+				this.Hide();
+
+			}
+			else if (columnName == "Details")
+			{
+				// --- LOGIC FOR THE "VIEW" BUTTON ---
+				MessageBox.Show($"Opening Profile View Form for Profile ID: {selectedStudentName}");
+				// Example: OpenProfileViewForm(selectedProfileID);
+			}
+		}
+
+		private void OpenEnrollmentForm(int profileID) // <-- The definition that solves the error
+		{
+			AdminEnrollment enrollmentForm = new AdminEnrollment(profileID);
+			enrollmentForm.Show();
 		}
 	}
 }

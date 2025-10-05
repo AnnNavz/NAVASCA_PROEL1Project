@@ -83,6 +83,12 @@
     <Compile Include="AdminDashboard.Designer.cs">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminEnrollment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminEnrollment.Designer.cs">
+      <DependentUpon>AdminEnrollment.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminLogs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminEnrollment.resx">
+      <DependentUpon>AdminEnrollment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminLogs.resx">
       <DependentUpon>AdminLogs.cs</DependentUpon>

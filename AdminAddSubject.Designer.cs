@@ -249,9 +249,9 @@
 			this.label7.ForeColor = System.Drawing.Color.White;
 			this.label7.Location = new System.Drawing.Point(80, 30);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(175, 19);
+			this.label7.Size = new System.Drawing.Size(133, 19);
 			this.label7.TabIndex = 92;
-			this.label7.Text = "Back to View Subjects";
+			this.label7.Text = "Back to Subjects";
 			// 
 			// txtDescription
 			// 

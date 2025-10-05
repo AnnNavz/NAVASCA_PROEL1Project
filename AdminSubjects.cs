@@ -93,8 +93,6 @@ namespace NAVASCA_PROEL1Project
 					AddLogEntry(LogName, "Delete Subject", logDescription);
 
 					DeleteCourse(courseID);
-
-					LoadCourses();
 				}
 			}
 			else
@@ -117,6 +115,8 @@ namespace NAVASCA_PROEL1Project
 					cmd.Parameters.AddWithValue("@CourseID", courseID);
 
 					int rowsAffected = cmd.ExecuteNonQuery();
+
+					LoadCourses();
 
 				}
 				catch (Exception ex)
@@ -142,8 +142,8 @@ namespace NAVASCA_PROEL1Project
 							  "INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
 							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
-							  "WHERE c.Status = 'Active' AND " + 
-							  "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
+							  "WHERE c.Status = 'Active' AND " +
+							  "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR c.Description LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -203,7 +203,9 @@ namespace NAVASCA_PROEL1Project
 
 			CoursesData.Columns["Status"].Visible = false;
 
-			
+			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+
 
 		}
 

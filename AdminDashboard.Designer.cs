@@ -238,7 +238,7 @@
 			this.btnSubjects.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnSubjects.Size = new System.Drawing.Size(185, 45);
 			this.btnSubjects.TabIndex = 4;
-			this.btnSubjects.Text = "View Subjects";
+			this.btnSubjects.Text = "Subjects";
 			this.btnSubjects.Click += new System.EventHandler(this.btnSubjects_Click);
 			// 
 			// btnTeachers
@@ -259,7 +259,7 @@
 			this.btnTeachers.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnTeachers.Size = new System.Drawing.Size(185, 45);
 			this.btnTeachers.TabIndex = 3;
-			this.btnTeachers.Text = "View Teachers";
+			this.btnTeachers.Text = "Teachers";
 			this.btnTeachers.Click += new System.EventHandler(this.btnTeachers_Click);
 			// 
 			// btnStudents
@@ -280,7 +280,7 @@
 			this.btnStudents.PressedColor = System.Drawing.Color.Firebrick;
 			this.btnStudents.Size = new System.Drawing.Size(185, 45);
 			this.btnStudents.TabIndex = 1;
-			this.btnStudents.Text = "View Students";
+			this.btnStudents.Text = "Students";
 			this.btnStudents.Click += new System.EventHandler(this.btnStudents_Click);
 			// 
 			// guna2HtmlLabel2
