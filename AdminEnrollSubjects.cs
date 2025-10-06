@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms.Suite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace NAVASCA_PROEL1Project
 {
@@ -17,18 +19,21 @@ namespace NAVASCA_PROEL1Project
 		{
 			InitializeComponent();
 			CoursesData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-			LoadCourses();
+			
 		}
 
 
 		private int StudentID;
+		private string StudentName;
 		string connectionString = Database.ConnectionString;
 
-		public AdminEnrollSubjects(int studentID) : this()
+		public AdminEnrollSubjects(int studentID, string studentName) : this()
 		{
 			StudentID = studentID;
+			StudentName = studentName;
 
-			this.Text = $"Enrollment - Student ID: {StudentID}";
+			this.Text = $"EnrollSubjects - Student ID: {StudentID}, {StudentName}";
+			LoadCourses();
 		}
 
 		private void picBack_Click(object sender, EventArgs e)
@@ -41,18 +46,14 @@ namespace NAVASCA_PROEL1Project
 		private void LoadCourses()
 		{
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
-					"p.FirstName, p.LastName, c.Status " +
-					"FROM Courses AS c " +
+					"p.FirstName, p.LastName, e.StudentID " +
+					"FROM Enrollment AS e " +
+					"INNER JOIN Programs AS r ON r.ProgramID = e.ProgramID " +
+					"INNER JOIN Departments AS d ON r.DepartmentID = d.DepartmentID " + 
+					"INNER JOIN Courses AS c ON c.DepartmentID = d.DepartmentID " +
 					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
 					"INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
-					"WHERE c.Status = 'Active' " +
-					"AND c.DepartmentID IN ( " +
-					  "SELECT prog.DepartmentID " +
-					  "FROM Programs AS prog " +
-					  "INNER JOIN Enrollment AS e ON prog.ProgramID = e.ProgramID " +
-					  "WHERE e.StudentID = @StudentID " +
-					") " +
-					"ORDER BY c.CourseID DESC";
+					"WHERE e.StudentID = @studentid ";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -61,7 +62,6 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					// CRITICAL ADDITION: Add the StudentID parameter to the data adapter's select command
 					dataAdapter.SelectCommand.Parameters.AddWithValue("@StudentID", StudentID);
 
 					DataTable dataTable = new DataTable();
@@ -141,8 +141,15 @@ namespace NAVASCA_PROEL1Project
 			string selectedCourseName = (courseNameObject.ToString());
 
 
+			string action = "Enroll Subject";
+			string description = $"Enrolled a student in {selectedCourseName}";
+			string name = StudentName;
+
+
 			string getEnrollmentIDQuery = "SELECT EnrollmentID FROM Enrollment WHERE StudentID = @studentID_int";
 			int enrollmentID = 0;
+
+
 
 			try
 			{
@@ -174,6 +181,7 @@ namespace NAVASCA_PROEL1Project
 				if (IsStudentEnrolled(StudentID, selectedCourseID))
 				{
 					MessageBox.Show("This student is already enrolled in this subject.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
 					return;
 				}
 
@@ -193,15 +201,15 @@ namespace NAVASCA_PROEL1Project
 						cmd.Parameters.AddWithValue("@CourseID", selectedCourseID);
 						cmd.Parameters.AddWithValue("@EnrollmentID", enrollmentID);
 						cmd.Parameters.AddWithValue("@Grade", "0.0");
+						cmd.Parameters.AddWithValue("@Action", action);
+						cmd.Parameters.AddWithValue("@Description", description);
+						cmd.Parameters.AddWithValue("@AddName", name);
 
 
 						cmd.ExecuteNonQuery();
 						MessageBox.Show("Enrolled Subject Successful!" + "\n Subject: " + selectedCourseName,
 										"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-						AdminStudents students = new AdminStudents();
-						students.Show();
-						this.Hide();
 
 					}
 				}
@@ -223,6 +231,56 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					int count = (int)cmd.ExecuteScalar();
 					return count > 0;
+				}
+			}
+		}
+
+		private void btnSearch_Click(object sender, EventArgs e)
+		{
+			string searchTerm = txtSearch.Text.Trim();
+
+			if (string.IsNullOrEmpty(searchTerm))
+			{
+				LoadCourses();
+				return;
+			}
+
+			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
+					"p.FirstName, p.LastName, e.StudentID " +
+					"FROM Enrollment AS e " +
+					"INNER JOIN Programs AS r ON r.ProgramID = e.ProgramID " +
+					"INNER JOIN Departments AS d ON r.DepartmentID = d.DepartmentID " +
+					"INNER JOIN Courses AS c ON c.DepartmentID = d.DepartmentID " +
+					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
+					"INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
+					"WHERE e.StudentID = @studentid AND " +
+			        "(c.CourseID LIKE @searchTerm OR c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR c.Description LIKE @searchTerm)";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				try
+				{
+					conn.Open();
+					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
+
+					dataAdapter.SelectCommand.Parameters.AddWithValue("@StudentID", StudentID);
+					dataAdapter.SelectCommand.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+					DataTable dataTable = new DataTable();
+					dataAdapter.Fill(dataTable);
+
+					CoursesData.DataSource = dataTable;
+
+					SetupCoursesDataGridView();
+
+					if (dataTable.Rows.Count == 0)
+					{
+						MessageBox.Show("No courses found matching your search criteria.", "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred during search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}

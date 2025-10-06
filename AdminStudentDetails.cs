@@ -16,18 +16,21 @@ namespace NAVASCA_PROEL1Project
 		public AdminStudentDetails()
 		{
 			InitializeComponent();
+			CoursesData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 		}
 
 
 		private int StudentID;
+		private string StudentName;
 
 		string connectionString = Database.ConnectionString;
 
-		public AdminStudentDetails(int studentID) : this()
+		public AdminStudentDetails(int studentID, string studentName) : this()
 		{
 			StudentID = studentID;
+			StudentName = studentName;
 
-			this.Text = $"Enrollment - Student ID: {StudentID}";
+			this.Text = $"Details - Student ID: {StudentID}, {StudentName}";
 
 
 			LoadSemester();
@@ -44,192 +47,102 @@ namespace NAVASCA_PROEL1Project
 			this.Hide();
 		}
 
+
+
 		private void LoadSemester()
 		{
-			string getEnrollmentSemester = @"SELECT
-                                            CONCAT(s.AcademicYear, ' ', s.TermName) AS FullSemesterName
-                                            FROM
-                                            Enrollment e
-                                            INNER JOIN
-                                            Semesters s ON e.SemesterID = s.SemesterID
-                                            WHERE
-                                            e.StudentID = @studentID_int;"; // Added semicolon
+			string sql = @"SELECT
+                          CONCAT(s.AcademicYear, ' ', s.TermName) AS FullSemesterName
+                          FROM
+                          Enrollment e
+                          INNER JOIN
+                          Semesters s ON e.SemesterID = s.SemesterID
+                          WHERE
+                          e.StudentID = @studentID_int;";
 
-			string semester = string.Empty;
-			// 'StudentID' and 'connectionString' are assumed to be defined elsewhere
-
-			try
-			{
-				using (SqlConnection conn = new SqlConnection(connectionString))
-				{
-					using (SqlCommand cmd = new SqlCommand(getEnrollmentSemester, conn))
-					{
-						// Add the parameter using the proper name defined in the SQL
-						cmd.Parameters.AddWithValue("@studentID_int", StudentID);
-
-						conn.Open();
-						object result = cmd.ExecuteScalar();
-
-						if (result != null)
-						{
-							semester = result.ToString();
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Could not find the Profile ID: " + ex.Message,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error);
-				return;
-			}
-
-			txtSemester.Text = semester;
+			txtSemester.Text = GetScalarResultForStudent(sql, "@studentID_int", StudentID);
 
 		}
 
 
 		private void LoadProgram()
 		{
-			string getEnrollmentSemester = @"SELECT
-                                            p.ProgramName
-                                            FROM
-                                            Enrollment e
-                                            INNER JOIN
-                                            Programs p ON p.ProgramID = e.ProgramID
-                                            WHERE
-                                            e.StudentID = @studentID_int;";
+			string sql = @"SELECT
+                         p.ProgramName
+                         FROM
+                         Enrollment e
+                         INNER JOIN
+                         Programs p ON p.ProgramID = e.ProgramID
+                         WHERE
+                         e.StudentID = @studentID_int;";
 
-			string program = string.Empty;
-			// 'StudentID' and 'connectionString' are assumed to be defined elsewhere
-
-			try
-			{
-				using (SqlConnection conn = new SqlConnection(connectionString))
-				{
-					using (SqlCommand cmd = new SqlCommand(getEnrollmentSemester, conn))
-					{
-						// Add the parameter using the proper name defined in the SQL
-						cmd.Parameters.AddWithValue("@studentID_int", StudentID);
-
-						conn.Open();
-						object result = cmd.ExecuteScalar();
-
-						if (result != null)
-						{
-							program = result.ToString();
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Could not find the Profile ID: " + ex.Message,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error);
-				return;
-			}
-
-			txtProgram.Text = program;
+			
+			txtProgram.Text = GetScalarResultForStudent(sql, "@studentID_int", StudentID);
 
 		}
 
 		private void LoadSection()
 		{
-			string getEnrollmentSemester = @"SELECT
-                                            Section
-                                            FROM
-                                            Enrollment 
-                                            WHERE
-                                            StudentID = @studentID_int;";
+			string sql = @"SELECT
+                          Section
+                          FROM
+                          Enrollment 
+                          WHERE
+                          StudentID = @studentID_int;";
 
-			string section = string.Empty;
-			// 'StudentID' and 'connectionString' are assumed to be defined elsewhere
-
-			try
-			{
-				using (SqlConnection conn = new SqlConnection(connectionString))
-				{
-					using (SqlCommand cmd = new SqlCommand(getEnrollmentSemester, conn))
-					{
-						// Add the parameter using the proper name defined in the SQL
-						cmd.Parameters.AddWithValue("@studentID_int", StudentID);
-
-						conn.Open();
-						object result = cmd.ExecuteScalar();
-
-						if (result != null)
-						{
-							section = result.ToString();
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Could not find the hatdog: " + ex.Message,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error);
-				return;
-			}
-
-			txtSection.Text = section;
+			txtSection.Text = GetScalarResultForStudent(sql, "@studentID_int", StudentID); 
 
 		}
 
 
 		private void LoadEnrollmentDate()
 		{
-			string getEnrollmentSemester = @"SELECT
-                                            EnrollmentDate
-                                            FROM
-                                            Students 
-                                            WHERE
-                                            StudentID = @studentID_int;";
+			string sql = @"SELECT
+                          DateRecorded
+                          FROM
+                          Enrollment 
+                          WHERE
+                          StudentID = @studentID_int;";
 
-			string section = string.Empty;
-			// 'StudentID' and 'connectionString' are assumed to be defined elsewhere
+			txtEnrollDate.Text = GetScalarResultForStudent(sql, "@studentID_int", StudentID); 
+
+		}
+
+		private string GetScalarResultForStudent(string sqlQuery, string parameterName, int studentIdValue)
+		{
+			string result = string.Empty;
 
 			try
 			{
 				using (SqlConnection conn = new SqlConnection(connectionString))
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
 				{
-					using (SqlCommand cmd = new SqlCommand(getEnrollmentSemester, conn))
+					cmd.Parameters.AddWithValue(parameterName, studentIdValue);
+
+					conn.Open();
+					object scalarResult = cmd.ExecuteScalar();
+
+					if (scalarResult != null)
 					{
-						// Add the parameter using the proper name defined in the SQL
-						cmd.Parameters.AddWithValue("@studentID_int", StudentID);
-
-						conn.Open();
-						object result = cmd.ExecuteScalar();
-
-						if (result != null)
-						{
-							section = result.ToString();
-						}
+						result = scalarResult.ToString();
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Could not find the hatdog: " + ex.Message,
-								"Error",
+				MessageBox.Show($"Database error: {ex.Message}",
+								"Data Retrieval Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error);
-				return;
 			}
 
-			txtEnrollDate.Text = section;
-
+			return result;
 		}
 
 		private void LoadSubjectsEnrolled()
 		{
-			string sqlQuery = "SELECT c.CourseName, " +
-					"p.FirstName, p.LastName, e.StudentID " +
+			string sqlQuery = "SELECT c.CourseCode, c.CourseName, " +
+					"p.FirstName, p.LastName, e.Grade, e.StudentID " +
 					"FROM EnrollSubject AS e " +
 					"INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
 					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
@@ -243,11 +156,8 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlCommand command = new SqlCommand(sqlQuery, conn);
 
-					// 2. Add the parameter and its value
-					// (You'll need to know the correct data type for StudentID)
-					command.Parameters.AddWithValue("@studentid", StudentID); // Use the variable holding the StudentID
+					command.Parameters.AddWithValue("@studentid", StudentID);
 
-					// 3. Initialize the SqlDataAdapter with the SqlCommand
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
 
 					DataTable dataTable = new DataTable();
@@ -268,36 +178,44 @@ namespace NAVASCA_PROEL1Project
 		{
 			DataTable dataTable = CoursesData.DataSource as DataTable;
 
-			// Check if the DataTable is present and valid
 			if (dataTable == null) return;
 
-			// --- 1. Prepare the DataTable (Add the calculated column) ---
-			// The expression creates a new column by concatenating the names
 			if (!dataTable.Columns.Contains("InstructorName"))
 			{
-				// 'FirstName' and 'LastName' are present from the SQL query
 				dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
 			}
 
-			// --- 2. Configure the DataGridView ---
 			CoursesData.AutoGenerateColumns = false;
 			CoursesData.Columns.Clear();
 			CoursesData.ReadOnly = true;
 
-			// Add the Course Name column and map it to the 'CourseName' column in the DataTable
+			CoursesData.Columns.Add(new DataGridViewTextBoxColumn()
+			{
+				Name = "CourseCode",
+				HeaderText = "Course Code",
+				DataPropertyName = "CourseCode"
+			});
+
 			CoursesData.Columns.Add(new DataGridViewTextBoxColumn()
 			{
 				Name = "CourseName",
 				HeaderText = "Course Name",
-				DataPropertyName = "CourseName" // Maps to the SQL column
+				DataPropertyName = "CourseName"
 			});
 
-			// Add the Instructor Name column and map it to the calculated 'InstructorName' column
+
 			CoursesData.Columns.Add(new DataGridViewTextBoxColumn()
 			{
 				Name = "InstructorName",
 				HeaderText = "Instructor Name",
-				DataPropertyName = "InstructorName" // Maps to the calculated DataTable column
+				DataPropertyName = "InstructorName"
+			});
+
+			CoursesData.Columns.Add(new DataGridViewTextBoxColumn()
+			{
+				Name = "Grade",
+				HeaderText = "Grade",
+				DataPropertyName = "Grade"
 			});
 
 			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;

@@ -23,14 +23,16 @@ namespace NAVASCA_PROEL1Project
 		}
 
 		private int StudentID;
+		private string StudentName;
 		string connectionString = Database.ConnectionString;
 		private DateTime DateRecorded;
 
-		public AdminEnrollment(int studentID) : this()
+		public AdminEnrollment(int studentID, string studentName) : this()
 		{
 			StudentID = studentID;
+			StudentName = studentName;
 
-			this.Text = $"Enrollment - Student ID: {StudentID}";
+			this.Text = $"Enrollment - Student ID: {StudentID}, {StudentName}";
 		}
 
 		private void picBack_Click(object sender, EventArgs e)
@@ -46,6 +48,10 @@ namespace NAVASCA_PROEL1Project
 			errorProvider1.Clear();
 			errorProvider2.Clear();
 			errorProvider3.Clear();
+
+			string action = "Enroll Student";
+			string description = $"Enrolled a student in {cmbProgram.Text} (Section {cmbSection.Text}, {cmbSemester.Text})";
+			string name = StudentName;
 
 
 			bool requiredFieldsMissing = false;
@@ -93,6 +99,9 @@ namespace NAVASCA_PROEL1Project
 				cmd.Parameters.AddWithValue("@Program", cmbProgram.Text);
 				cmd.Parameters.AddWithValue("@Section", cmbSection.Text);
 				cmd.Parameters.AddWithValue("@DateRecorded", DateRecorded);
+				cmd.Parameters.AddWithValue("@Action", action);
+				cmd.Parameters.AddWithValue("@Description", description);
+				cmd.Parameters.AddWithValue("@AddName", name);
 
 
 				cmd.ExecuteNonQuery();
@@ -105,5 +114,8 @@ namespace NAVASCA_PROEL1Project
 
 			}
 		}
+
+
+
 	}
 }

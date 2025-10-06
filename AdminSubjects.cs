@@ -143,7 +143,7 @@ namespace NAVASCA_PROEL1Project
 							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
 							  "WHERE c.Status = 'Active' AND " +
-							  "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR c.Description LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
+							  "(c.CourseID LIKE @searchTerm OR c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR c.Description LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

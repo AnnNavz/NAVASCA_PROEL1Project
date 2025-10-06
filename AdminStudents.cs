@@ -644,7 +644,7 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			int selectedStudentID = Convert.ToInt32(studentIDObject);
-			string selectedStudentName= (studentLastNameObject.ToString()) + ", " + (studentFirstNameObject.ToString());
+			string selectedStudentName= (studentFirstNameObject.ToString()) + " " + (studentLastNameObject.ToString());
 
 			string columnName = StudentData.Columns[e.ColumnIndex].Name;
 
@@ -658,7 +658,7 @@ namespace NAVASCA_PROEL1Project
 				}
 
 				MessageBox.Show($"Opening Enrollment Form for Student: {selectedStudentName}", "Enrollment", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				OpenEnrollmentForm(selectedStudentID);
+				OpenEnrollmentForm(selectedStudentID, selectedStudentName);
 				this.Hide();
 
 			}
@@ -671,14 +671,14 @@ namespace NAVASCA_PROEL1Project
 				}
 
 				MessageBox.Show($"Opening Enroll Subjects Form for Student: {selectedStudentName}", "Enroll Subjects", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				OpenEnrollSub(selectedStudentID);
+				OpenEnrollSub(selectedStudentID, selectedStudentName);
 				this.Hide();
 
 			}
 			else if (columnName == "Details")
 			{
 				MessageBox.Show($"Opening the Details for Student: {selectedStudentName}", "Student Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				OpenDetails(selectedStudentID);
+				OpenDetails(selectedStudentID, selectedStudentName);
 				this.Hide();
 			}
 		}
@@ -718,22 +718,22 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void OpenEnrollmentForm(int profileID)
+		private void OpenEnrollmentForm(int profileID, string studentName)
 		{
-			AdminEnrollment enrollmentForm = new AdminEnrollment(profileID);
+			AdminEnrollment enrollmentForm = new AdminEnrollment(profileID, studentName);
 			enrollmentForm.Show();
 		}
 
-		private void OpenEnrollSub(int profileID)
+		private void OpenEnrollSub(int profileID, string studentName)
 		{
-			AdminEnrollSubjects enrollmentForm = new AdminEnrollSubjects(profileID);
+			AdminEnrollSubjects enrollmentForm = new AdminEnrollSubjects(profileID, studentName);
 			enrollmentForm.Show();
 		}
 
 
-		private void OpenDetails(int profileID)
+		private void OpenDetails(int profileID, string studentName)
 		{
-			AdminStudentDetails details = new AdminStudentDetails(profileID);
+			AdminStudentDetails details = new AdminStudentDetails(profileID, studentName);
 			details.Show();
 		}
 	}

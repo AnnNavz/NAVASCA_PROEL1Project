@@ -155,6 +155,7 @@
 			this.btnSearch.TabIndex = 97;
 			this.btnSearch.TabStop = false;
 			this.btnSearch.UseTransparentBackground = true;
+			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
 			// txtSearch
 			// 
