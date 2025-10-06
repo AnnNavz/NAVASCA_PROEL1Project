@@ -665,6 +665,7 @@
 			this.TeachersData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
 			this.TeachersData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.TeachersData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeachersData_CellClick);
+			this.TeachersData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeachersData_CellContentClick);
 			// 
 			// guna2HtmlLabel3
 			// 

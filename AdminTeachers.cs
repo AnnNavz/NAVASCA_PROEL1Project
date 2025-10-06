@@ -84,6 +84,15 @@ namespace NAVASCA_PROEL1Project
 
 					TeachersData.Columns["Status"].Visible = false;
 
+					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
+
+					detailsButtonColumn.HeaderText = "Details";
+					detailsButtonColumn.Name = "Details";
+					detailsButtonColumn.Text = "View";
+					detailsButtonColumn.UseColumnTextForButtonValue = true;
+
+					TeachersData.Columns.Add(detailsButtonColumn);
+
 
 
 
@@ -637,5 +646,52 @@ namespace NAVASCA_PROEL1Project
 				this.Close();
 			}
 		}
+
+		private void TeachersData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex < 0) return;
+
+			object teacherIDObject = TeachersData.Rows[e.RowIndex].Cells["InstructorID"].Value;
+			object teacherFirstNameObject = TeachersData.Rows[e.RowIndex].Cells["FirstName"].Value;
+			object teacherLastNameObject = TeachersData.Rows[e.RowIndex].Cells["LastName"].Value;
+
+
+
+			if (teacherIDObject is DBNull || teacherIDObject == null)
+			{
+				MessageBox.Show("Please select a teacher.", "Teacher", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			int selectedTeacherID = Convert.ToInt32(teacherIDObject);
+
+			if (selectedTeacherID == 0)
+			{
+				MessageBox.Show("Please select a teacher.", "Teacher", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			string selectedTeacherName = (teacherFirstNameObject.ToString()) + " " + (teacherLastNameObject.ToString());
+
+			string columnName = TeachersData.Columns[e.ColumnIndex].Name;
+
+			if (columnName == "Details")
+			{
+				MessageBox.Show($"Opening the Details for Teacher: {selectedTeacherName}", "Teacher Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OpenDetails(selectedTeacherID, selectedTeacherName);
+				this.Hide();
+			}
+
+
+		}
+
+		private void OpenDetails(int profileID, string teacherName)
+		{
+			AdminTeacherDetails details = new AdminTeacherDetails(profileID, teacherName);
+			details.Show();
+		}
+
+
+
 	}
 }

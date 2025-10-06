@@ -52,7 +52,7 @@ namespace NAVASCA_PROEL1Project
 		private void LoadSemester()
 		{
 			string sql = @"SELECT
-                          CONCAT(s.AcademicYear, ' ', s.TermName) AS FullSemesterName
+                          CONCAT(s.TermName, ' ', s.AcademicYear) AS FullSemesterName
                           FROM
                           Enrollment e
                           INNER JOIN

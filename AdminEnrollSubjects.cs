@@ -128,6 +128,7 @@ namespace NAVASCA_PROEL1Project
 
 			object courseIDObject = CoursesData.Rows[e.RowIndex].Cells["CourseID"].Value;
 			object courseNameObject = CoursesData.Rows[e.RowIndex].Cells["CourseName"].Value;
+			object courseCodeObject = CoursesData.Rows[e.RowIndex].Cells["CourseCode"].Value;
 
 
 
@@ -139,6 +140,7 @@ namespace NAVASCA_PROEL1Project
 
 			int selectedCourseID = Convert.ToInt32(courseIDObject);
 			string selectedCourseName = (courseNameObject.ToString());
+			string selectedCourseCode = (courseCodeObject.ToString());
 
 
 			string action = "Enroll Subject";
@@ -178,7 +180,7 @@ namespace NAVASCA_PROEL1Project
 			if (columnName == "Enrollment")
 			{
 
-				if (IsStudentEnrolled(StudentID, selectedCourseID))
+				if (IsStudentEnrolled(StudentID, selectedCourseCode))
 				{
 					MessageBox.Show("This student is already enrolled in this subject.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -217,17 +219,20 @@ namespace NAVASCA_PROEL1Project
 		}
 
 
-		private bool IsStudentEnrolled(int currentStudentID , int currentCourseID)
+		private bool IsStudentEnrolled(int currentStudentID , string currentCourseID)
 		{
 
-			string sqlQuery = "SELECT COUNT(*) FROM EnrollSubject WHERE StudentID = @studentID AND CourseID = @courseID";
+			string sqlQuery = "SELECT COUNT(*) " +
+				  "FROM EnrollSubject e " +
+				  "INNER JOIN Courses c ON e.CourseID = c.CourseID " +
+				  "WHERE e.StudentID = @studentID AND c.CourseCode = @courseCode;";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
 				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
 				{
 					cmd.Parameters.AddWithValue("@studentID", currentStudentID);
-					cmd.Parameters.AddWithValue("@courseID", currentCourseID);
+					cmd.Parameters.AddWithValue("@courseCode", currentCourseID);
 					conn.Open();
 					int count = (int)cmd.ExecuteScalar();
 					return count > 0;

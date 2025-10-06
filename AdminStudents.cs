@@ -637,13 +637,21 @@ namespace NAVASCA_PROEL1Project
 			object studentLastNameObject = StudentData.Rows[e.RowIndex].Cells["LastName"].Value;
 
 
-			if (studentIDObject == null)
+
+			if (studentIDObject is DBNull || studentIDObject == null)
 			{
-				MessageBox.Show("Student ID not found.", "Error");
+				MessageBox.Show("Please select a student." , "Student", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
 			int selectedStudentID = Convert.ToInt32(studentIDObject);
+
+			if (selectedStudentID == 0)
+			{
+				MessageBox.Show("Please select a student.", "Student", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
 			string selectedStudentName= (studentFirstNameObject.ToString()) + " " + (studentLastNameObject.ToString());
 
 			string columnName = StudentData.Columns[e.ColumnIndex].Name;

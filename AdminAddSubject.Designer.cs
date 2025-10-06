@@ -80,7 +80,7 @@
 			this.cmbCredits.Location = new System.Drawing.Point(145, 325);
 			this.cmbCredits.Name = "cmbCredits";
 			this.cmbCredits.Size = new System.Drawing.Size(219, 36);
-			this.cmbCredits.TabIndex = 2;
+			this.cmbCredits.TabIndex = 3;
 			// 
 			// label4
 			// 
@@ -337,7 +337,7 @@
 			this.txtCode.PlaceholderText = "Enter code...";
 			this.txtCode.SelectedText = "";
 			this.txtCode.Size = new System.Drawing.Size(174, 36);
-			this.txtCode.TabIndex = 96;
+			this.txtCode.TabIndex = 2;
 			// 
 			// AdminAddSubject
 			// 
