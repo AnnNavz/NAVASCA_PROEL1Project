@@ -37,12 +37,12 @@
 			this.picBack = new System.Windows.Forms.PictureBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.TeachersData = new Guna.UI2.WinForms.Guna2DataGridView();
 			this.btnSearch = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
+			this.TeachersData = new Guna.UI2.WinForms.Guna2DataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TeachersData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.TeachersData)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label5
@@ -93,6 +93,44 @@
 			this.label3.Size = new System.Drawing.Size(252, 38);
 			this.label3.TabIndex = 109;
 			this.label3.Text = "Teacher Details";
+			// 
+			// btnSearch
+			// 
+			this.btnSearch.BackColor = System.Drawing.Color.Transparent;
+			this.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
+			this.btnSearch.ImageRotate = 0F;
+			this.btnSearch.Location = new System.Drawing.Point(582, 197);
+			this.btnSearch.Name = "btnSearch";
+			this.btnSearch.Size = new System.Drawing.Size(28, 26);
+			this.btnSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.btnSearch.TabIndex = 121;
+			this.btnSearch.TabStop = false;
+			this.btnSearch.UseTransparentBackground = true;
+			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+			// 
+			// txtSearch
+			// 
+			this.txtSearch.BackColor = System.Drawing.Color.Transparent;
+			this.txtSearch.BorderColor = System.Drawing.SystemColors.GradientActiveCaption;
+			this.txtSearch.BorderRadius = 16;
+			this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.txtSearch.DefaultText = "";
+			this.txtSearch.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.txtSearch.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.txtSearch.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtSearch.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.txtSearch.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.txtSearch.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.txtSearch.Location = new System.Drawing.Point(407, 191);
+			this.txtSearch.Name = "txtSearch";
+			this.txtSearch.PlaceholderText = "Search....";
+			this.txtSearch.SelectedText = "";
+			this.txtSearch.Size = new System.Drawing.Size(209, 38);
+			this.txtSearch.TabIndex = 122;
 			// 
 			// TeachersData
 			// 
@@ -164,44 +202,6 @@
 			this.TeachersData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
 			this.TeachersData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			// 
-			// btnSearch
-			// 
-			this.btnSearch.BackColor = System.Drawing.Color.Transparent;
-			this.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-			this.btnSearch.ImageRotate = 0F;
-			this.btnSearch.Location = new System.Drawing.Point(582, 197);
-			this.btnSearch.Name = "btnSearch";
-			this.btnSearch.Size = new System.Drawing.Size(28, 26);
-			this.btnSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.btnSearch.TabIndex = 121;
-			this.btnSearch.TabStop = false;
-			this.btnSearch.UseTransparentBackground = true;
-			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-			// 
-			// txtSearch
-			// 
-			this.txtSearch.BackColor = System.Drawing.Color.Transparent;
-			this.txtSearch.BorderColor = System.Drawing.SystemColors.GradientActiveCaption;
-			this.txtSearch.BorderRadius = 16;
-			this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.txtSearch.DefaultText = "";
-			this.txtSearch.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-			this.txtSearch.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-			this.txtSearch.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtSearch.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtSearch.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-			this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.txtSearch.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtSearch.Location = new System.Drawing.Point(407, 191);
-			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.PlaceholderText = "Search....";
-			this.txtSearch.SelectedText = "";
-			this.txtSearch.Size = new System.Drawing.Size(209, 38);
-			this.txtSearch.TabIndex = 122;
-			// 
 			// AdminTeacherDetails
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,8 +219,8 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "AdminTeacherDetails";
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TeachersData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.TeachersData)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -232,8 +232,8 @@
 		private System.Windows.Forms.PictureBox picBack;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label3;
-		private Guna.UI2.WinForms.Guna2DataGridView TeachersData;
 		private Guna.UI2.WinForms.Guna2PictureBox btnSearch;
 		private Guna.UI2.WinForms.Guna2TextBox txtSearch;
+		private Guna.UI2.WinForms.Guna2DataGridView TeachersData;
 	}
 }

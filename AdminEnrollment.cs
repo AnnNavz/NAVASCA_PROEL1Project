@@ -168,7 +168,7 @@ namespace NAVASCA_PROEL1Project
 				using (SqlConnection conn = new SqlConnection(connectionString))
 				{
 					conn.Open();
-					string query = "SELECT ProgramID, ProgramName FROM Programs ORDER BY ProgramName";
+					string query = "SELECT ProgramID, ProgramName FROM Programs ORDER BY ProgramID";
 
 					SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
 					DataTable dt = new DataTable();
@@ -201,7 +201,7 @@ namespace NAVASCA_PROEL1Project
             WHERE 
                 s.ProgramID = @programID
             ORDER BY
-                s.SectionName";
+                s.SectionID";
 
 			try
 			{

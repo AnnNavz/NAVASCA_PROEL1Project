@@ -84,6 +84,15 @@ namespace NAVASCA_PROEL1Project
 
 					TeachersData.Columns["Status"].Visible = false;
 
+					DataGridViewButtonColumn manageButtonColumn = new DataGridViewButtonColumn();
+
+					manageButtonColumn.HeaderText = "Handle Subjects";
+					manageButtonColumn.Name = "Subjects";
+					manageButtonColumn.Text = "Manage";
+					manageButtonColumn.UseColumnTextForButtonValue = true;
+
+					TeachersData.Columns.Add(manageButtonColumn);
+
 					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
 
 					detailsButtonColumn.HeaderText = "Details";
@@ -681,6 +690,12 @@ namespace NAVASCA_PROEL1Project
 				OpenDetails(selectedTeacherID, selectedTeacherName);
 				this.Hide();
 			}
+			else if (columnName == "Subjects")
+			{
+				MessageBox.Show($"Opening Manage Subjects for Teacher: {selectedTeacherName}", "Teacher Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				OpenSubjects(selectedTeacherID, selectedTeacherName);
+				this.Hide();
+			}
 
 
 		}
@@ -689,6 +704,12 @@ namespace NAVASCA_PROEL1Project
 		{
 			AdminTeacherDetails details = new AdminTeacherDetails(profileID, teacherName);
 			details.Show();
+		}
+
+		private void OpenSubjects(int profileID, string teacherName)
+		{
+			AdminTeacherSubjects subjects = new AdminTeacherSubjects(profileID, teacherName);
+			subjects.Show();
 		}
 
 
