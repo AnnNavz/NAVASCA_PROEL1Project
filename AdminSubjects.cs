@@ -20,10 +20,6 @@ namespace NAVASCA_PROEL1Project
 			CoursesData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 			LoadCourses();
 
-			DataTable departmentsData = DatabaseManager.GetDepartments();
-			cmbDepartment.DataSource = departmentsData;
-			cmbDepartment.DisplayMember = "DepartmentName";
-			cmbDepartment.ValueMember = "DepartmentID";
 		}
 
 		string connectionString = Database.ConnectionString;
@@ -43,10 +39,8 @@ namespace NAVASCA_PROEL1Project
 												"WHERE Status = 'Active'";
 
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
-							  "p.FirstName, p.LastName, d.DepartmentName, c.Status " +
+							  "c.CourseSem, d.DepartmentName, c.Status " +
 							  "FROM Courses AS c " +
-							  "INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
-							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
 							  "WHERE c.Status = 'Active' " +
 							  "ORDER BY c.CourseID DESC";
@@ -65,8 +59,32 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
+					CoursesData.AutoGenerateColumns = false;
+					CoursesData.Columns.Clear();
+					CoursesData.ReadOnly = true;
+
+					CoursesData.Columns.Add("CourseID", "Course ID");
+					CoursesData.Columns.Add("CourseName", "Course Name");
+					CoursesData.Columns.Add("CourseCode", "Course Code");
+					CoursesData.Columns.Add("Description", "Description");
+					CoursesData.Columns.Add("Credits", "Credits");
+					CoursesData.Columns.Add("CourseSem", "Term");
+					CoursesData.Columns.Add("DepartmentName", "Department Name");
+					CoursesData.Columns.Add("Status", "Status");
+
+
+					foreach (DataGridViewColumn col in CoursesData.Columns)
+					{
+						if (dataTable.Columns.Contains(col.Name))
+						{
+							col.DataPropertyName = col.Name;
+						}
+					}
+
+					CoursesData.Columns["Status"].Visible = false;
+
+
 					CoursesData.DataSource = dataTable;
-					SetupCoursesDataGridView();
 				}
 				catch (Exception ex)
 				{
@@ -137,13 +155,11 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits, " +
-							  "p.FirstName, p.LastName, d.DepartmentName, c.Status " +
+							  "c.CourseSem, d.DepartmentName, c.Status " +
 							  "FROM Courses AS c " +
-							  "INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
-							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "INNER JOIN Departments AS d ON c.DepartmentID = d.DepartmentID " +
 							  "WHERE c.Status = 'Active' AND " +
-							  "(c.CourseID LIKE @searchTerm OR c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR c.Description LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
+							  "(c.CourseID LIKE @searchTerm OR c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR c.Description LIKE @searchTerm OR c.CourseSem LIKE @searchTerm OR d.DepartmentName LIKE @searchTerm)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -158,7 +174,6 @@ namespace NAVASCA_PROEL1Project
 
 					CoursesData.DataSource = dataTable;
 
-					SetupCoursesDataGridView();
 
 					if (dataTable.Rows.Count == 0)
 					{
@@ -172,42 +187,6 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
-		private void SetupCoursesDataGridView()
-		{
-			CoursesData.AutoGenerateColumns = false;
-			CoursesData.Columns.Clear();
-			CoursesData.ReadOnly = true;
-
-			CoursesData.Columns.Add("CourseID", "Course ID");
-			CoursesData.Columns.Add("CourseName", "Course Name");
-			CoursesData.Columns.Add("CourseCode", "Course Code");
-			CoursesData.Columns.Add("Description", "Description");
-			CoursesData.Columns.Add("Credits", "Credits");
-			CoursesData.Columns.Add("InstructorName", "Instructor Name");
-			CoursesData.Columns.Add("DepartmentName", "Department Name");
-			CoursesData.Columns.Add("Status", "Status");
-
-			DataTable dataTable = (DataTable)CoursesData.DataSource;
-			if (dataTable != null && !dataTable.Columns.Contains("InstructorName"))
-			{
-				dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
-			}
-
-			foreach (DataGridViewColumn col in CoursesData.Columns)
-			{
-				if (dataTable.Columns.Contains(col.Name))
-				{
-					col.DataPropertyName = col.Name;
-				}
-			}
-
-			CoursesData.Columns["Status"].Visible = false;
-
-			CoursesData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-
-
-		}
 
 		private void btnApproval_Click(object sender, EventArgs e)
 		{
@@ -276,23 +255,24 @@ namespace NAVASCA_PROEL1Project
 
 			int courseID = Convert.ToInt32(CoursesData.SelectedRows[0].Cells["CourseID"].Value);
 
-			string selectedDepartmentName = cmbDepartment.Text;
-			string selectedInstructorName = cmbTeacher.Text;
+			int DepartmentID = 0;
 
-			if (string.IsNullOrEmpty(selectedDepartmentName) || string.IsNullOrEmpty(selectedInstructorName))
+			if (cmbDepartment.SelectedIndex == 0)
 			{
-				MessageBox.Show("Please select both a Department and an Instructor.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
+				DepartmentID = 1;
 			}
-
-			if (cmbDepartment.SelectedValue == null || cmbTeacher.SelectedValue == null)
+			if (cmbDepartment.SelectedIndex == 1)
 			{
-				MessageBox.Show("Selected Department or Instructor is not a valid item.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				DepartmentID = 2;
 			}
-
-			int departmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
-			int instructorID = Convert.ToInt32(cmbTeacher.SelectedValue);
+			if (cmbDepartment.SelectedIndex == 2)
+			{
+				DepartmentID = 3;
+			}
+			if (cmbDepartment.SelectedIndex == 2)
+			{
+				DepartmentID = 4;
+			}
 
 			string sqlQuery = "UPDATE Courses SET " +
 							  "CourseName = @CourseName, " +
@@ -300,7 +280,7 @@ namespace NAVASCA_PROEL1Project
 							  "Credits = @Credits, " +
 							  "Description = @Description, " +
 							  "DepartmentID = @DepartmentID, " +
-							  "InstructorID = @InstructorID " +
+							  "CourseSem = @Term " +
 							  "WHERE CourseID = @CourseID;";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -315,9 +295,8 @@ namespace NAVASCA_PROEL1Project
 					cmd.Parameters.AddWithValue("@CourseCode", txtCourseCode.Text);
 					cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
 					cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
-
-					cmd.Parameters.AddWithValue("@DepartmentID", departmentID);
-					cmd.Parameters.AddWithValue("@InstructorID", instructorID);
+					cmd.Parameters.AddWithValue("@DepartmentID", DepartmentID);
+					cmd.Parameters.AddWithValue("@Term", cmbTerm.Text);
 
 					int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -366,28 +345,15 @@ namespace NAVASCA_PROEL1Project
 				string credits = row.Cells["Credits"].Value.ToString();
 				string description = row.Cells["Description"].Value.ToString();
 				string department = row.Cells["DepartmentName"].Value.ToString();
-				string instructor = row.Cells["InstructorName"].Value.ToString();
+				string Term = row.Cells["CourseSem"].Value.ToString();
 
 				txtCourseName.Text = courseName;
 				txtCourseCode.Text = courseCode;
 				cmbCredits.Text = credits; 
 				txtDescription.Text = description;
-
-				cmbDepartment.SelectedIndexChanged -= cmbDepartment_SelectedIndexChanged;
-				cmbDepartment.SelectedIndex = cmbDepartment.FindStringExact(department);
-				cmbDepartment.SelectedIndexChanged += cmbDepartment_SelectedIndexChanged;
-
-				if (cmbDepartment.SelectedValue != null)
-				{
-					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
-
-					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
-					cmbTeacher.DataSource = instructorsData;
-					cmbTeacher.DisplayMember = "FullName";
-					cmbTeacher.ValueMember = "InstructorID";
-				}
-
-				cmbTeacher.SelectedIndex = cmbTeacher.FindStringExact(instructor);
+				cmbTerm.Text = Term;
+				cmbDepartment.Text = department;
+				
 			}
 
 		}
@@ -396,85 +362,6 @@ namespace NAVASCA_PROEL1Project
 		{
 			pnlUpdate.Visible=false;
 		}
-
-		public static class DatabaseManager
-		{
-			public static DataTable GetDepartments()
-			{
-				DataTable dataTable = new DataTable();
-				string sqlQuery = "SELECT DepartmentID, DepartmentName FROM Departments";
-				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
-				{
-					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-					{
-						connection.Open();
-						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-						dataAdapter.Fill(dataTable);
-					}
-				}
-				return dataTable;
-			}
-
-
-			public static DataTable GetInstructorsByDepartment(int departmentID)
-			{
-				DataTable dataTable = new DataTable();
-				string sqlQuery = @"
-                                  SELECT 
-                                  i.InstructorID, 
-                                  p.FirstName + ' ' + p.LastName AS FullName
-                                  FROM 
-                                  Instructors i
-                                  INNER JOIN 
-                                  Profiles p ON i.ProfileID = p.ProfileID
-                                  WHERE 
-                                  i.DepartmentID = @DepartmentID
-                                  AND
-                                  p.Status = 'Active';
-                                  ";
-
-				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
-				{
-					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-					{
-						command.Parameters.AddWithValue("@DepartmentID", departmentID);
-						connection.Open();
-						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-						dataAdapter.Fill(dataTable);
-					}
-				}
-				return dataTable;
-			}
-
-
-		}
-
-		private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-			if (cmbDepartment.SelectedValue != null && cmbDepartment.SelectedValue.ToString() != "")
-			{
-				try
-				{
-					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
-
-					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
-
-					cmbTeacher.DataSource = instructorsData;
-					cmbTeacher.DisplayMember = "FullName";
-					cmbTeacher.ValueMember = "InstructorID";
-				}
-				catch (InvalidCastException ex)
-				{
-					Console.WriteLine("InvalidCastException: " + ex.Message);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("An error occurred: " + ex.Message);
-				}
-			}
-		}
-
 
 		private void AddLogEntry(string name, string action, string description)
 		{

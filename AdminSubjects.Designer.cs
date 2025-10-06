@@ -48,7 +48,7 @@
 			this.cmbDepartment = new Guna.UI2.WinForms.Guna2ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.cmbTeacher = new Guna.UI2.WinForms.Guna2ComboBox();
+			this.cmbTerm = new Guna.UI2.WinForms.Guna2ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.cmbCredits = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -303,7 +303,7 @@
 			this.pnlUpdate.Controls.Add(this.cmbDepartment);
 			this.pnlUpdate.Controls.Add(this.label4);
 			this.pnlUpdate.Controls.Add(this.label3);
-			this.pnlUpdate.Controls.Add(this.cmbTeacher);
+			this.pnlUpdate.Controls.Add(this.cmbTerm);
 			this.pnlUpdate.Controls.Add(this.label5);
 			this.pnlUpdate.Controls.Add(this.label2);
 			this.pnlUpdate.Controls.Add(this.cmbCredits);
@@ -363,11 +363,15 @@
 			this.cmbDepartment.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbDepartment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbDepartment.ItemHeight = 30;
+			this.cmbDepartment.Items.AddRange(new object[] {
+            "College of Computer Studies",
+            "College of Business and Management",
+            "College of Arts, Sciences, and Pedagogy",
+            "College of Nursing"});
 			this.cmbDepartment.Location = new System.Drawing.Point(27, 462);
 			this.cmbDepartment.Name = "cmbDepartment";
 			this.cmbDepartment.Size = new System.Drawing.Size(296, 36);
 			this.cmbDepartment.TabIndex = 96;
-			this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
 			// 
 			// label4
 			// 
@@ -389,25 +393,28 @@
 			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
 			this.label3.Location = new System.Drawing.Point(31, 515);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(141, 20);
+			this.label3.Size = new System.Drawing.Size(46, 20);
 			this.label3.TabIndex = 98;
-			this.label3.Text = "Teacher Assigned:";
+			this.label3.Text = "Term:";
 			// 
-			// cmbTeacher
+			// cmbTerm
 			// 
-			this.cmbTeacher.BackColor = System.Drawing.Color.Transparent;
-			this.cmbTeacher.BorderRadius = 16;
-			this.cmbTeacher.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.cmbTeacher.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbTeacher.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.cmbTeacher.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.cmbTeacher.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-			this.cmbTeacher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-			this.cmbTeacher.ItemHeight = 30;
-			this.cmbTeacher.Location = new System.Drawing.Point(29, 541);
-			this.cmbTeacher.Name = "cmbTeacher";
-			this.cmbTeacher.Size = new System.Drawing.Size(294, 36);
-			this.cmbTeacher.TabIndex = 97;
+			this.cmbTerm.BackColor = System.Drawing.Color.Transparent;
+			this.cmbTerm.BorderRadius = 16;
+			this.cmbTerm.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.cmbTerm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbTerm.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbTerm.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.cmbTerm.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+			this.cmbTerm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+			this.cmbTerm.ItemHeight = 30;
+			this.cmbTerm.Items.AddRange(new object[] {
+            "First Semester",
+            "Second Semester"});
+			this.cmbTerm.Location = new System.Drawing.Point(29, 541);
+			this.cmbTerm.Name = "cmbTerm";
+			this.cmbTerm.Size = new System.Drawing.Size(294, 36);
+			this.cmbTerm.TabIndex = 97;
 			// 
 			// label5
 			// 
@@ -889,7 +896,7 @@
 		private Guna.UI2.WinForms.Guna2ComboBox cmbDepartment;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
-		private Guna.UI2.WinForms.Guna2ComboBox cmbTeacher;
+		private Guna.UI2.WinForms.Guna2ComboBox cmbTerm;
 		private System.Windows.Forms.Label label6;
 		private Guna.UI2.WinForms.Guna2TextBox txtCourseCode;
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;

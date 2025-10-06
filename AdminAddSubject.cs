@@ -25,62 +25,6 @@ namespace NAVASCA_PROEL1Project
 
 		private void AdminAddSubject_Load(object sender, EventArgs e)
 		{
-
-			DataTable departmentsData = DatabaseManager.GetDepartments();
-			cmbDepartment.DataSource = departmentsData;
-			cmbDepartment.DisplayMember = "DepartmentName";
-			cmbDepartment.ValueMember = "DepartmentID";
-		}
-
-
-		public static class DatabaseManager
-		{
-			public static DataTable GetDepartments()
-			{
-				DataTable dataTable = new DataTable();
-				string sqlQuery = "SELECT DepartmentID, DepartmentName FROM Departments";
-				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
-				{
-					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-					{
-						connection.Open();
-						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-						dataAdapter.Fill(dataTable);
-					}
-				}
-				return dataTable;
-			}
-
-
-			public static DataTable GetInstructorsByDepartment(int departmentID)
-			{
-				DataTable dataTable = new DataTable();
-				string sqlQuery = @"
-                                  SELECT 
-                                  i.InstructorID, 
-                                  p.FirstName + ' ' + p.LastName AS FullName
-                                  FROM 
-                                  Instructors i
-                                  INNER JOIN 
-                                  Profiles p ON i.ProfileID = p.ProfileID
-                                  WHERE 
-                                  i.DepartmentID = @DepartmentID
-                                  AND
-                                  p.Status = 'Active';
-                                  ";
-
-				using (SqlConnection connection = new SqlConnection(Database.ConnectionString))
-				{
-					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-					{
-						command.Parameters.AddWithValue("@DepartmentID", departmentID);
-						connection.Open();
-						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-						dataAdapter.Fill(dataTable);
-					}
-				}
-				return dataTable;
-			}
 		}
 
 
@@ -93,30 +37,6 @@ namespace NAVASCA_PROEL1Project
 		}
 
 
-		private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (cmbDepartment.SelectedValue != null && cmbDepartment.SelectedValue.ToString() != "")
-			{
-				try
-				{
-					int selectedDepartmentID = Convert.ToInt32(cmbDepartment.SelectedValue);
-
-					DataTable instructorsData = DatabaseManager.GetInstructorsByDepartment(selectedDepartmentID);
-
-					cmbTeacher.DataSource = instructorsData;
-					cmbTeacher.DisplayMember = "FullName";
-					cmbTeacher.ValueMember = "InstructorID";
-				}
-				catch (InvalidCastException ex)
-				{
-					Console.WriteLine("InvalidCastException: " + ex.Message);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("An error occurred: " + ex.Message);
-				}
-			}
-		}
 
 		private void btnSubmit_Click(object sender, EventArgs e)
 		{
@@ -139,7 +59,7 @@ namespace NAVASCA_PROEL1Project
 			if (string.IsNullOrWhiteSpace(cmbCredits.Text)) { errorProvider2.SetError(cmbCredits, "Credits is required."); requiredFieldsMissing = true; }
 			if (string.IsNullOrWhiteSpace(txtDescription.Text)) { errorProvider3.SetError(txtDescription, "Description is required."); requiredFieldsMissing = true; }
 			if (string.IsNullOrWhiteSpace(cmbDepartment.Text)) { errorProvider4.SetError(cmbDepartment, "Department is required."); requiredFieldsMissing = true; }
-			if (string.IsNullOrWhiteSpace(cmbTeacher.Text)) { errorProvider5.SetError(cmbTeacher, "Teacher is required."); requiredFieldsMissing = true; }
+			if (string.IsNullOrWhiteSpace(cmbTerm.Text)) { errorProvider5.SetError(cmbTerm, "Term is required."); requiredFieldsMissing = true; }
 
 			if (requiredFieldsMissing)
 			{
@@ -173,7 +93,7 @@ namespace NAVASCA_PROEL1Project
 				cmd.Parameters.AddWithValue("@CourseCode", formattedCode);
 				cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
 				cmd.Parameters.AddWithValue("@Credits", cmbCredits.Text);
-				cmd.Parameters.AddWithValue("@Teacher", cmbTeacher.Text);
+				cmd.Parameters.AddWithValue("@CourseSem", cmbTerm.Text);
 				cmd.Parameters.AddWithValue("@Department", cmbDepartment.Text);
 				cmd.Parameters.AddWithValue("@Status", status);
 				cmd.Parameters.AddWithValue("@Action", action);

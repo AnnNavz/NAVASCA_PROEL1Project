@@ -162,18 +162,13 @@
 			this.cmbProgram.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbProgram.ItemHeight = 30;
 			this.cmbProgram.Items.AddRange(new object[] {
-            "BEED (BACHELOR OF ELEMENTARY EDUCATION)",
             "BSEd-ENG (BACHELOR OF SECONDARY EDUCATION - ENGLISH)",
             "BSEd-MATH (BACHELOR OF SECONDARY EDUCATION - MATH)",
-            "BSIS (BACHELOR OF SCIENCE IN INFORMATION SYSTEMS)",
             "BSIT (BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY)",
             "BSCS (BACHELOR OF SCIENCE IN COMPUTER SCIENCE)",
-            "BSCpE (BACHELOR OF SCIENCE IN COMPUTER ENGINEERING)",
             "BSBA-FM (BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION - FINANCIAL MANAGEMENT)",
             "BSBA-MM (BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MARJOR IN MARKETING MANAG" +
-                "EMENT)",
-            "BSHM (BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT)",
-            "BSTM (BACHELOR OF SCIENCE IN TOURISM MANAGEMENT)",
+                "EMENT))",
             "BSN (BACHELOR OF SCIENCE IN NURSING)"});
 			this.cmbProgram.Location = new System.Drawing.Point(153, 303);
 			this.cmbProgram.Name = "cmbProgram";
@@ -203,14 +198,6 @@
 			this.cmbSection.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbSection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbSection.ItemHeight = 30;
-			this.cmbSection.Items.AddRange(new object[] {
-            "Burning Bud (AM)",
-            "Elder Strawberry (AM)",
-            "Ember Lily (AM)",
-            "Beanstalk (AM)",
-            "Sugar Apple (PM)",
-            "Romanesco (PM)",
-            "Crimson Thorn (PM)"});
 			this.cmbSection.Location = new System.Drawing.Point(153, 378);
 			this.cmbSection.Name = "cmbSection";
 			this.cmbSection.Size = new System.Drawing.Size(479, 36);
