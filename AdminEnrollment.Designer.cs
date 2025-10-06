@@ -174,6 +174,7 @@
 			this.cmbProgram.Name = "cmbProgram";
 			this.cmbProgram.Size = new System.Drawing.Size(479, 36);
 			this.cmbProgram.TabIndex = 112;
+			this.cmbProgram.SelectedIndexChanged += new System.EventHandler(this.cmbProgram_SelectedIndexChanged);
 			// 
 			// label1
 			// 
@@ -247,6 +248,7 @@
 			this.Name = "AdminEnrollment";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "AdminEnrollment";
+			this.Load += new System.EventHandler(this.AdminEnrollment_Load);
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();

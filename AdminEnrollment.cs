@@ -42,6 +42,7 @@ namespace NAVASCA_PROEL1Project
 			this.Hide();
 		}
 
+		
 		private void btnSubmit_Click(object sender, EventArgs e)
 		{
 
@@ -115,7 +116,114 @@ namespace NAVASCA_PROEL1Project
 			}
 		}
 
+		private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cmbProgram.SelectedValue != null && cmbProgram.SelectedValue != DBNull.Value)
+			{
+				try
+				{
+					if (cmbProgram.SelectedValue is int selectedProgramID)
+					{
+						DataTable sectionsData = GetSectionsByProgram(selectedProgramID);
 
+						ClearSectionComboBox(cmbSection);
+						cmbSection.DataSource = sectionsData;
+						cmbSection.DisplayMember = "SectionName";
+						cmbSection.ValueMember = "SectionID";
+						cmbSection.SelectedIndex = -1;
+					}
+					else
+					{
+						ClearSectionComboBox(cmbSection);
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred while loading sections: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			else
+			{
+				ClearSectionComboBox(cmbSection);
+			}
+		}
+
+		private void AdminEnrollment_Load(object sender, EventArgs e)
+		{
+			FillProgramComboBox(cmbProgram);
+			ClearSectionComboBox(cmbSection);
+		}
+
+		private void ClearSectionComboBox(ComboBox cmbSection)
+		{
+			cmbSection.DataSource = null;
+			cmbSection.Items.Clear();
+			cmbSection.Text = "";
+		}
+
+		private void FillProgramComboBox(ComboBox cmbProgram)
+		{
+			try
+			{
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+					conn.Open();
+					string query = "SELECT ProgramID, ProgramName FROM Programs ORDER BY ProgramName";
+
+					SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+					DataTable dt = new DataTable();
+					adapter.Fill(dt);
+
+					cmbProgram.DataSource = null;
+
+					cmbProgram.DataSource = dt;
+					cmbProgram.DisplayMember = "ProgramName";
+					cmbProgram.ValueMember = "ProgramID";
+
+					cmbProgram.SelectedIndex = -1; 
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error loading Programs: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		private DataTable GetSectionsByProgram(int programID)
+		{
+			DataTable dataTable = new DataTable();
+
+			string sqlQuery = @"
+            SELECT 
+                s.SectionID, s.SectionName 
+            FROM 
+                Sections s 
+            WHERE 
+                s.ProgramID = @programID
+            ORDER BY
+                s.SectionName";
+
+			try
+			{
+				using (SqlConnection connection = new SqlConnection(connectionString))
+				{
+					using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+					{
+						command.Parameters.AddWithValue("@programID", programID);
+						connection.Open();
+
+						SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+						dataAdapter.Fill(dataTable);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Database Error fetching sections: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			return dataTable;
+		}
 
 	}
 }

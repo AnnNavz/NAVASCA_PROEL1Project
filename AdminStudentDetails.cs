@@ -84,11 +84,12 @@ namespace NAVASCA_PROEL1Project
 		private void LoadSection()
 		{
 			string sql = @"SELECT
-                          Section
+                          s.SectionName
                           FROM
-                          Enrollment 
+                          Enrollment e
+                          INNER JOIN Sections s ON s.SectionId = e.SectionID
                           WHERE
-                          StudentID = @studentID_int;";
+                          e.StudentID = @studentID_int;";
 
 			txtSection.Text = GetScalarResultForStudent(sql, "@studentID_int", StudentID); 
 
@@ -145,7 +146,8 @@ namespace NAVASCA_PROEL1Project
 					"p.FirstName, p.LastName, e.Grade, e.StudentID " +
 					"FROM EnrollSubject AS e " +
 					"INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
-					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
+					"INNER JOIN HandleSubjects AS h ON c.CourseID = h.CourseID " +
+					"INNER JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
 					"INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 					"WHERE e.StudentID = @studentid ";
 
