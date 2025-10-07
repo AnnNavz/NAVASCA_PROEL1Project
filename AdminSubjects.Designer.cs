@@ -174,6 +174,7 @@
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.CoursesData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CoursesData_CellClick);
+			this.CoursesData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CoursesData_CellContentClick);
 			// 
 			// btnAdd
 			// 

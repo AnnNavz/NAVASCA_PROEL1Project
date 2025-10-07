@@ -75,7 +75,7 @@ namespace NAVASCA_PROEL1Project
 
 					DataGridViewButtonColumn enrollmentButtonColumn = new DataGridViewButtonColumn();
 
-					enrollmentButtonColumn.HeaderText = " ";
+					enrollmentButtonColumn.HeaderText = $"                                     ";
 					enrollmentButtonColumn.Name = "Enrollment";
 					enrollmentButtonColumn.Text = "Enroll";
 					enrollmentButtonColumn.UseColumnTextForButtonValue = true;
@@ -85,7 +85,7 @@ namespace NAVASCA_PROEL1Project
 
 					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
 
-					detailsButtonColumn.HeaderText = " ";
+					detailsButtonColumn.HeaderText = $"                                    ";
 					detailsButtonColumn.Name = "Details";
 					detailsButtonColumn.Text = "Details";
 					detailsButtonColumn.UseColumnTextForButtonValue = true;

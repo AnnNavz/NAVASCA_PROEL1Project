@@ -33,7 +33,7 @@ namespace NAVASCA_PROEL1Project
 			TeacherID = teacherID;
 			TeacherName = teacherName;
 
-			this.Text = $"Details - Student ID: {TeacherID}, {TeacherName}";
+			this.Text = $"Details - Teacher ID: {TeacherID}, {TeacherName}";
 
 		}
 		private void picBack_Click(object sender, EventArgs e)
@@ -229,6 +229,12 @@ namespace NAVASCA_PROEL1Project
 					return;
 				}
 
+				if (IsAlready(selecteCourseCode, cmbSection.Text))
+				{
+					MessageBox.Show("Someone already handle this subject in this section.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+					return;
+				}
 
 				string Semester = string.Empty;
 
@@ -287,6 +293,30 @@ namespace NAVASCA_PROEL1Project
 				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
 				{
 					cmd.Parameters.AddWithValue("@instructorID", currentTeacherID);
+					cmd.Parameters.AddWithValue("@courseCode", currentCourseCode);
+					cmd.Parameters.AddWithValue("@sectionName", currentSection);
+
+
+					conn.Open();
+					int count = (int)cmd.ExecuteScalar();
+					return count > 0;
+				}
+			}
+		}
+
+		private bool IsAlready(string currentCourseCode, string currentSection)
+		{
+
+			string sqlQuery = "SELECT COUNT(*) " +
+				  "FROM HandleSubjects e " +
+				  "INNER JOIN Sections s ON e.SectionID = s.SectionID " +
+				  "INNER JOIN Courses c ON c.CourseID = e.CourseID " +
+				  "WHERE c.CourseCode = @courseCode AND s.SectionName = @sectionName;";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
 					cmd.Parameters.AddWithValue("@courseCode", currentCourseCode);
 					cmd.Parameters.AddWithValue("@sectionName", currentSection);
 

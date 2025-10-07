@@ -18,7 +18,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminStudentAddSubject()
 		{
 			InitializeComponent();
-			
+			CoursesData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+
 		}
 
 		private int StudentID;

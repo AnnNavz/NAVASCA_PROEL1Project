@@ -72,6 +72,16 @@ namespace NAVASCA_PROEL1Project
 					CoursesData.Columns.Add("DepartmentName", "Department Name");
 					CoursesData.Columns.Add("Status", "Status");
 
+					DataGridViewButtonColumn detailsButton = new DataGridViewButtonColumn();
+
+
+					detailsButton.HeaderText = $"                                     ";
+					detailsButton.Name = "Details";
+					detailsButton.Text = "Details";
+					detailsButton.UseColumnTextForButtonValue = true;
+
+					CoursesData.Columns.Add(detailsButton);
+
 
 					foreach (DataGridViewColumn col in CoursesData.Columns)
 					{
@@ -387,6 +397,44 @@ namespace NAVASCA_PROEL1Project
 					}
 				}
 			}
+		}
+
+		private void CoursesData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex < 0) return;
+
+			object CourseID = CoursesData.Rows[e.RowIndex].Cells["CourseID"].Value;
+			object CourseName = CoursesData.Rows[e.RowIndex].Cells["CourseName"].Value;
+
+			if (CourseID is DBNull || CourseID == null)
+			{
+				MessageBox.Show("Please select a teacher.", "Teacher", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			int selectedCourseID = Convert.ToInt32(CourseID);
+
+			if (selectedCourseID == 0)
+			{
+				MessageBox.Show("Please select a teacher.", "Teacher", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			string selectedCourseName = (CourseName.ToString());
+
+			string columnName = CoursesData.Columns[e.ColumnIndex].Name;
+
+			if (columnName == "Details")
+			{
+				OpenDetails(selectedCourseID, selectedCourseName);
+				this.Hide();
+			}
+		}
+
+		private void OpenDetails(int courseID, string CourseName)
+		{
+			AdminSubjectDetails details = new AdminSubjectDetails(courseID, CourseName);
+			details.Show();
 		}
 	}
 }
