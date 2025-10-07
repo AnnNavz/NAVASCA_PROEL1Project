@@ -241,7 +241,9 @@ namespace NAVASCA_PROEL1Project
 					Semester = "First Semester";
 				}
 
-				if (MessageBox.Show("Do you want this teacher to handle in this subject " + selectedCourseName + "?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+				if (MessageBox.Show("Do you want this teacher to handle in this subject?" +
+					                "\nSubject: " + selectedCourseName +
+									"\nSection: " + cmbSection.Text , "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
 				{
 
 					using (SqlConnection conn = new SqlConnection(connectionString))

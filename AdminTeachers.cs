@@ -97,7 +97,7 @@ namespace NAVASCA_PROEL1Project
 
 					detailsButtonColumn.HeaderText = " ";
 					detailsButtonColumn.Name = "Details";
-					detailsButtonColumn.Text = "View";
+					detailsButtonColumn.Text = "Details";
 					detailsButtonColumn.UseColumnTextForButtonValue = true;
 
 					TeachersData.Columns.Add(detailsButtonColumn);

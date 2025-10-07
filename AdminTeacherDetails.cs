@@ -16,6 +16,8 @@ namespace NAVASCA_PROEL1Project
 		public AdminTeacherDetails()
 		{
 			InitializeComponent();
+
+			TeachersData.CellBorderStyle = DataGridViewCellBorderStyle.Single;
 		}
 
 
@@ -44,14 +46,13 @@ namespace NAVASCA_PROEL1Project
 		private void LoadSubjectsEnrolled()
 		{
 			string sqlQuery = "SELECT c.CourseCode, c.CourseName, " +
-					"p.FirstName, p.LastName, e.Grade, c.InstructorID " +
-					"FROM EnrollSubject AS e " +
-					"INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
-					"INNER JOIN Enrollment AS m ON m.EnrollmentID = e.EnrollmentID " +
-					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
-					"INNER JOIN Students AS s ON s.StudentID = e.StudentID " +
-					"INNER JOIN Profiles AS p ON s.ProfileID = p.ProfileID " +
-					"WHERE i.InstructorID = @teacherID ";
+							  "t.TermName + ' ' + t.AcademicYear AS Semester, " + // Combined Semester
+							  "s.SectionName " +
+	                          "FROM HandleSubjects AS e " +
+	                          "INNER JOIN Semesters AS t ON t.SemesterID = e.SemesterID " + // Corrected Join Condition
+	                          "INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
+	                          "INNER JOIN Sections AS s ON s.SectionID = e.SectionID " +
+							  "WHERE e.InstructorID = @teacherID;";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -67,8 +68,44 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
+					if (dataTable == null) return;
+
+
+					TeachersData.AutoGenerateColumns = false;
+					TeachersData.Columns.Clear();
+					TeachersData.ReadOnly = true;
+
+					TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
+					{
+						Name = "CourseCode",
+						HeaderText = "Course Code",
+						DataPropertyName = "CourseCode"
+					});
+
+					TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
+					{
+						Name = "CourseName",
+						HeaderText = "Course Name",
+						DataPropertyName = "CourseName"
+					});
+
+					TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
+					{
+						Name = "Semester",
+						HeaderText = "Semester",
+						DataPropertyName = "Semester"
+					});
+
+
+					TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
+					{
+						Name = "SectionName",
+						HeaderText = "Sections",
+						DataPropertyName = "SectionName"
+					});
+
+
 					TeachersData.DataSource = dataTable;
-					SetupTeachersDataGridView();
 				}
 				catch (Exception ex)
 				{
@@ -78,55 +115,7 @@ namespace NAVASCA_PROEL1Project
 		}
 
 
-		private void SetupTeachersDataGridView()
-		{
-			DataTable dataTable = TeachersData.DataSource as DataTable;
-
-			if (dataTable == null) return;
-
-			if (!dataTable.Columns.Contains("StudentName"))
-			{
-				dataTable.Columns.Add("StudentName", typeof(string), "FirstName + ' ' + LastName");
-			}
-
-			TeachersData.AutoGenerateColumns = false;
-			TeachersData.Columns.Clear();
-			TeachersData.ReadOnly = true;
-
-			TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
-			{
-				Name = "CourseCode",
-				HeaderText = "Course Code",
-				DataPropertyName = "CourseCode"
-			});
-
-			TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
-			{
-				Name = "CourseName",
-				HeaderText = "Course Name",
-				DataPropertyName = "CourseName"
-			});
-
-
-			TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
-			{
-				Name = "StudentName",
-				HeaderText = "Student Name",
-				DataPropertyName = "StudentName"
-			});
-
-			TeachersData.Columns.Add(new DataGridViewTextBoxColumn()
-			{
-				Name = "Grade",
-				HeaderText = "Grade",
-				DataPropertyName = "Grade"
-			});
-
-			
-
-
-
-		}
+		
 
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
@@ -139,15 +128,14 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			string sqlQuery = "SELECT c.CourseCode, c.CourseName, " +
-					"p.FirstName, p.LastName, e.Grade, c.InstructorID " +
-					"FROM EnrollSubject AS e " +
-					"INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
-					"INNER JOIN Enrollment AS m ON m.EnrollmentID = e.EnrollmentID " +
-					"INNER JOIN Instructors AS i ON c.InstructorID = i.InstructorID " +
-					"INNER JOIN Students AS s ON s.StudentID = e.StudentID " +
-					"INNER JOIN Profiles AS p ON s.ProfileID = p.ProfileID " +
-					"WHERE i.InstructorID = @teacherID AND " +
-			        "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm OR e.Grade LIKE @searchTerm)";
+							  "t.TermName + ' ' + t.AcademicYear AS Semester, " +
+							  "s.SectionName " +
+							  "FROM HandleSubjects AS e " +
+							  "INNER JOIN Semesters AS t ON t.SemesterID = e.SemesterID " +
+							  "INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
+							  "INNER JOIN Sections AS s ON s.SectionID = e.SectionID " +
+							  "WHERE e.InstructorID = @teacherID AND " +
+							  "(c.CourseName LIKE @searchTerm OR c.CourseCode LIKE @searchTerm OR t.TermName LIKE @searchTerm OR t.AcademicYear LIKE @searchTerm OR s.SectionName LIKE @searchTerm)";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -164,7 +152,6 @@ namespace NAVASCA_PROEL1Project
 
 					TeachersData.DataSource = dataTable;
 
-					SetupTeachersDataGridView();
 
 					if (dataTable.Rows.Count == 0)
 					{

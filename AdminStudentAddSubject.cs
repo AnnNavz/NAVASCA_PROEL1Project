@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace NAVASCA_PROEL1Project
+{
+	public partial class AdminStudentAddSubject : Form
+	{
+		public AdminStudentAddSubject()
+		{
+			InitializeComponent();
+		}
+
+		private void picBack_Click(object sender, EventArgs e)
+		{
+			AdminStudents students = new AdminStudents();
+			students.Show();
+			this.Hide();
+		}
+	}
+}

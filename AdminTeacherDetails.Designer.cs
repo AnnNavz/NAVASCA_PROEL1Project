@@ -101,7 +101,7 @@
 			this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
 			this.btnSearch.ImageRotate = 0F;
-			this.btnSearch.Location = new System.Drawing.Point(582, 197);
+			this.btnSearch.Location = new System.Drawing.Point(601, 201);
 			this.btnSearch.Name = "btnSearch";
 			this.btnSearch.Size = new System.Drawing.Size(28, 26);
 			this.btnSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -125,7 +125,7 @@
 			this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
 			this.txtSearch.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtSearch.Location = new System.Drawing.Point(407, 191);
+			this.txtSearch.Location = new System.Drawing.Point(426, 195);
 			this.txtSearch.Name = "txtSearch";
 			this.txtSearch.PlaceholderText = "Search....";
 			this.txtSearch.SelectedText = "";
@@ -162,7 +162,7 @@
 			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.TeachersData.DefaultCellStyle = dataGridViewCellStyle3;
 			this.TeachersData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(157)))), ((int)(((byte)(189)))));
-			this.TeachersData.Location = new System.Drawing.Point(168, 241);
+			this.TeachersData.Location = new System.Drawing.Point(150, 248);
 			this.TeachersData.Name = "TeachersData";
 			this.TeachersData.ReadOnly = true;
 			this.TeachersData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -177,7 +177,7 @@
 			this.TeachersData.RowHeadersVisible = false;
 			this.TeachersData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 			this.TeachersData.RowTemplate.Height = 30;
-			this.TeachersData.Size = new System.Drawing.Size(448, 303);
+			this.TeachersData.Size = new System.Drawing.Size(485, 303);
 			this.TeachersData.TabIndex = 120;
 			this.TeachersData.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Blue;
 			this.TeachersData.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;

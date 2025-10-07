@@ -83,20 +83,11 @@ namespace NAVASCA_PROEL1Project
 					StudentData.Columns.Add(enrollmentButtonColumn);
 
 
-					DataGridViewButtonColumn enrollSubjectButtonColumn = new DataGridViewButtonColumn();
-
-					enrollSubjectButtonColumn.HeaderText = " ";
-					enrollSubjectButtonColumn.Name = "EnrollSub";
-					enrollSubjectButtonColumn.Text = "Enroll Subjects";
-					enrollSubjectButtonColumn.UseColumnTextForButtonValue = true;
-
-					StudentData.Columns.Add(enrollSubjectButtonColumn);
-
 					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
 
 					detailsButtonColumn.HeaderText = " ";
 					detailsButtonColumn.Name = "Details";
-					detailsButtonColumn.Text = "View";
+					detailsButtonColumn.Text = "Details";
 					detailsButtonColumn.UseColumnTextForButtonValue = true;
 
 					StudentData.Columns.Add(detailsButtonColumn);
@@ -670,21 +661,14 @@ namespace NAVASCA_PROEL1Project
 				this.Hide();
 
 			}
-			else if (columnName == "EnrollSub")
+			else if (columnName == "Details")
 			{
 				if (IsStudentNotEnrolled(selectedStudentID))
 				{
-					MessageBox.Show("This student is not yet enrolled.", "Enrollment Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					MessageBox.Show("This student is not yet enrolled.", "Details Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
 
-				MessageBox.Show($"Opening Enroll Subjects Form for Student: {selectedStudentName}", "Enroll Subjects", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				OpenEnrollSub(selectedStudentID, selectedStudentName);
-				this.Hide();
-
-			}
-			else if (columnName == "Details")
-			{
 				MessageBox.Show($"Opening the Details for Student: {selectedStudentName}", "Student Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				OpenDetails(selectedStudentID, selectedStudentName);
 				this.Hide();
@@ -729,12 +713,6 @@ namespace NAVASCA_PROEL1Project
 		private void OpenEnrollmentForm(int profileID, string studentName)
 		{
 			AdminEnrollment enrollmentForm = new AdminEnrollment(profileID, studentName);
-			enrollmentForm.Show();
-		}
-
-		private void OpenEnrollSub(int profileID, string studentName)
-		{
-			AdminEnrollSubjects enrollmentForm = new AdminEnrollSubjects(profileID, studentName);
 			enrollmentForm.Show();
 		}
 

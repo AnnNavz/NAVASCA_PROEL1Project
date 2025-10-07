@@ -69,38 +69,57 @@ namespace NAVASCA_PROEL1Project
 
 					CoursesData.AutoGenerateColumns = false;
 					CoursesData.Columns.Clear();
-					CoursesData.ReadOnly = true;
+
+					CoursesData.ReadOnly = false;
 
 					DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
-
 					checkBoxColumn.HeaderText = "Select Subject";
 					checkBoxColumn.Name = "SubjectSelected";
 					checkBoxColumn.MinimumWidth = 50;
 					checkBoxColumn.TrueValue = true;
 					checkBoxColumn.FalseValue = false;
 
+					checkBoxColumn.ReadOnly = false;
+
 					CoursesData.Columns.Add(checkBoxColumn);
 
-					CoursesData.Columns.Add("CourseID", "Course ID");
+					var courseIdCol = new DataGridViewTextBoxColumn();
+					courseIdCol.Name = "CourseID";
+					courseIdCol.HeaderText = "Course ID";
+					CoursesData.Columns.Add(courseIdCol);
+
 					CoursesData.Columns.Add("CourseName", "Course Name");
 					CoursesData.Columns.Add("CourseCode", "Course Code");
 					CoursesData.Columns.Add("Description", "Description");
 					CoursesData.Columns.Add("Credits", "Credits");
-
-
-					
 
 					foreach (DataGridViewColumn col in CoursesData.Columns)
 					{
 						if (dataTable.Columns.Contains(col.Name))
 						{
 							col.DataPropertyName = col.Name;
+
+							// 💡 CRITICAL CHANGE: Make all DATA columns ReadOnly = TRUE
+							// We only want the checkbox column to be editable.
+							col.ReadOnly = true;
 						}
 					}
 
+					// You can also make the entire DataGridView ReadOnly = true, and ONLY set the Checkbox column to ReadOnly = false.
+					// CoursesData.ReadOnly = true; // Set DGV to read-only
+					// CoursesData.Columns["SubjectSelected"].ReadOnly = false; // Override for the checkbox
 
 					CoursesData.DataSource = dataTable;
-					
+
+					// 💡 IMPORTANT: Ensure the default value for the checkbox column is FALSE
+					// This initializes all rows' checkboxes to unchecked.
+					foreach (DataGridViewRow row in CoursesData.Rows)
+					{
+						if (!row.IsNewRow)
+						{
+							row.Cells["SubjectSelected"].Value = false;
+						}
+					}
 				}
 				catch (Exception ex)
 				{
@@ -163,65 +182,156 @@ namespace NAVASCA_PROEL1Project
 			string name = StudentName;
 
 
+
 			bool requiredFieldsMissing = false;
 
 			if (string.IsNullOrWhiteSpace(cmbProgram.Text)) { errorProvider1.SetError(cmbProgram, "Program is required."); requiredFieldsMissing = true; }
 			if (string.IsNullOrWhiteSpace(cmbSection.Text)) { errorProvider2.SetError(cmbSection, "Section is required."); requiredFieldsMissing = true; }
 			if (string.IsNullOrWhiteSpace(cmbSemester.Text)) { errorProvider3.SetError(cmbSemester, "Semester is required."); requiredFieldsMissing = true; }
 
+			if (!CoursesData.Rows.Cast<DataGridViewRow>().Any(r => !r.IsNewRow && r.Cells["SubjectSelected"].Value != null && (bool)r.Cells["SubjectSelected"].Value))
+			{
+				MessageBox.Show("Please select at least one subject to enroll.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				requiredFieldsMissing = true;
+			}
+
+			foreach (DataGridViewRow row in CoursesData.Rows)
+			{
+				if (row.IsNewRow || row.DataBoundItem == null) continue;
+
+				object selectedValue = row.Cells["SubjectSelected"].Value;
+				bool isChecked = selectedValue != null && selectedValue != DBNull.Value && (bool)selectedValue;
+
+				if (isChecked)
+				{
+					object courseIdValue = row.Cells["CourseID"].Value;
+
+					if (courseIdValue == null || courseIdValue == DBNull.Value)
+					{
+						MessageBox.Show("A selected subject row is empty. Please uncheck empty or invalid rows.", "Enrollment Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						row.Cells["SubjectSelected"].Value = false;
+						requiredFieldsMissing = true;
+						break;
+					}
+				}
+			}
+
 			if (requiredFieldsMissing)
 			{
 				return;
 			}
 
+			string Semester = (cmbSemester.SelectedIndex == 0) ? "Second Semester" :
+							  (cmbSemester.SelectedIndex == 1) ? "First Semester" :
+							   throw new InvalidOperationException("Please select a valid semester.");
 
-			string Semester = string.Empty;
 
-			if (cmbSemester.SelectedIndex == 0)
-			{
-				Semester = "Second Semester";
+			int newEnrollmentId = 0;
+			string enrollSubjectsQuery = "INSERT INTO EnrollSubjects (EnrollmentID, CourseID, Grade) VALUES (@EnrollmentID, @CourseID, @Grade)";
+
+			
+
+				if (MessageBox.Show("Do you want to enrolled this student?" + "\n" +
+				                "\nSemester: " + cmbSemester.Text + 
+				                "\nProgram: " + cmbProgram.Text +
+								"\nSection: " + cmbSection.Text, "Enrollment Confirm" , MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+			    {
+
+				using (SqlConnection conn = new SqlConnection(connectionString))
+				{
+
+					try
+					{
+						conn.Open();
+
+						SqlTransaction transaction = conn.BeginTransaction();
+
+						try
+						{
+
+							SqlCommand cmdEnrollment = new SqlCommand("Enrollment_SP", conn, transaction);
+							cmdEnrollment.CommandType = CommandType.StoredProcedure;
+
+							cmdEnrollment.Parameters.AddWithValue("@StudentID", StudentID);
+							cmdEnrollment.Parameters.AddWithValue("@Semester", Semester);
+							cmdEnrollment.Parameters.AddWithValue("@Program", cmbProgram.Text);
+							cmdEnrollment.Parameters.AddWithValue("@Section", cmbSection.Text);
+							cmdEnrollment.Parameters.AddWithValue("@DateRecorded", DateRecorded);
+							cmdEnrollment.Parameters.AddWithValue("@Action", action);
+							cmdEnrollment.Parameters.AddWithValue("@Description", description);
+							cmdEnrollment.Parameters.AddWithValue("@AddName", name);
+
+							SqlParameter outputParam = cmdEnrollment.Parameters.Add("@NewEnrollmentID", SqlDbType.Int);
+							outputParam.Direction = ParameterDirection.Output;
+
+							cmdEnrollment.ExecuteNonQuery();
+
+							newEnrollmentId = (int)outputParam.Value;
+
+							if (newEnrollmentId <= 0)
+							{
+								throw new InvalidOperationException("Enrollment failed or returned an invalid Enrollment ID.");
+							}
+
+							foreach (DataGridViewRow row in CoursesData.Rows)
+							{
+								if (row.IsNewRow || row.DataBoundItem == null) continue;
+
+								object selectedSubValue = row.Cells["SubjectSelected"].Value;
+								bool isSubjectSelected = selectedSubValue != null && selectedSubValue != DBNull.Value && (bool)selectedSubValue;
+
+								if (isSubjectSelected)
+								{
+									object courseIdValue = row.Cells["CourseID"].Value;
+
+									int courseId = Convert.ToInt32(courseIdValue);
+									decimal grade = 0.00M;
+									using (SqlCommand cmdSubject = new SqlCommand(enrollSubjectsQuery, conn, transaction))
+									{
+										cmdSubject.Parameters.AddWithValue("@EnrollmentID", newEnrollmentId);
+										cmdSubject.Parameters.AddWithValue("@CourseID", courseId);
+										cmdSubject.Parameters.AddWithValue("@Grade", grade);
+
+										cmdSubject.ExecuteNonQuery();
+									}
+								}
+
+								transaction.Commit();
+
+								MessageBox.Show("Enrolled Student Successful!" + "\n Student: " + StudentName,
+											"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+								AdminStudents students = new AdminStudents();
+								students.Show();
+								this.Hide();
+							}
+						}
+						catch (Exception ex)
+						{
+							try
+							{
+								transaction.Rollback();
+							}
+							catch (Exception exRollback)
+							{
+								MessageBox.Show("Transaction rollback failed: " + exRollback.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							}
+							MessageBox.Show("Enrollment Failed. " +
+											"Details: " + ex.Message,
+											"Error",
+											MessageBoxButtons.OK,
+											MessageBoxIcon.Error);
+						}
+
+					}
+					catch (Exception exConn)
+					{
+						MessageBox.Show("Database connection error: " + exConn.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
 			}
-			else if (cmbSemester.SelectedIndex == 1)
-			{
-				Semester = "First Semester";
-			}
-			else
-			{
-				throw new InvalidOperationException("Please select a valid semester.");
 
-			}
-
-
-
-
-			using (SqlConnection conn = new SqlConnection(connectionString))
-			{
-				conn.Open();
-
-
-				SqlCommand cmd = new SqlCommand("Enrollment_SP", conn);
-				cmd.CommandType = CommandType.StoredProcedure;
-
-
-				cmd.Parameters.AddWithValue("@StudentID", StudentID);
-				cmd.Parameters.AddWithValue("@Semester", Semester);
-				cmd.Parameters.AddWithValue("@Program", cmbProgram.Text);
-				cmd.Parameters.AddWithValue("@Section", cmbSection.Text);
-				cmd.Parameters.AddWithValue("@DateRecorded", DateRecorded);
-				cmd.Parameters.AddWithValue("@Action", action);
-				cmd.Parameters.AddWithValue("@Description", description);
-				cmd.Parameters.AddWithValue("@AddName", name);
-
-
-				cmd.ExecuteNonQuery();
-				MessageBox.Show("Enrolled Student Successful!" + "\n Student: " + StudentName,
-								"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-				AdminStudents students = new AdminStudents();
-				students.Show();
-				this.Hide();
-
-			}
+			
 		}
 
 		private void cmbProgram_SelectedIndexChanged(object sender, EventArgs e)

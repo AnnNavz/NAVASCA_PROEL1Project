@@ -89,12 +89,6 @@
     <Compile Include="AdminEnrollment.Designer.cs">
       <DependentUpon>AdminEnrollment.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminEnrollSubjects.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AdminEnrollSubjects.Designer.cs">
-      <DependentUpon>AdminEnrollSubjects.cs</DependentUpon>
-    </Compile>
     <Compile Include="AdminLogs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +100,12 @@
     </Compile>
     <Compile Include="AdminReports.Designer.cs">
       <DependentUpon>AdminReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminStudentAddSubject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminStudentAddSubject.Designer.cs">
+      <DependentUpon>AdminStudentAddSubject.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminStudentDetails.cs">
       <SubType>Form</SubType>
@@ -200,14 +200,14 @@
     <EmbeddedResource Include="AdminEnrollment.resx">
       <DependentUpon>AdminEnrollment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminEnrollSubjects.resx">
-      <DependentUpon>AdminEnrollSubjects.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AdminLogs.resx">
       <DependentUpon>AdminLogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminReports.resx">
       <DependentUpon>AdminReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminStudentAddSubject.resx">
+      <DependentUpon>AdminStudentAddSubject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminStudentDetails.resx">
       <DependentUpon>AdminStudentDetails.cs</DependentUpon>

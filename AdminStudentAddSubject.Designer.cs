@@ -1,6 +1,6 @@
 ﻿namespace NAVASCA_PROEL1Project
 {
-	partial class AdminEnrollSubjects
+	partial class AdminStudentAddSubject
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,22 +28,68 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminStudentAddSubject));
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminEnrollSubjects));
-			this.CoursesData = new Guna.UI2.WinForms.Guna2DataGridView();
-			this.btnSearch = new Guna.UI2.WinForms.Guna2PictureBox();
-			this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.picBack = new System.Windows.Forms.PictureBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.picBack = new System.Windows.Forms.PictureBox();
-			this.label5 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
+			this.CoursesData = new Guna.UI2.WinForms.Guna2DataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.BackColor = System.Drawing.Color.Transparent;
+			this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.White;
+			this.label5.Location = new System.Drawing.Point(80, 35);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(133, 19);
+			this.label5.TabIndex = 99;
+			this.label5.Text = "Back to Students";
+			// 
+			// picBack
+			// 
+			this.picBack.BackColor = System.Drawing.Color.Transparent;
+			this.picBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picBack.BackgroundImage")));
+			this.picBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.picBack.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.picBack.Location = new System.Drawing.Point(12, 12);
+			this.picBack.Name = "picBack";
+			this.picBack.Size = new System.Drawing.Size(62, 60);
+			this.picBack.TabIndex = 98;
+			this.picBack.TabStop = false;
+			this.picBack.Click += new System.EventHandler(this.picBack_Click);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.BackColor = System.Drawing.Color.Transparent;
+			this.label6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.DimGray;
+			this.label6.Location = new System.Drawing.Point(277, 147);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(231, 17);
+			this.label6.TabIndex = 110;
+			this.label6.Text = "View here to see subjects to enroll.";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.BackColor = System.Drawing.Color.Transparent;
+			this.label3.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(282, 104);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(221, 38);
+			this.label3.TabIndex = 109;
+			this.label3.Text = "Add Subjects";
 			// 
 			// CoursesData
 			// 
@@ -75,7 +121,7 @@
 			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.CoursesData.DefaultCellStyle = dataGridViewCellStyle3;
 			this.CoursesData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(157)))), ((int)(((byte)(189)))));
-			this.CoursesData.Location = new System.Drawing.Point(84, 237);
+			this.CoursesData.Location = new System.Drawing.Point(138, 206);
 			this.CoursesData.Name = "CoursesData";
 			this.CoursesData.ReadOnly = true;
 			this.CoursesData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -90,8 +136,8 @@
 			this.CoursesData.RowHeadersVisible = false;
 			this.CoursesData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 			this.CoursesData.RowTemplate.Height = 30;
-			this.CoursesData.Size = new System.Drawing.Size(609, 304);
-			this.CoursesData.TabIndex = 96;
+			this.CoursesData.Size = new System.Drawing.Size(509, 319);
+			this.CoursesData.TabIndex = 116;
 			this.CoursesData.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Blue;
 			this.CoursesData.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
 			this.CoursesData.ThemeStyle.AlternatingRowsStyle.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -114,126 +160,33 @@
 			this.CoursesData.ThemeStyle.RowsStyle.Height = 30;
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
 			this.CoursesData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.CoursesData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CoursesData_CellContentClick);
 			// 
-			// btnSearch
-			// 
-			this.btnSearch.BackColor = System.Drawing.Color.Transparent;
-			this.btnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-			this.btnSearch.ImageRotate = 0F;
-			this.btnSearch.Location = new System.Drawing.Point(659, 191);
-			this.btnSearch.Name = "btnSearch";
-			this.btnSearch.Size = new System.Drawing.Size(28, 26);
-			this.btnSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.btnSearch.TabIndex = 97;
-			this.btnSearch.TabStop = false;
-			this.btnSearch.UseTransparentBackground = true;
-			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-			// 
-			// txtSearch
-			// 
-			this.txtSearch.BackColor = System.Drawing.Color.Transparent;
-			this.txtSearch.BorderColor = System.Drawing.SystemColors.GradientActiveCaption;
-			this.txtSearch.BorderRadius = 16;
-			this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.txtSearch.DefaultText = "";
-			this.txtSearch.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-			this.txtSearch.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-			this.txtSearch.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtSearch.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-			this.txtSearch.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-			this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.txtSearch.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-			this.txtSearch.Location = new System.Drawing.Point(484, 185);
-			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.PlaceholderText = "Search....";
-			this.txtSearch.SelectedText = "";
-			this.txtSearch.Size = new System.Drawing.Size(209, 38);
-			this.txtSearch.TabIndex = 98;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.BackColor = System.Drawing.Color.Transparent;
-			this.label6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.ForeColor = System.Drawing.Color.DimGray;
-			this.label6.Location = new System.Drawing.Point(277, 146);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(231, 17);
-			this.label6.TabIndex = 106;
-			this.label6.Text = "View here to see subjects to enroll.";
-			this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.BackColor = System.Drawing.Color.Transparent;
-			this.label3.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(215, 103);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(354, 38);
-			this.label3.TabIndex = 105;
-			this.label3.Text = "Enrollment of Subjects";
-			// 
-			// picBack
-			// 
-			this.picBack.BackColor = System.Drawing.Color.Transparent;
-			this.picBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picBack.BackgroundImage")));
-			this.picBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.picBack.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.picBack.Location = new System.Drawing.Point(12, 12);
-			this.picBack.Name = "picBack";
-			this.picBack.Size = new System.Drawing.Size(62, 60);
-			this.picBack.TabIndex = 94;
-			this.picBack.TabStop = false;
-			this.picBack.Click += new System.EventHandler(this.picBack_Click);
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.BackColor = System.Drawing.Color.Transparent;
-			this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label5.ForeColor = System.Drawing.Color.White;
-			this.label5.Location = new System.Drawing.Point(80, 35);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(133, 19);
-			this.label5.TabIndex = 95;
-			this.label5.Text = "Back to Students";
-			// 
-			// AdminEnrollSubjects
+			// AdminStudentAddSubject
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
 			this.ClientSize = new System.Drawing.Size(784, 611);
+			this.Controls.Add(this.CoursesData);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.btnSearch);
-			this.Controls.Add(this.txtSearch);
-			this.Controls.Add(this.CoursesData);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.picBack);
-			this.Name = "AdminEnrollSubjects";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "AdminEnrollSubjects";
-			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
+			this.Name = "AdminStudentAddSubject";
+			this.Text = "AdminStudentAddSubject";
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private Guna.UI2.WinForms.Guna2DataGridView CoursesData;
-		private Guna.UI2.WinForms.Guna2PictureBox btnSearch;
-		private Guna.UI2.WinForms.Guna2TextBox txtSearch;
+
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.PictureBox picBack;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.PictureBox picBack;
-		private System.Windows.Forms.Label label5;
+		private Guna.UI2.WinForms.Guna2DataGridView CoursesData;
 	}
 }
