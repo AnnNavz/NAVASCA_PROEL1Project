@@ -142,7 +142,7 @@ namespace NAVASCA_PROEL1Project
             WHERE 
                 i.InstructorID = @InstructorID
             ORDER BY
-                s.SectionName";
+                s.SectionID";
 
 			try
 			{

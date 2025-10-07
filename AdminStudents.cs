@@ -656,7 +656,6 @@ namespace NAVASCA_PROEL1Project
 					return;
 				}
 
-				MessageBox.Show($"Opening Enrollment Form for Student: {selectedStudentName}", "Enrollment", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				OpenEnrollmentForm(selectedStudentID, selectedStudentName);
 				this.Hide();
 
@@ -669,7 +668,6 @@ namespace NAVASCA_PROEL1Project
 					return;
 				}
 
-				MessageBox.Show($"Opening the Details for Student: {selectedStudentName}", "Student Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				OpenDetails(selectedStudentID, selectedStudentName);
 				this.Hide();
 			}

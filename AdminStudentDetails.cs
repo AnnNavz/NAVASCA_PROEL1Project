@@ -225,5 +225,18 @@ namespace NAVASCA_PROEL1Project
 
 
 		}
+
+		private void btnAdd_Click(object sender, EventArgs e)
+		{
+			OpenAddSubjects(StudentID);
+			this.Hide();
+		}
+
+		private void OpenAddSubjects(int profileID)
+		{
+			AdminStudentAddSubject addSubject = new AdminStudentAddSubject(profileID);
+			addSubject.Show();
+			this.Hide();
+		}
 	}
 }

@@ -60,7 +60,6 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
 
-					dataAdapter.SelectCommand.Parameters.AddWithValue("@StudentID", StudentID);
 					dataAdapter.SelectCommand.Parameters.AddWithValue("@semester", semester);
 					dataAdapter.SelectCommand.Parameters.AddWithValue("@programID", programID);
 
@@ -99,20 +98,12 @@ namespace NAVASCA_PROEL1Project
 						{
 							col.DataPropertyName = col.Name;
 
-							// 💡 CRITICAL CHANGE: Make all DATA columns ReadOnly = TRUE
-							// We only want the checkbox column to be editable.
 							col.ReadOnly = true;
 						}
 					}
 
-					// You can also make the entire DataGridView ReadOnly = true, and ONLY set the Checkbox column to ReadOnly = false.
-					// CoursesData.ReadOnly = true; // Set DGV to read-only
-					// CoursesData.Columns["SubjectSelected"].ReadOnly = false; // Override for the checkbox
-
 					CoursesData.DataSource = dataTable;
 
-					// 💡 IMPORTANT: Ensure the default value for the checkbox column is FALSE
-					// This initializes all rows' checkboxes to unchecked.
 					foreach (DataGridViewRow row in CoursesData.Rows)
 					{
 						if (!row.IsNewRow)
