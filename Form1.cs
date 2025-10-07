@@ -24,8 +24,6 @@ namespace NAVASCA_PROEL1Project
 
 		string connectionString = Database.ConnectionString;
 
-		string cmb;
-
         string mailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$";
         string phonePattern = @"^(?:\+63|0)?9\d{9}$";
 		string agePattern = @"^(1[0-9]{2}|[1-9]?[0-9])$";
@@ -98,19 +96,6 @@ namespace NAVASCA_PROEL1Project
 
 
 
-			if (cmbGender.SelectedIndex == 0)
-			{
-				cmb += cmbGender.Text;
-			}
-			if (cmbGender.SelectedIndex == 1)
-			{
-				cmb += cmbGender.Text;
-			}
-			if (cmbGender.SelectedIndex == 2)
-			{
-				cmb += cmbGender.Text;
-			}
-
 
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
@@ -141,7 +126,7 @@ namespace NAVASCA_PROEL1Project
 				cmd.Parameters.AddWithValue("@firstname", txtFirstname.Text);
 				cmd.Parameters.AddWithValue("@lastname", txtLastname.Text);
 				cmd.Parameters.AddWithValue("@age", txtAge.Text);
-				cmd.Parameters.AddWithValue("@gender", cmb);
+				cmd.Parameters.AddWithValue("@gender", cmbGender.Text);
 				cmd.Parameters.AddWithValue("@phone", txtPhone.Text);
 				cmd.Parameters.AddWithValue("@address", txtAddress.Text);
 				cmd.Parameters.AddWithValue("@email", txtEmail.Text);

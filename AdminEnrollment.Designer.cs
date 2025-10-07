@@ -30,6 +30,10 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminEnrollment));
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.picBack = new System.Windows.Forms.PictureBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.btnSubmit = new Guna.UI2.WinForms.Guna2Button();
@@ -44,10 +48,17 @@
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
 			this.errorProvider3 = new System.Windows.Forms.ErrorProvider(this.components);
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.CoursesData = new Guna.UI2.WinForms.Guna2DataGridView();
+			this.label9 = new System.Windows.Forms.Label();
+			this.panel2 = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.picBack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).BeginInit();
+			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).BeginInit();
+			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// picBack
@@ -88,7 +99,7 @@
 			this.btnSubmit.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold);
 			this.btnSubmit.ForeColor = System.Drawing.Color.White;
 			this.btnSubmit.HoverState.FillColor = System.Drawing.Color.RoyalBlue;
-			this.btnSubmit.Location = new System.Drawing.Point(288, 475);
+			this.btnSubmit.Location = new System.Drawing.Point(214, 750);
 			this.btnSubmit.Name = "btnSubmit";
 			this.btnSubmit.Size = new System.Drawing.Size(214, 45);
 			this.btnSubmit.TabIndex = 105;
@@ -101,7 +112,7 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.DimGray;
-			this.label6.Location = new System.Drawing.Point(257, 159);
+			this.label6.Location = new System.Drawing.Point(186, 59);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(271, 17);
 			this.label6.TabIndex = 104;
@@ -113,7 +124,7 @@
 			this.label3.AutoSize = true;
 			this.label3.BackColor = System.Drawing.Color.Transparent;
 			this.label3.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(261, 113);
+			this.label3.Location = new System.Drawing.Point(190, 13);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(262, 38);
 			this.label3.TabIndex = 103;
@@ -133,10 +144,11 @@
 			this.cmbSemester.Items.AddRange(new object[] {
             "Second Semester A.Y. 2025 - 2026",
             "First Semester A.Y. 2026 - 2027"});
-			this.cmbSemester.Location = new System.Drawing.Point(153, 230);
+			this.cmbSemester.Location = new System.Drawing.Point(82, 130);
 			this.cmbSemester.Name = "cmbSemester";
 			this.cmbSemester.Size = new System.Drawing.Size(479, 36);
 			this.cmbSemester.TabIndex = 110;
+			this.cmbSemester.SelectedIndexChanged += new System.EventHandler(this.cmbSemester_SelectedIndexChanged);
 			// 
 			// label7
 			// 
@@ -144,7 +156,7 @@
 			this.label7.BackColor = System.Drawing.Color.Transparent;
 			this.label7.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label7.Location = new System.Drawing.Point(155, 207);
+			this.label7.Location = new System.Drawing.Point(84, 107);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(79, 20);
 			this.label7.TabIndex = 109;
@@ -170,7 +182,7 @@
             "BSBA-MM (BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MARJOR IN MARKETING MANAG" +
                 "EMENT))",
             "BSN (BACHELOR OF SCIENCE IN NURSING)"});
-			this.cmbProgram.Location = new System.Drawing.Point(153, 303);
+			this.cmbProgram.Location = new System.Drawing.Point(82, 203);
 			this.cmbProgram.Name = "cmbProgram";
 			this.cmbProgram.Size = new System.Drawing.Size(479, 36);
 			this.cmbProgram.TabIndex = 112;
@@ -182,7 +194,7 @@
 			this.label1.BackColor = System.Drawing.Color.Transparent;
 			this.label1.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label1.Location = new System.Drawing.Point(155, 280);
+			this.label1.Location = new System.Drawing.Point(84, 180);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(75, 20);
 			this.label1.TabIndex = 111;
@@ -199,7 +211,7 @@
 			this.cmbSection.Font = new System.Drawing.Font("Century Gothic", 9.75F);
 			this.cmbSection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
 			this.cmbSection.ItemHeight = 30;
-			this.cmbSection.Location = new System.Drawing.Point(153, 378);
+			this.cmbSection.Location = new System.Drawing.Point(82, 278);
 			this.cmbSection.Name = "cmbSection";
 			this.cmbSection.Size = new System.Drawing.Size(479, 36);
 			this.cmbSection.TabIndex = 114;
@@ -210,7 +222,7 @@
 			this.label.BackColor = System.Drawing.Color.Transparent;
 			this.label.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
-			this.label.Location = new System.Drawing.Point(155, 355);
+			this.label.Location = new System.Drawing.Point(84, 255);
 			this.label.Name = "label";
 			this.label.Size = new System.Drawing.Size(67, 20);
 			this.label.TabIndex = 113;
@@ -228,21 +240,124 @@
 			// 
 			this.errorProvider3.ContainerControl = this;
 			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.White;
+			this.panel1.Controls.Add(this.label9);
+			this.panel1.Controls.Add(this.CoursesData);
+			this.panel1.Controls.Add(this.label3);
+			this.panel1.Controls.Add(this.cmbSection);
+			this.panel1.Controls.Add(this.label6);
+			this.panel1.Controls.Add(this.label);
+			this.panel1.Controls.Add(this.btnSubmit);
+			this.panel1.Controls.Add(this.cmbProgram);
+			this.panel1.Controls.Add(this.label7);
+			this.panel1.Controls.Add(this.label1);
+			this.panel1.Controls.Add(this.cmbSemester);
+			this.panel1.Location = new System.Drawing.Point(45, 12);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(659, 830);
+			this.panel1.TabIndex = 115;
+			// 
+			// CoursesData
+			// 
+			this.CoursesData.AllowUserToResizeRows = false;
+			dataGridViewCellStyle13.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle13.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.CoursesData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+			this.CoursesData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+			this.CoursesData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(234)))), ((int)(((byte)(243)))));
+			this.CoursesData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle14.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.CoursesData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+			this.CoursesData.ColumnHeadersHeight = 35;
+			dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle15.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.CoursesData.DefaultCellStyle = dataGridViewCellStyle15;
+			this.CoursesData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(157)))), ((int)(((byte)(189)))));
+			this.CoursesData.Location = new System.Drawing.Point(82, 396);
+			this.CoursesData.Name = "CoursesData";
+			this.CoursesData.ReadOnly = true;
+			this.CoursesData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+			dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.CoursesData.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
+			this.CoursesData.RowHeadersVisible = false;
+			this.CoursesData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+			this.CoursesData.RowTemplate.Height = 30;
+			this.CoursesData.Size = new System.Drawing.Size(479, 304);
+			this.CoursesData.TabIndex = 115;
+			this.CoursesData.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Blue;
+			this.CoursesData.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
+			this.CoursesData.ThemeStyle.AlternatingRowsStyle.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CoursesData.ThemeStyle.AlternatingRowsStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.CoursesData.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			this.CoursesData.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.CoursesData.ThemeStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(234)))), ((int)(((byte)(243)))));
+			this.CoursesData.ThemeStyle.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(157)))), ((int)(((byte)(189)))));
+			this.CoursesData.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(150)))), ((int)(((byte)(232)))));
+			this.CoursesData.ThemeStyle.HeaderStyle.BorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+			this.CoursesData.ThemeStyle.HeaderStyle.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CoursesData.ThemeStyle.HeaderStyle.ForeColor = System.Drawing.Color.White;
+			this.CoursesData.ThemeStyle.HeaderStyle.HeaightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this.CoursesData.ThemeStyle.HeaderStyle.Height = 35;
+			this.CoursesData.ThemeStyle.ReadOnly = true;
+			this.CoursesData.ThemeStyle.RowsStyle.BackColor = System.Drawing.Color.White;
+			this.CoursesData.ThemeStyle.RowsStyle.BorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.CoursesData.ThemeStyle.RowsStyle.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.CoursesData.ThemeStyle.RowsStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			this.CoursesData.ThemeStyle.RowsStyle.Height = 30;
+			this.CoursesData.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(201)))), ((int)(((byte)(228)))));
+			this.CoursesData.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.BackColor = System.Drawing.Color.Transparent;
+			this.label9.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(177)))), ((int)(((byte)(189)))));
+			this.label9.Location = new System.Drawing.Point(264, 362);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(130, 20);
+			this.label9.TabIndex = 119;
+			this.label9.Text = "Subjects to Enroll";
+			// 
+			// panel2
+			// 
+			this.panel2.AutoScroll = true;
+			this.panel2.BackColor = System.Drawing.Color.White;
+			this.panel2.Controls.Add(this.panel1);
+			this.panel2.Location = new System.Drawing.Point(9, 79);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(766, 533);
+			this.panel2.TabIndex = 116;
+			// 
 			// AdminEnrollment
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
 			this.ClientSize = new System.Drawing.Size(784, 611);
-			this.Controls.Add(this.cmbSection);
-			this.Controls.Add(this.label);
-			this.Controls.Add(this.cmbProgram);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.cmbSemester);
-			this.Controls.Add(this.label7);
-			this.Controls.Add(this.btnSubmit);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label3);
+			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.picBack);
 			this.Name = "AdminEnrollment";
@@ -253,6 +368,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider3)).EndInit();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CoursesData)).EndInit();
+			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -274,5 +393,9 @@
 		private System.Windows.Forms.ErrorProvider errorProvider1;
 		private System.Windows.Forms.ErrorProvider errorProvider2;
 		private System.Windows.Forms.ErrorProvider errorProvider3;
+		private System.Windows.Forms.Panel panel1;
+		private Guna.UI2.WinForms.Guna2DataGridView CoursesData;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Panel panel2;
 	}
 }

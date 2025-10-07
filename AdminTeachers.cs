@@ -86,16 +86,16 @@ namespace NAVASCA_PROEL1Project
 
 					DataGridViewButtonColumn manageButtonColumn = new DataGridViewButtonColumn();
 
-					manageButtonColumn.HeaderText = "Handle Subjects";
+					manageButtonColumn.HeaderText = " ";
 					manageButtonColumn.Name = "Subjects";
-					manageButtonColumn.Text = "Manage";
+					manageButtonColumn.Text = "Manage Subjects";
 					manageButtonColumn.UseColumnTextForButtonValue = true;
 
 					TeachersData.Columns.Add(manageButtonColumn);
 
 					DataGridViewButtonColumn detailsButtonColumn = new DataGridViewButtonColumn();
 
-					detailsButtonColumn.HeaderText = "Details";
+					detailsButtonColumn.HeaderText = " ";
 					detailsButtonColumn.Name = "Details";
 					detailsButtonColumn.Text = "View";
 					detailsButtonColumn.UseColumnTextForButtonValue = true;

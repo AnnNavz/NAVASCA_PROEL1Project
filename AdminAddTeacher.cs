@@ -64,7 +64,7 @@ namespace NAVASCA_PROEL1Project
 
 
 			string action = "Add Teacher";
-			string description = "Added a new teacher";
+			string description = "Added a new teacher in " + cmbDepartment.Text + ".";
 			string AddName = txtFirstname.Text + " " + txtLastname.Text;
 
 			bool requiredFieldsMissing = false;

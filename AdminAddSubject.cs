@@ -47,7 +47,7 @@ namespace NAVASCA_PROEL1Project
 			errorProvider5.Clear();
 
 			string action = "Add Subject";
-			string description = "Added a new subject";
+			string description = "Added a new subject in " + cmbDepartment + "." ;
 			string AddName = txtCourseName.Text;
 			string Code = txtCode.Text;
 			string formattedCode = Code.ToUpper();
