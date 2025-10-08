@@ -35,13 +35,19 @@ namespace NAVASCA_PROEL1Project
 		private void LoadCourses()
 		{
 			string sqlQuery = "SELECT c.CourseID, c.CourseName, c.CourseCode, c.Description, c.Credits " +
-	                          "FROM Enrollment AS e " +
-	                          "INNER JOIN Programs AS r ON e.ProgramID = r.ProgramID " +
-	                          "INNER JOIN Departments AS d ON r.DepartmentID = d.DepartmentID " +
-	                          "INNER JOIN Courses AS c ON c.DepartmentID = d.DepartmentID " +
-							  "INNER JOIN Semesters AS s ON s.SemesterID = e.SemesterID " +
-							  "RIGHT JOIN EnrollSubjects AS j ON j.EnrollmentID = e.EnrollmentID " +
-							  "WHERE e.StudentID = @StudentID AND s.TermName = c.CourseSem AND j.CourseID != c.CourseID;";
+				  "FROM Enrollment AS e " +
+				  "INNER JOIN Programs AS r ON e.ProgramID = r.ProgramID " +
+				  "INNER JOIN Departments AS d ON r.DepartmentID = d.DepartmentID " +
+				  "INNER JOIN Courses AS c ON c.DepartmentID = d.DepartmentID " +
+				  "INNER JOIN Semesters AS s ON s.SemesterID = e.SemesterID " +
+				  "WHERE e.StudentID = @StudentID " +
+				  "  AND s.TermName = c.CourseSem " +
+				  "  AND NOT EXISTS ( " +
+				  "    SELECT 1 " +
+				  "    FROM EnrollSubjects AS es " +
+				  "    WHERE es.EnrollmentID = e.EnrollmentID " +
+				  "      AND es.CourseID = c.CourseID " +
+				  "  );";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{

@@ -35,15 +35,13 @@ namespace NAVASCA_PROEL1Project
 		{
 			string sqlQuery = "SELECT t.TermName + ' ' + t.AcademicYear AS Semester, r.ProgramName, s.SectionName, " +
 							  "p.FirstName, p.LastName " +
-							  "FROM EnrollSubjects AS e " +
-							  "INNER JOIN Courses AS c ON e.CourseID = c.CourseID " +
-							  "INNER JOIN Enrollment AS m ON m.EnrollmentID = e.EnrollmentID " +
-							  "INNER JOIN Semesters AS t ON t.SemesterID = m.SemesterID " +
-							  "INNER JOIN Sections AS s ON s.SectionID = m.SectionID " +
-							  "INNER JOIN Programs AS r ON r.ProgramID = m.ProgramID " +
-							  "LEFT JOIN HandleSubjects h ON h.CourseID = c.CourseID " +
-							  "LEFT JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
-							  "LEFT JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
+							  "FROM HandleSubjects AS h " +
+							  "INNER JOIN Courses AS c ON h.CourseID = c.CourseID " +
+							  "INNER JOIN Semesters AS t ON t.SemesterID = h.SemesterID " +
+							  "INNER JOIN Sections AS s ON s.SectionID = h.SectionID " +
+							  "INNER JOIN Programs AS r ON r.ProgramID = s.ProgramID " +
+							  "INNER JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
+							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 							  "WHERE c.CourseID = @CourseID " +
 							  "ORDER BY t.SemesterID, s.SectionID";
 
@@ -59,25 +57,34 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
+
+					CoursesData.AutoGenerateColumns = false;
+					CoursesData.Columns.Clear();
+					CoursesData.ReadOnly = true;
+
 					if (dataTable != null && !dataTable.Columns.Contains("InstructorName"))
 					{
 						dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
 					}
 
-					if (dataTable != null)
+
+					CoursesData.Columns.Add("Semester", "Semester");
+					CoursesData.Columns.Add("ProgramName", "Program Name");
+					CoursesData.Columns.Add("SectionName", "Section");
+					CoursesData.Columns.Add("InstructorName", "Teacher");
+
+
+					foreach (DataGridViewColumn col in CoursesData.Columns)
 					{
-						DataView view = new DataView(dataTable);
-
-						DataTable distinctTable = view.ToTable(true,
-							"Semester",
-							"ProgramName",
-							"SectionName",
-							"InstructorName"
-						);
-
-						CoursesData.DataSource = distinctTable;
-						
+						if (dataTable.Columns.Contains(col.Name))
+						{
+							col.DataPropertyName = col.Name;
+						}
 					}
+
+
+
+					CoursesData.DataSource = dataTable;
 
 				}
 				catch (Exception ex)
@@ -95,6 +102,7 @@ namespace NAVASCA_PROEL1Project
 
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
+
 			string searchTerm = txtSearch.Text.Trim();
 
 			if (string.IsNullOrEmpty(searchTerm))
@@ -104,20 +112,18 @@ namespace NAVASCA_PROEL1Project
 			}
 
 			string sqlQuery = "SELECT t.TermName + ' ' + t.AcademicYear AS Semester, r.ProgramName, s.SectionName, " +
-					 "p.FirstName, p.LastName " +
-					 "FROM EnrollSubjects AS e " +
-					 "INNER JOIN Courses AS c ON e.CourseID = c.CourseID " +
-					 "INNER JOIN Enrollment AS m ON m.EnrollmentID = e.EnrollmentID " +
-					 "INNER JOIN Semesters AS t ON t.SemesterID = m.SemesterID " +
-					 "INNER JOIN Sections AS s ON s.SectionID = m.SectionID " +
-					 "INNER JOIN Programs AS r ON r.ProgramID = m.ProgramID " +
-					 "LEFT JOIN HandleSubjects h ON h.CourseID = c.CourseID AND h.SectionID = m.SectionID AND h.SemesterID = m.SemesterID " +
-					  "LEFT JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
-					 "LEFT JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
-					 "WHERE c.CourseID = @CourseID AND " +
-					 "(t.TermName LIKE @searchTerm OR t.AcademicYear LIKE @searchTerm OR r.ProgramName LIKE @searchTerm OR s.SectionName LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm)";
+							  "p.FirstName, p.LastName " +
+							  "FROM HandleSubjects AS h " +
+							  "INNER JOIN Courses AS c ON h.CourseID = c.CourseID " +
+							  "INNER JOIN Semesters AS t ON t.SemesterID = h.SemesterID " +
+							  "INNER JOIN Sections AS s ON s.SectionID = h.SectionID " +
+							  "INNER JOIN Programs AS r ON r.ProgramID = s.ProgramID " +
+							  "INNER JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
+							  "INNER JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
+							  "WHERE c.CourseID = @CourseID AND " +
+			                  "(t.TermName LIKE @searchTerm OR t.AcademicYear LIKE @searchTerm OR r.ProgramName LIKE @searchTerm OR s.SectionName LIKE @searchTerm OR p.FirstName LIKE @searchTerm OR p.LastName LIKE @searchTerm)";
 
-			sqlQuery += " ORDER BY Semester, s.SectionID ";
+			sqlQuery += " ORDER BY t.SemesterID, s.SectionID";
 
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
@@ -132,26 +138,31 @@ namespace NAVASCA_PROEL1Project
 					DataTable dataTable = new DataTable();
 					dataAdapter.Fill(dataTable);
 
-					DataTable distinctTable = new DataTable();
+					CoursesData.AutoGenerateColumns = false;
+					CoursesData.Columns.Clear();
+					CoursesData.ReadOnly = true;
 
-					if (dataTable.Rows.Count > 0)
+					if (dataTable != null && !dataTable.Columns.Contains("InstructorName"))
 					{
-						if (!dataTable.Columns.Contains("InstructorName"))
-						{
-							dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
-						}
-
-						DataView view = new DataView(dataTable);
-
-						distinctTable = view.ToTable(true,
-							"Semester",
-							"ProgramName",
-							"SectionName",
-							"InstructorName"
-						);
+						dataTable.Columns.Add("InstructorName", typeof(string), "FirstName + ' ' + LastName");
 					}
 
-					CoursesData.DataSource = distinctTable;
+
+					CoursesData.Columns.Add("Semester", "Semester");
+					CoursesData.Columns.Add("ProgramName", "Program Name");
+					CoursesData.Columns.Add("SectionName", "Section");
+					CoursesData.Columns.Add("InstructorName", "Teacher");
+
+
+					foreach (DataGridViewColumn col in CoursesData.Columns)
+					{
+						if (dataTable.Columns.Contains(col.Name))
+						{
+							col.DataPropertyName = col.Name;
+						}
+					}
+
+					CoursesData.DataSource = dataTable;
 
 
 					if (dataTable.Rows.Count == 0)

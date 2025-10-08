@@ -266,6 +266,9 @@ namespace NAVASCA_PROEL1Project
 						cmd.Parameters.AddWithValue("@CourseID", selectedCourseID);
 						cmd.Parameters.AddWithValue("@InstructorID", TeacherID);
 
+						string LogName = TeacherName;
+						string logDescription = $"Manage {selecteCourseCode} in {cmbSection.Text}.";
+						AddLogEntry(LogName, "Manage Subject", logDescription);
 
 						cmd.ExecuteNonQuery();
 						MessageBox.Show("Managed Subject Successful!" + "\n Subject: " + selectedCourseName,
@@ -324,6 +327,32 @@ namespace NAVASCA_PROEL1Project
 					conn.Open();
 					int count = (int)cmd.ExecuteScalar();
 					return count > 0;
+				}
+			}
+		}
+
+		private void AddLogEntry(string name, string action, string description)
+		{
+
+			string sqlQuery = "INSERT INTO Logs (Name, Action, Description) VALUES (@name, @action, @description)";
+
+			using (SqlConnection conn = new SqlConnection(connectionString))
+			{
+				using (SqlCommand cmd = new SqlCommand(sqlQuery, conn))
+				{
+					cmd.Parameters.AddWithValue("@name", name);
+					cmd.Parameters.AddWithValue("@action", action);
+					cmd.Parameters.AddWithValue("@description", description);
+
+					try
+					{
+						conn.Open();
+						cmd.ExecuteNonQuery();
+					}
+					catch (Exception ex)
+					{
+						MessageBox.Show("Error logging action: " + ex.Message);
+					}
 				}
 			}
 		}
