@@ -227,9 +227,7 @@ namespace NAVASCA_PROEL1Project
 
 								MessageBox.Show("Add Subjects Successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-								AdminStudents students = new AdminStudents();
-								students.Show();
-								this.Hide();
+								
 							}
 						}
 						catch (Exception ex)

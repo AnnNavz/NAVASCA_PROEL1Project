@@ -180,11 +180,6 @@ namespace NAVASCA_PROEL1Project
 			if (string.IsNullOrWhiteSpace(cmbSection.Text)) { errorProvider2.SetError(cmbSection, "Section is required."); requiredFieldsMissing = true; }
 			if (string.IsNullOrWhiteSpace(cmbSemester.Text)) { errorProvider3.SetError(cmbSemester, "Semester is required."); requiredFieldsMissing = true; }
 
-			if (!CoursesData.Rows.Cast<DataGridViewRow>().Any(r => !r.IsNewRow && r.Cells["SubjectSelected"].Value != null && (bool)r.Cells["SubjectSelected"].Value))
-			{
-				MessageBox.Show("Please select at least one subject to enroll.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				requiredFieldsMissing = true;
-			}
 
 			foreach (DataGridViewRow row in CoursesData.Rows)
 			{
