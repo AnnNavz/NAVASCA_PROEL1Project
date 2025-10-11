@@ -147,10 +147,12 @@ namespace NAVASCA_PROEL1Project
 	                          "FROM EnrollSubjects AS e " +
 	                          "INNER JOIN Enrollment AS m ON e.EnrollmentID = m.EnrollmentID " +
 	                          "INNER JOIN Courses AS c ON c.CourseID = e.CourseID " +
-	                          "LEFT JOIN HandleSubjects AS h ON c.CourseID = h.CourseID AND m.SectionID = h.SectionID " + // Corrected Join
+	                          "LEFT JOIN HandleSubjects AS h ON c.CourseID = h.CourseID AND m.SectionID = h.SectionID " + 
 	                          "LEFT JOIN Instructors AS i ON h.InstructorID = i.InstructorID " +
 	                          "LEFT JOIN Profiles AS p ON i.ProfileID = p.ProfileID " +
 	                          "WHERE m.StudentID = @studentid";
+
+
 			using (SqlConnection conn = new SqlConnection(connectionString))
 			{
 				try

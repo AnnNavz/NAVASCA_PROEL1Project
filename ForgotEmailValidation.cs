@@ -78,7 +78,7 @@ namespace NAVASCA_PROEL1Project
 
 			if (profileId != -1)
 			{
-				MessageBox.Show("Successfully Confirmed!", "Email Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("Confirmed Email!", "Email Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				ForgotConfirmPassword forgotConfirmForm = new ForgotConfirmPassword(email);
 				this.Hide();
 				forgotConfirmForm.Show();

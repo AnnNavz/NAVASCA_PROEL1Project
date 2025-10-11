@@ -196,7 +196,7 @@ namespace NAVASCA_PROEL1Project
 									insertCmd.ExecuteNonQuery();
 								}
 
-								MessageBox.Show($"Successfully updated to '{newStatus}' and enrolled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+								MessageBox.Show($"Successfully updated to '{newStatus}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 								LoadData();
 							}
 							else

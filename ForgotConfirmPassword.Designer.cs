@@ -63,12 +63,11 @@
 			this.label6.BackColor = System.Drawing.Color.Transparent;
 			this.label6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.ForeColor = System.Drawing.Color.DimGray;
-			this.label6.Location = new System.Drawing.Point(248, 214);
+			this.label6.Location = new System.Drawing.Point(237, 214);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(303, 34);
+			this.label6.Size = new System.Drawing.Size(311, 34);
 			this.label6.TabIndex = 34;
-			this.label6.Text = "To change your password, you must first \r\nconfirm your current one for security p" +
-    "urposes.\r\n";
+			this.label6.Text = "Confirm the password to successfully changed \r\nthe forgotten password.\r\n";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label3

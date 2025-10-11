@@ -686,13 +686,11 @@ namespace NAVASCA_PROEL1Project
 
 			if (columnName == "Details")
 			{
-				MessageBox.Show($"Opening the Details for Teacher: {selectedTeacherName}", "Teacher Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				OpenDetails(selectedTeacherID, selectedTeacherName);
 				this.Hide();
 			}
 			else if (columnName == "Subjects")
 			{
-				MessageBox.Show($"Opening Manage Subjects for Teacher: {selectedTeacherName}", "Teacher Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				OpenSubjects(selectedTeacherID, selectedTeacherName);
 				this.Hide();
 			}
